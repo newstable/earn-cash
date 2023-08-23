@@ -1,0 +1,153 @@
+body {
+    margin: 0 auto;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    background-color: #232121 !important;
+    overflow-x: hidden;
+    color: #fff;
+    min-height: 100%;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.carousel-item {
+    min-width: 125px;
+}
+
+@media only screen and (min-width: 1200px) {
+    body.chatActive {
+        header {
+            width: calc(100% - $chat-width) !important;
+        }
+        div.feed {
+            width: calc(100% - $chat-width - $nav-width) !important;
+        }
+    }
+}
+
+body input {
+    color: white;
+}
+body.chatActive div.chat {
+    width: $chat-width !important;
+}
+
+body.nav-open div.navigation {
+    left: 0;
+    display: block;
+    width: $nav-width;
+}
+
+body.nav-open div.nav-bg {
+    display: block;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px
+}
+
+::-webkit-scrollbar-track {
+    background: #262323;
+    -webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1)
+}
+
+::-webkit-scrollbar-thumb {
+    background: #302a2a;
+    -webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #aaa
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: #888;
+    -webkit-box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3)
+}
+
+body.chatActive div.offers-page-content {
+    grid-template-columns: repeat(3, 1fr);
+    @media only screen and (min-width: 701px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @media only screen and (min-width: 800px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @media only screen and (min-width: 999px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @media only screen and (min-width: 1200px) {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    @media only screen and (min-width: 1600px) {
+        grid-template-columns: repeat(8, 1fr);
+    }
+    @media only screen and (min-width: 1800px) {
+        grid-template-columns: repeat(9, 1fr);
+    }
+    @media only screen and (min-width: 2000px) {
+        grid-template-columns: repeat(10, 1fr);
+    }
+    @media only screen and (min-width: 2200px) {
+        grid-template-columns: repeat(11, 1fr);
+    }
+    @media only screen and (min-width: 2400px) {
+        grid-template-columns: repeat(12, 1fr);
+    }
+    @media only screen and (min-width: 2600px) {
+        grid-template-columns: repeat(13, 1fr);
+    }
+    @media only screen and (min-width: 2800px) {
+        grid-template-columns: repeat(14, 1fr);
+    }
+    @media only screen and (min-width: 2000px) {
+        grid-template-columns: repeat(15, 1fr);
+    }
+}
+
+input:not([type]):not(.browser-default),
+input[type=text]:not(.browser-default),
+input[type=password]:not(.browser-default),
+input[type=email]:not(.browser-default),
+input[type=url]:not(.browser-default),
+input[type=time]:not(.browser-default),
+input[type=date]:not(.browser-default),
+input[type=datetime]:not(.browser-default),
+input[type=datetime-local]:not(.browser-default),
+input[type=tel]:not(.browser-default),
+input[type=number]:not(.browser-default),
+input[type=search]:not(.browser-default),
+textarea.materialize-textarea {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    border-radius: 0;
+    outline: none;
+    height: 3rem;
+    width: 100%;
+    font-size: 16px;
+    margin: 0 0 8px 0;
+    padding: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    -webkit-transition: border .3s, -webkit-box-shadow .3s;
+    transition: border .3s, -webkit-box-shadow .3s;
+    transition: box-shadow .3s, border .3s;
+    transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
+}
+
+@media only screen and (min-width: 1200px) {
+    body.chatActive>div>div.site {
+        margin-right: 260px;
+    }
+}
+
+* {
+    overflow-wrap: break-word;
+}

@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /r/
+Disallow: /admin/
+Disallow: /account/
+Disallow: /api/
+
+User-agent: Twitterbot
+Allow: /r/
+
+Sitemap: https://justearn.gg/sitemap.xml

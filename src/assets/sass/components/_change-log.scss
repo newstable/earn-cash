@@ -1,0 +1,204 @@
+//Change log
+
+.changelog {
+    @include e(according) {
+        margin-top: 30px;
+
+        .card {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+
+            &:not(:last-child) {
+                margin-bottom: 20px;
+            }
+
+            .card-header {
+                border-radius: 6px;
+                background-color: var(--bg-normal);
+                height: 66px;
+                display: flex;
+                align-items: center;
+                border-bottom: 0;
+                @include xs(){
+                    height: auto;
+                }
+            }
+        }
+    }
+
+    @include e(accordingCollapsed) {
+        height: 66px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        @include xs(){
+            height: auto;
+        }
+
+        &:not(.collapsed) {
+            .changelog__accordingArrow {
+                transform: rotate(90deg);
+                transition: transform .24s;
+            }
+        }
+
+        .changelog__accordingArrow {
+            transition: transform .24s;
+            img,
+            svg {
+                width: 18px;
+                color: var(--color-light);
+            }
+        }
+    }
+
+    @include e(accordingTitle){
+        .v-num{
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+    }
+}
+
+
+.version-list {
+    @include e(top) {
+        .badge {
+            font-size: 12px;
+            line-height: 1.2;
+            letter-spacing: 1.4px;
+            font-weight: 500;
+            display: inline-block;
+            padding: 5px 8px;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 14px;
+            text-transform: capitalize;
+        }
+    }
+
+    @include e(single) {
+        &:not(:last-child) {
+            margin-bottom: 30px;
+        }
+
+        ul {
+            li {
+                position: relative;
+                padding-left: 20px;
+                font-size: 16px;
+                color: var(--color-gray);
+                @include ofs(16px, null, null);
+
+                &:not(:last-child) {
+                    margin-bottom: 12px;
+                }
+
+                &::after {
+                    position: absolute;
+                    left:0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    content: "";
+                }
+            }
+
+            &.version-success li {
+                &::after {
+                   background-color:var(--color-success);
+                }
+            }
+
+            &.version-info li {
+                &::after {
+                   background-color:var(--color-info);
+                }
+            }
+
+            &.version-primary li {
+                &::after {
+                    background-color: var(--color-primary);
+                }
+            }
+        }
+    }
+}
+
+.v-num {
+    @include ofs(18px, lh(18px, 22px), 500);
+    color: var(--color-dark);
+}
+
+
+.changelog-history__title{
+    @include ofs(14px, lh(14px, 20px), 500);
+    color: var(--color-dark);
+}
+
+.history-title {
+    font-size: 11px;
+    line-height: lh(11px, 15px);
+    margin-bottom: 24px;
+    color: var(--color-light);
+}
+
+.v-arrow {
+    color: #5C637E;
+    margin:0 4px 0 14px;
+}
+
+.rl-date {
+    @include ofs(16px, lh(16px, 20px), 400);
+    color: var(--color-gray-x);
+    @include xs(){
+        margin: 4px 0;
+    }
+}
+
+.v-history-list li .version-name {
+    @include ofs(14px, null, 500);
+    color: var(--color-dark);
+    margin-right: 10px;
+}
+
+.v-history-list li .version-date {
+    @include ofs(14px, null, null);
+    color: rgb(134, 142, 174);
+}
+
+.v-history-list li {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.v-history-list li:not(:last-child) {
+    margin-bottom: 24px;
+}
+@media (min-width: 768px) {
+    .changelog-19 {
+        flex: 0 0 66.66666667%;
+        max-width: 66.66666667%;
+    }
+
+    .changelog-5 {
+        flex: 0 0 33.33333333%;
+        max-width: 33.33333333%;
+    }
+}
+@media (min-width: 1600px) {
+    .changelog-19 {
+        flex: 0 0 79.16666667%;
+        max-width: 79.16666667%;
+    }
+
+    .changelog-5 {
+        flex: 0 0 20.83333333%;
+        max-width: 20.83333333%;
+    }
+}
+

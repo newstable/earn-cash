@@ -1,0 +1,73 @@
+.pricing__tag{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    font-size: 13px;
+	line-height: 1.5384615385;
+	font-weight: 500;
+	padding: 7px 22px;
+	height: 32px;
+}
+.pricing__price .pricing_user {
+	font-size: 13px;
+	line-height: 1.6923076923;
+	font-weight: 400;
+	color: var(--color-light);
+	margin-left: 8px;
+}
+.pricing__price .pricing_value {
+	margin-top: 21px;
+    font-size: 36px;
+}
+
+.pricing__price .pricing_subtitle {
+	font-size: 13px;
+	line-height: 1.5384615385;
+	font-weight: 500;
+	color: var(--color-gray);
+	text-transform: capitalize;
+}
+.pricing__price sup {
+	font-size: 16px;
+	line-height: 1.25;
+	font-weight: 600;
+	color: var(--color-lighten);
+}
+
+.pricing__features ul {
+	padding-top: 30px;
+	padding-bottom: 2px;
+}
+
+.pricing__features ul li {
+	list-style-type: none;
+	font-size: 14px;
+	line-height: normal;
+	font-weight: 400;
+	position: relative;
+	padding-left: 1.33333rem;
+	margin-left: 0;
+	color: var(--color-gray);
+	text-transform: capitalize;
+}
+
+.pricing__features ul li:not(:last-child) {
+	margin-bottom: 15px;
+}
+
+.pricing__features ul li > span:first-child {
+	position: absolute;
+	left: -2px;
+	top: -2px;
+	margin-right: 4px;
+	width: 1.13333rem;
+	font-size: 18px;
+}
+
+.pricing__features ul li span.uil-check {
+	color: var(--color-success);
+}
+
+.pricing__features ul li span.uil-times {
+	color: #e23636;
+}

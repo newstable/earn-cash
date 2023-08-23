@@ -1,0 +1,15 @@
+@import "./variables";
+@import "./helpers";
+@import "./rfs";
+@import "./media-queries";
+@import "./utility-classes";
+@import "./functions";
+
+@mixin bidi-style($prop, $value, $inverse-prop, $default-value) {
+    #{$prop}: $value;
+
+    html[dir=rtl] & {
+        #{$inverse-prop}: $value;
+        #{$prop}: $default-value;
+    }
+}

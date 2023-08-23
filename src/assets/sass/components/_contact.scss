@@ -1,0 +1,304 @@
+.contact-card-group {
+  .col-xl-3 {
+    @include xl {
+      flex: 0 0 33.3333%;
+      max-width: 33.3333%;
+    }
+
+    @include md {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+
+    @include ssm {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+}
+
+// Contact Breadcrumb
+.contact-breadcrumb {
+  .breadcrumb-main__wrapper {
+    @include ssm {
+      flex-flow: column;
+    }
+
+    @include sm {
+      margin-bottom: 15px;
+    }
+
+    .sub-title {
+      display: none;
+    }
+
+    .add-contact__form {
+      width: 280px;
+      border-radius: 6px;
+      box-shadow: 0 5px 5px rgba(var(--light-gray-rgba), 0.03);
+      height: 40px;
+      padding: 15px 18px;
+      background-color: var(--color-white);
+
+      @include ssm {
+        margin: 10px 0 2px 0;
+      }
+
+      svg,
+      img,
+      i {
+        color: var(--color-light);
+        width: 16px;
+        height: 16px;
+      }
+
+      .form-control {
+        height: 40px;
+
+        &::placeholder {
+          color: var(--color-lighten);
+        }
+      }
+    }
+  }
+
+  .action-btn {
+    .btn {
+      box-shadow: 0 5px 10px rgba(var(--color-primary-rgba), 0.1);
+    }
+  }
+}
+
+// add contact modal
+.add-contact {
+  .btn-close,
+  .close {
+
+    svg,
+    img {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .modal-content{
+    border-radius: 10px;
+  }
+
+  .add-new-contact {
+    margin-top: -8px;
+
+    label {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: var(--color-dark);
+    }
+
+    .form-control {
+      &.form-control-lg {
+        height: 3rem;
+      }
+    }
+
+    button {
+      text-transform: capitalize;
+    }
+  }
+
+  button{
+    font-size: 12px;
+    line-height: 1.25;
+    font-weight: 500;
+    height: 40px;
+    border-radius: 6px;
+    text-transform: capitalize;
+  }
+}
+
+// Contact List Table
+.contact-list-wrap {
+  padding: 25px 25px 30px 25px;
+  background-color: var(--color-white);
+  border-radius: 3px;
+}
+
+.contact-list {
+  table {
+    th {
+      &.c-name {
+        min-width: 120px;
+      }
+
+      &.c-company {
+        min-width: 120px;
+      }
+
+      &.c-position {
+        min-width: 120px;
+      }
+
+      &.c-phone {
+        min-width: 170px;
+      }
+
+      &.c-action {
+        min-width: 110px;
+      }
+    }
+  }
+
+  .contact-item {
+    min-width: 210px;
+
+    .contact-personal-info {
+      align-items: center;
+      margin-left: 20px;
+
+      .profile-image {
+        margin-right: 12px !important;
+      }
+    }
+
+    .contact_title {
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 2px;
+      }
+
+      a {
+        color: var(--color-dark);
+      }
+
+      .location {
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--color-light);
+      }
+    }
+  }
+
+  .table-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    a {
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+
+      &.active {
+
+        svg,
+        img,
+        i {
+          color: var(--color-warning);
+        }
+      }
+
+      svg,
+      img,
+      i {
+        width: 18px;
+        height: 18px;
+        color: var(--color-light);
+      }
+    }
+
+    .dropdown-menu {
+      min-width: 7rem;
+    }
+
+    .btn-link {
+      img,
+      svg {
+        width: 18px;
+        height: 18px;
+        color: var(--color-light);
+      }
+    }
+  }
+}
+
+// Contact Profile Card
+.contact-card {
+  position: relative;
+
+  .dropdown-menu {
+    min-width: 7rem;
+  }
+
+  .card__more-action {
+    position: absolute;
+    right: 30px;
+    top: 15px;
+    a{
+      svg{
+        width: 24px !important;
+        height: 24px !important;
+      }
+    }
+  }
+
+  .cp-img {
+    margin-bottom: 20px;
+
+    img {
+      max-width: 120px;
+    }
+  }
+
+  .cp-info {
+    @include e(title) {
+     @include rfs(18px);
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--color-dark);
+    }
+
+    @include e(designation) {
+      font-size: 14px;
+      color: #8288a4;
+    }
+  }
+
+  .c-info-list {
+    margin-bottom: 5px;
+    margin-top: -2px;
+
+    @include e(item) {
+      display: flex;
+      align-items: center;
+
+      &:not(:last-child) {
+        margin-bottom: 4px;
+      }
+
+      .c-info-item-icon {
+
+        svg,
+        img,
+        i {
+          width: 14px;
+          height: 14px;
+          margin-right: 12px;
+          color: var(--color-light);
+        }
+      }
+
+      p {
+        font-size: 14px;
+        color: #8288a4;
+        margin-bottom: 0;
+      }
+    }
+  }
+}

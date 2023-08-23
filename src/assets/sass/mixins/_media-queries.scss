@@ -1,0 +1,123 @@
+
+// Device Screen Breakpoint
+$desktop-width-1: 1599px;
+$desktop-width-2: 1399px;
+
+$laptop-width-1: 1199px;
+
+$tablet-width-1: 991px;
+$tablet-width-2: 767px;
+
+$mobile-width-1: 575px;
+$mobile-width-2: 479px;
+$mobile-width-3: 375px;
+
+// Media Queries
+
+// XXS. Extra Small Devices (less than 375px)
+@mixin xxs() {
+    @media only screen and (max-width: #{$mobile-width-3}){
+        @content;
+    }
+}
+
+// XS. Small Devices (less than 480px)
+@mixin xs() {
+    @media only screen and (max-width: #{$mobile-width-2}){
+        @content;
+    }
+}
+
+// SSM. Medium Devices (less than 576px)
+@mixin ssm() {
+    @media only screen and (max-width: #{$mobile-width-1}){
+        @content;
+    }
+}
+@mixin minSsm() {
+    @media only screen and (min-width: #{$mobile-width-1}){
+        @content;
+    }
+}
+
+// SM. Medium Devices (less than 768px)
+@mixin sm() {
+    @media only screen and (max-width: #{$tablet-width-2}){
+        @content;
+    }
+}
+
+@mixin MinSm() {
+    @media only screen and (min-width: #{$tablet-width-2}){
+        @content;
+    }
+}
+
+
+// MD. Medium Devices (less than 991px)
+@mixin md() {
+    @media only screen and (max-width: #{$tablet-width-1}){
+        @content;
+    }
+}
+
+
+
+// LG. Large Devices (less than 1200px)
+@mixin lg() {
+    @media only screen and (max-width: #{$laptop-width-1}){
+        @content;
+    }
+}
+
+@mixin minLg() {
+    @media only screen and (min-width: #{$desktop-width-1}) {
+        @content;
+    }
+}
+
+
+
+// XL. Extra Large Devices (Less than 1400px)
+@mixin xl() {
+    @media only screen and (max-width: #{$desktop-width-2}) {
+        @content;
+    }
+}
+
+@mixin minXl() {
+    @media only screen and (min-width: #{$desktop-width-2}) {
+        @content;
+    }
+}
+
+
+// XXL. Extra Large Devices (Less than 1600px)
+@mixin xxl() {
+    @media only screen and (max-width: #{$desktop-width-1}) {
+        @content;
+    }
+}
+
+
+
+// Custom Media Screen - min and max width
+@mixin cms($min-width, $max-width){
+    @media only screen and (min-width: $min-width) and (max-width: $max-width){
+        @content;
+    }
+}
+
+// Custom Media Screen - max width
+@mixin cms2($max-width) {
+    @media only screen and (max-width: $max-width) {
+        @content;
+    }
+}
+
+// Custom Media Screen - min width
+@mixin cms3($min-width) {
+    @media only screen and (min-width: $min-width) {
+        @content;
+    }
+}

@@ -1,0 +1,88 @@
+// Upload Css
+.dm-upload {
+  .btn-upload {
+    border-radius: 5px;
+    svg,
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  .upload-one {
+    display: none;
+  }
+  @include e("file") {
+    margin-top: 12px;
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 3px 6px;
+      border-radius: 4px;
+      transition: 0.35s ease;
+      &.danger {
+        .file-name {
+          i,
+          svg,
+          span,
+          img {
+            color:var(--color-danger);
+          }
+        }
+      }
+      &:hover {
+        background-color:var(--bg-lighter);
+        .btn-delete {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+      .file-name {
+        display: flex;
+        align-items: center;
+        i,
+        svg,
+        span,
+        img {
+         @include rfs(18px);
+          margin-right: 7px;
+          color:var(--color-gray);
+        }
+        .name-text {
+          margin-top: -4px;
+          line-height: 1;
+          font-size: 14px;
+          font-weight: 500;
+          color:var(--color-primary);
+        }
+      }
+      .btn-delete {
+       @include rfs(18px);
+        opacity: 0;
+        visibility: hidden;
+        color:var(--color-danger);
+      }
+    }
+  }
+}
+
+// Upload Avatar
+.dm-upload-avatar {
+  .avatrSrc {
+    max-width: 100px;
+  }
+  .upload-avatar-input {
+    display: none;
+  }
+}
+.dm-upload {
+  .avatar-up {
+    .upload-avatar-input {
+      display: none;
+    }
+  }
+}

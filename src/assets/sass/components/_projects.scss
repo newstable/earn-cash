@@ -1,0 +1,529 @@
+// Application
+
+.application-task {
+  .application-task-icon {
+    border-radius: 12px;
+    margin-right: 20px;
+  }
+
+  .application-task-content {
+    flex: 1;
+  }
+}
+
+// About Project
+.about-projects {
+  @include e(details) {
+    p {
+      @include ofs(15px, lh(15px, 25px), 400);
+      color: var(--color-gray);
+    }
+  }
+
+  ul {
+    margin-top: 35px;
+    margin-bottom: -10px;
+    flex-wrap: wrap;
+
+    @include md {
+      flex-flow: column;
+    }
+
+    li {
+      margin-top: 10px;
+      margin-bottom: 10px;
+
+      &:not(:last-child) {
+        margin-right: 80px;
+      }
+    }
+  }
+}
+
+.acButton {
+  text-transform: capitalize;
+  padding: 1px 15px;
+  margin: 4px 0;
+  display: flex;
+  align-items: center;
+
+  @include ssm {
+    margin-bottom: 0;
+    margin-top: 15px;
+  }
+  img,
+  svg {
+    width: 14px;
+    margin-right: 7px;
+  }
+}
+
+//Project Task
+
+.project-task-list--active-user {
+  td {
+    padding-left: 0;
+  }
+
+  .custom-checkbox input[type="checkbox"]+label {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--color-gray);
+  }
+
+  .project-task-list__right {
+    ul li {
+      a {
+        img,
+        svg {
+          color: var(--light-gray);
+          width: 14px;
+        }
+        i{
+         font-size: 18px;
+          color: var(--light-gray);
+        }
+        &.cross{
+          svg{
+            width: 18px;
+          }
+        }
+
+        &:hover {
+          &.edit svg {
+            color: var(--color-info);
+          }
+
+          &.cross svg {
+            color: var(--color-danger);
+          }
+        }
+      }
+    }
+  }
+}
+
+.project-task-list__right {
+  ul li {
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) {
+      margin-right: 20px;
+      @include ssm{
+        margin-right: 10px;
+      }
+    }
+
+    .time-completed {
+      width: 70px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    button {
+      height: unset;
+      img,
+      svg {
+        width: 22px;
+        color: var(--color-lighten);
+      }
+    }
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      img,
+      svg {
+        color: var(--color-light);
+        width: 14px;
+      }
+      i{
+        color: var(--color-light);
+        font-size: 18px;
+        display: inline-flex;
+        @include ssm{
+          font-size: 14px;
+        }
+        &.uil-times{
+          font-size: 22px;
+          @include ssm{
+            font-size: 18px;
+          }
+        }
+      }
+      &:hover{
+        &.edit{
+          i{
+            color: var(--color-info);
+          }
+        }
+        &.cross{
+          i{
+            color: var(--color-danger);
+          }
+        }
+      }
+    }
+  }
+}
+
+.project-task .ptl--hover,
+.todo-task .ptl--hover {
+  padding: 0 0;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  td {
+    padding: 9px 0;
+    vertical-align: middle;
+
+    &:first-child {
+      padding-left: 25px;
+    }
+
+    &:last-child {
+      padding-right: 25px;
+      float: right;
+    }
+  }
+
+  &:hover {
+    box-shadow:0 15px 50px var(--shadow4);
+  }
+
+  .custom-checkbox input[type="checkbox"]:checked+label:after {
+    background-color: var(--color-success);
+    border: 1px solid var(--color-success);
+  }
+}
+
+input[type="checkbox"]:checked+label.strikethrough {
+  text-decoration: line-through;
+}
+
+.task-list-btn button {
+  font-weight: 500;
+  font-size: 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  border: none;
+  width: 100%;
+  padding: 13px 20px;
+  background-color: rgba(var(--color-primary-rgba), 0.08);
+  @include ssm{
+    justify-content: center;
+  }
+  img,
+  svg {
+    margin-right: 5px;
+    width: 18px;
+  }
+}
+
+.task-activities__left {
+  @include ssm {
+    flex-flow: column;
+    width: 100%;
+
+    .task-activities__month {
+      padding: 30px 0;
+      display: flex;
+    }
+  }
+}
+
+.task-activities__right {
+  @include ssm {
+    padding-top: 17px;
+  }
+}
+
+/* demo 4 project task */
+.project-task-list {
+  &--todo {
+    td {
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+
+      .custom-checkbox {
+        input[type="checkbox"] {
+          +label {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--color-dark);
+            display: inline-flex !important;
+
+            span {
+              font-size: 12px;
+              font-weight: 400;
+              color: var(--color-light);
+              pointer-events: none;
+              margin-top: 4px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .event-Wrapper{
+    display: flex;
+    align-items: center;
+    @include ssm{
+      padding-right: 10px;
+    }
+    .event-wrapper-item{
+      width: 60px;
+      height: 60px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--color-white);
+      margin-right: 15px;
+      font-size: 15px;
+      padding: 0 5px
+    }
+    .event-Wrapper__right{
+      h6{
+        font-size: 15px;
+        font-weight: 400;
+        color: var(--color-dark);
+      }
+      span{
+        font-size: 15px;
+        font-weight: 400;
+        color: var(--light-gray);
+      }
+    }
+  }
+  @include e(left){
+    @include ssm{
+      flex-wrap: wrap;
+      .checkbox-group{
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+.project-task-list--event{
+  tbody{
+    tr{
+      td{
+        vertical-align: middle;
+        padding: 10px 0;
+        white-space: nowrap;
+      }
+    }
+  }
+  .project-task-list__right {
+    ul {
+      li {
+        a {
+          svg{
+            width: 12px;
+            height: 12px;
+            color: var(--light-gray);
+          }
+          &:hover{
+            &.edit{
+              svg{
+                color: var(--color-info);
+              }
+            }
+            &.cross{
+              svg{
+                color: var(--color-danger);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &.card .card-header .card-extra{
+    margin-right: -15px;
+  }
+}
+
+.card{
+  .card-body{
+    .project-task--todo{
+      .dropdown{
+        svg,
+        i{
+          color: var(--light-gray);
+        }
+      }
+    }
+  }
+}
+
+//Application Ui
+
+
+.files-area__img {
+  margin-right: 20px;
+}
+
+
+.files-area__right {
+  p {
+    text-transform: capitalize;
+  }
+
+  .dropdown {
+    img,
+    svg {
+      width: 22px;
+      height: 22px;
+      color: var(--color-light);
+    }
+  }
+}
+
+// Application Top Bar
+.breadcrumb-edit,
+.breadcrumb-remove {
+  text-transform: capitalize;
+  padding: 5px 15px;
+  img,
+  svg {
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+  }
+}
+
+.application-ui .action-btn a {
+  height: 35px;
+  padding: 0 15px;
+}
+
+.application-ui {
+  .btn-group-toggle {
+    .btn {
+      height: 35px;
+      padding: 0 15px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid #c6d0dc;
+      color: var(--color-light);
+      background: var(--color-white);
+      box-shadow: none;
+    }
+    .btn-check{
+      &:checked + .btn-outline-secondary{
+        background-color: var(--color-primary);
+        color: var(--color-white);
+        border: 1px solid var(--color-primary);
+      }
+    }
+  }
+}
+
+.media-ui__title {
+  margin-right: 10px;
+}
+
+.media-ui__start {
+  margin-right: 30px;
+}
+
+//Modal New Member
+
+.new-member {
+  .modal-header .close {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    margin: 0;
+    background: var(--bg-lighters);
+    border-radius: 50%;
+    color: var(--color-light);
+    text-shadow: none;
+    opacity: 1;
+    transition: var(--transition);
+   @include rfs(18px);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: var(--color-white);
+      background-color: var(--color-primary);
+      opacity: 0.7;
+      svg{
+        color: var(--color-white);
+      }
+    }
+    img,
+    svg {
+      width: 18px;
+    }
+  }
+
+  .modal-body {
+    padding: 25px 30px 30px;
+  }
+
+  .textarea-group {
+    margin-bottom: 28px;
+  }
+}
+
+.new-member .modal-header {
+  padding: 12px 30px;
+}
+
+//tab
+.app-ui-tab.ap-tab-main .nav-link:after {
+  bottom: -1px;
+  height: 1px;
+}
+.chat-wrapper{
+  .ap-tab-main .nav-link:after{
+    bottom: 0;
+  }
+}
+
+.project-top-progress {
+  .project-top-right {
+    @include sm {
+      justify-content: space-between;
+    }
+  }
+
+  .project-tab {
+    @include sm {
+      padding: 0 10px;
+    }
+  }
+}
+
+.projects-tab-content--progress {
+  .col-xl-4 {
+    @include xxl {
+      max-width: 50%;
+      flex: 0 0 50%;
+    }
+
+    @include ssm {
+      max-width: 100%;
+      flex: 0 0 100%;
+    }
+  }
+}

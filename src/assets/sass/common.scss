@@ -1,0 +1,105 @@
+.mt-35 {
+	margin-top: 2.18753rem;
+}
+
+/* Form Style */
+.form-control {
+	font-size: 14px;
+	color: var(--color-dark);
+	background-color: var(--input-bg);
+	border: 1px solid var(--border-light);
+	box-shadow: 0 0;
+	&:focus {
+		outline: none;
+		color: var(--color-dark);
+		background-color: var(--input-focus-bg);
+		border-color: var(--color-primary);
+		box-shadow: 0 5px 20px rgba(var(--color-primary-rgba), 0.1);
+	}
+}
+.input-group-lg > .btn,
+.input-group-lg > .form-control,
+.input-group-lg > .form-select,
+.input-group-lg > .input-group-text {
+	font-size: 15px;
+}
+
+.input-container {
+	.input-icon {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		line-height: 0;
+		&.icon-left {
+			left: 20px;
+			input {
+				padding-left: 40px !important;
+			}
+		}
+	}
+}
+
+/* Custom Checkbox */
+.custom-checkbox {
+	input {
+		display: none;
+		label {
+			display: inline-block !important;
+			font-size: 14px;
+		}
+	}
+	input[type='checkbox'] {
+		&:checked {
+			& + label {
+				&:before {
+					opacity: 1;
+					color: var(--color-white);
+				}
+				&:after {
+					background-color: var(--color-primary);
+					border: 1px solid var(--color-primary);
+				}
+			}
+		}
+		& + label {
+			min-width: 18px;
+			min-height: 18px;
+			font-size: 14px;
+			display: flex;
+			flex-flow: column;
+			position: relative;
+			padding-left: 28px;
+			margin-bottom: 0;
+			line-height: 1.2;
+			font-weight: 400;
+			color: var(--color-light);
+			&:before {
+				position: absolute;
+				font-size: 12px;
+				left: 3px;
+				top: 3px;
+				font-weight: 900;
+				font-family: 'unicons-line';
+				content: '\e9c3';
+				display: block;
+				opacity: 0;
+				transition: all 0.3s ease 0s;
+				z-index: 2;
+				color: var(--color-primary);
+			}
+			&:after {
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 18px;
+				height: 18px;
+				border-radius: 4px;
+				content: '';
+				border-width: 1px;
+				border-style: solid;
+				background-color: var(--color-white);
+				border: 1px solid var(--border-light);
+			}
+		}
+	}
+}

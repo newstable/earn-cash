@@ -1,0 +1,251 @@
+// Form With icon
+.with-icon {
+    position: relative;
+    .form-control {
+        padding-left: 40px;
+    }
+    span {
+        @include ofs(18px, null, null);
+        position: absolute;
+        z-index: 2;
+        display: block;
+        width: 40px;
+        height: 40px;
+        line-height: 2.375rem;
+        text-align: center;
+        pointer-events: none;
+        top: 50%;
+        left: 0;
+        transform: translate(0%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-light);
+    }
+}
+
+// Utility Class
+//Input Height
+.form-control {
+    &.ih-large {
+        height: 60px;
+        @extend .content-center;
+    }
+    &.ih-medium {
+        height: 48px;
+        @extend .content-center;
+    }
+    &.ih-small {
+        height: 38px;
+        @extend .content-center;
+    }
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+//Input Placeholder Color
+.ip-light,
+.form-group .ip-light {
+    &::placeholder {
+        color: var(--color-lighten);
+    }
+}
+
+.ip-gray,
+.form-group .ip-gray {
+    &::placeholder {
+        color: var(--color-gray-x);
+    }
+}
+
+//Input label Color
+.il-gray {
+    color: var(--color-gray-x);
+}
+
+.il-dark {
+    color: var(--color-dark);
+}
+
+//button
+.layout-button {
+    margin: -7px;
+    display: flex;
+    flex-wrap: wrap;
+    button {
+        @include ofs(14px, lh(14px, 25px), 500);
+        height: 44px;
+        @extend .content-center;
+        text-transform: capitalize;
+        margin: 7px;
+        &.btn-primary {
+            box-shadow: 0 3px 5px rgba(#20C997, .05);
+        }
+    }
+}
+
+//textarea
+.form-element-textarea textarea {
+    height: 80px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    resize: none;
+}
+
+//Form Element
+.form-element {
+    .dm-select .select2-selection {
+        min-height: 48px;
+    }
+    .dm-select.disabled .form-control {
+        border: 1px solid var(--border-light);
+        background: #EFF0F3;
+        color: var(--color-lighten);
+    }
+    .custom-file-label {
+        overflow: hidden;
+        height: 48px;
+        padding: 0;
+        line-height: 33px;
+        font-size: 14px;
+        color: var(--color-lighten);
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: none;
+        &::after {
+            height: 48px;
+            padding: 0 23px;
+            line-height: 1.5;
+            color: var(--color-lighten);
+            content: "Browse";
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            border-left: inherit;
+        }
+    }
+    .custom-file {
+        position: relative;
+        input[type='file'] {
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 5;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: default;
+        }
+    }
+}
+
+// checkbox / radio
+.form-element-radioChecks {
+    .custom-checkbox.disabled input[type="checkbox"]:checked+label {
+        &:after {
+            background-color: var(--color-primary);
+        }
+        &:before {
+            color: var(--color-white);
+        }
+    }
+    .custom-radio.disabled input[type="radio"]+label {
+        color: var(--color-white);
+    }
+}
+
+// Select
+.select-style2 {
+    .select2-container .select2-selection--single .select2-selection__rendered,
+    .select2-container--default .select2-selection--single .select2-selection__placeholder {
+        color: var(--color-lighten);
+    }
+}
+
+.alert2,
+.option2 {
+    border: 1px solid var(--border-color);
+    box-shadow: none;
+    padding: 16px 15px;
+    .select2-results__option {
+        padding: 0;
+        color: var(--color-gray-x);
+        @include ofs(14px, lh(14px, 35px), 400);
+    }
+    .select2-search--dropdown {
+        padding: 0;
+    }
+    .select2-search--dropdown .select2-search__field {
+        height: 48px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        box-shadow: 0 3px 6px rgba(146, 153, 184, .15);
+    }
+    .select2-results__option[aria-selected=true],
+    .select2-results__option--highlighted[aria-selected] {
+        background-color: transparent;
+    }
+    .select2-results>.select2-results__options {
+        padding: 13px 0;
+    }
+}
+
+// datepicker
+.ui-datepicker-multi {
+    z-index: 11 !important;
+    @media (min-width: 767px) {
+        padding-right: 0;
+    }
+    .ui-datepicker-calendar tbody td a {
+        width: 32px;
+        height: 32px;
+        margin: 2px;
+    }
+}
+
+//Text Editor
+.formElement-editor {
+    .trumbowyg-editor,
+    .trumbowyg-textarea {
+        min-height: 160px;
+    }
+    .trumbowyg-button-pane {
+        background-color: transparent;
+        border-bottom: 1px solid var(--border-color);
+        min-height: 56px;
+        display: flex;
+        align-items: center;
+    }
+    .trumbowyg-box {
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+    }
+    .trumbowyg-button-pane::after {
+        background: var(--border-color);
+        display: none;
+    }
+    .trumbowyg-button-pane .trumbowyg-button-group::after {
+        background: var(--border-color);
+        display: none;
+    }
+    .trumbowyg-box {
+        margin: 0;
+        min-height: 160px;
+    }
+    .trumbowyg-editor {
+        @include ofs(15px, null, null);
+    }
+}
+
+//color code
+.color-picker input {
+    padding: 9px 0;
+}

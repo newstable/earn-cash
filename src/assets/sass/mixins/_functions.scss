@@ -1,0 +1,50 @@
+// px to rem
+@function remy($value, $base: 15px) {
+  @return ($value / $base) * 1rem;
+}
+
+//line height generate
+@function lh($font-size, $line-height) {
+  @return calc($line-height / $font-size);
+}
+
+// BEM Elements & Modifiers
+@mixin e($element) {
+  &__#{$element} {
+    @content;
+  }
+}
+
+@mixin m($modifier) {
+  &--#{$modifier} {
+    @content;
+  }
+}
+
+// Normal responsive font size
+@mixin ofs($size, $lineHeight, $weight) {
+  @if $size !=null {
+    @include rfs($size); //Added responsive font size for use bootstrap.Just include this mixin and normally put the font size
+  }
+
+  @if $lineHeight !=null {
+    line-height: $lineHeight;
+  }
+
+  @if $weight !=null {
+    font-weight: $weight;
+  }
+}
+
+// padding top, bottom
+@mixin padding_tb($top, $bottom) {
+  padding-top: $top;
+  padding-bottom: $bottom;
+}
+
+//border-radius
+@mixin radius($width) {
+  -webkit-border-radius: remy($width);
+  -moz-border-radius: remy($width);
+  border-radius: remy($width);
+}

@@ -1,0 +1,82 @@
+.media-import{
+    margin: 10px auto 30px;
+    position: relative;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 280px;
+    border: 2px dashed #C6D0DC;
+    background-color: var(--color-white);
+    border-radius: 10px;
+    svg{
+        color: var(--body-color);
+        width: 80px;
+        height: auto;
+    }
+    p{
+        @include ofs(null, lh(20px, 25px), 500);
+        margin-top: 27px;
+        margin-bottom: 0;
+    }
+}
+
+.exportDatatable{
+    .order-button-group button{
+        height: 44px;
+        @include ofs(15px, lh(15px,20px), 600);
+    }
+    .order-search__form{
+        background-color: transparent;
+        border: 1px solid var(--border-color);
+        padding: 12px 13px;
+        width:250px ;
+        @include xxl{
+            width: 100%;
+        }
+    }
+    &.orderDatatable .table tbody tr td {
+        padding: 20px 20px;
+    }
+    &.orderDatatable .table-hover tbody tr{
+        transition: 0.3s ease;
+        border-radius: 10px;
+        box-shadow:none;
+        &:hover{
+            --bs-table-accent-bg:var(--bg-normal);
+
+        }
+    }
+    .export-table {
+        .custom-checkbox input[type="checkbox"] + label{
+            padding-left:60px;
+        }
+    }
+    .modal-dialog{
+        max-width: 390px;
+    }
+    .fileM-Modal-overlay .modal-body {
+        input{
+            border:1px solid var(--border-color);
+        }
+        .select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple{
+            height:36px;
+            border:1px solid var(--border-color);
+        }
+        .select2-container .select2-selection--single .select2-selection__rendered, .select2-container--default .select2-selection--single .select2-selection__placeholder{
+            color:var(--color-gray);
+        }
+    }
+}
+
+.select2-dropdown{
+    z-index: 9999;
+}
+
+.dropzone-lg-s{
+    min-height: 180px;
+}
+.dropzone-md-s{
+min-height: 100px;
+}

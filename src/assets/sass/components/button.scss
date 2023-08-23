@@ -1,0 +1,21 @@
+.btn{
+    font-weight: 500;
+}
+
+.btn-sm{
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 1px 20px;
+    line-height: 2.4;
+    font-weight: 500;
+}
+
+.btn-white{
+    box-shadow: 0 3px 5px rgba(var(--light-gray-rgba),.05);
+    background: var(--color-white);
+    color: var(--color-dark);
+}
+
+.btn-shadow-primary{
+    box-shadow: 0 8px 10px var(--color-primary-rgba-shadow)!important;
+}

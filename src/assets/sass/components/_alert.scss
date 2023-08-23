@@ -1,0 +1,26 @@
+.alert {
+    font-size: 14px;
+    padding: 0.659rem 1.2rem;
+    border-radius: 5px;
+    .btn-close{
+        padding: 0;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        width: auto;
+        height: 26px;
+        background: transparent;
+        font-size: 12px;
+        font-weight: 500;
+        svg{
+            outline: none;
+            width: 12px;
+            height: 12px;
+        }
+        span{
+            margin-right: 5px;
+        }
+    }
+}

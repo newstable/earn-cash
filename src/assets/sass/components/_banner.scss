@@ -1,0 +1,63 @@
+@import '../mixins/media-queries';
+@import '../mixins/functions';
+/* Banner Feature */
+.banner-feature {
+    z-index: 1;
+    overflow: hidden;
+    img,
+    svg {
+        max-width: 100%;
+    }
+
+    @include md{
+        min-height: 270px;
+        max-height: 100%;
+    }
+
+    .card-body {
+        padding: 43px 30px 40px 30px;
+    }
+
+    &__heading {
+        line-height: lh(30, 38);
+    }
+
+    &__para {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: calc(27 / 17);
+        margin: 19px 0 22px 0;
+        color: var(--color-dark);
+    }
+
+    &__btn {
+        text-transform: capitalize;
+    }
+    .banner-feature__shape{
+        @include xl{
+            img{
+                width: 100%;
+            }
+        }
+    }
+}
+
+.banner-feature__shape {
+    img,
+    svg {
+        max-width: 100%;
+    }
+}
+
+.demo4{
+    .banner-feature--5{
+        min-height: 360px;
+
+    }
+    .banner-feature--7{
+        .banner-feature__shape{
+            width: 160px;
+            height: 160px;
+        }
+    }
+}

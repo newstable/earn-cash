@@ -1,0 +1,189 @@
+// Custom Checkbox
+.custom-checkbox {
+    input {
+        display: none;
+    }
+
+    label {
+        display: inline-block !important;
+        font-size: 14px;
+    }
+
+    input[type="checkbox"]+label {
+        min-width: 18px;
+        min-height: 18px;
+        font-size: 14px;
+        display: flex;
+        flex-flow: column;
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: 0;
+        line-height: 1.2;
+        font-weight: 400;
+        color:var(--color-light);
+
+        &:after {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            content: "";
+            background-color: var(--color-white);
+            border-width: 1px;
+            border-style: solid;
+            border:1px solid var(--border-light);
+        }
+
+        &:before {
+            position: absolute;
+            font-size: 14px;
+            left: 2px;
+            top: 2px;
+            font-weight: 400;
+            font-family: 'unicons-line';
+            content: '\e9c3';
+            display: block;
+            opacity: 0;
+            transition: all 0.3s ease 0s;
+            z-index: 2;
+            color:var(--color-primary);
+        }
+    }
+
+    input[type="checkbox"] {
+        &:checked+label {
+            &:after {
+                background-color: var(--color-primary);
+                border:1px solid var(--color-primary);
+            }
+
+            &:before {
+                opacity: 1;
+                color: var(--color-white);
+            }
+        }
+
+    }
+    &.custom-checkbox--success{
+        input[type="checkbox"] {
+            &:checked+label {
+                &:after {
+                    background-color: var(--color-success);
+                    border:1px solid var(--color-success);
+                }
+            }
+
+        }
+    }
+}
+
+// Custom Indeterminate
+.custom-checkbox {
+    input:indeterminate~label {
+        &::after {
+            background: var(--color-primary);
+            font-weight: 400;
+            font-family: 'unicons-line';
+            content: '\e9c3';
+            color: var(--color-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            line-height: lh(10px, 20px);
+            border: 1px solid var(--color-primary);
+        }
+    }
+    &.custom-checkbox--success{
+        input:indeterminate~label{
+            &::after {
+                background: var(--color-success);
+                border: 1px solid var(--color-success);
+            }
+        }
+    }
+}
+
+// Custom Checkbox Disabled
+
+.custom-checkbox {
+    &.disabled {
+        opacity: .4;
+
+        label {
+            cursor: not-allowed;
+        }
+
+        input[type="checkbox"] {
+            &:checked+label {
+                &:after {
+                    background-color: var(--color-white);
+                    border: 1px solid var(--border-light);
+                }
+
+                &:before {
+                    color:var(--color-light);
+                    font-size: 8px;
+                    left: 5px;
+                    top: 5px;
+                }
+            }
+        }
+    }
+}
+
+// Checboc Theme 2
+.custom-checkbox {
+    &.checkbox-theme-2 {
+        input[type="checkbox"]+label {
+            &:after {
+                background-color: var(--color-white);
+                border:1px solid var(--border-light);
+            }
+
+            &::before {
+                top: 4px;
+                content: '';
+                width: 10px;
+                height: 10px;
+                border-radius: 3px;
+                background-color: var(--color-primary);
+            }
+        }
+    }
+}
+
+// Custom Checkbox Toggle
+
+.checkbox-controll {
+    &__actions{
+        margin-top: 35px;
+
+        .btn-checkToggle {
+            min-width: 95px;
+            margin-right: 10px;
+        }
+
+        .btn-activeToggle {
+            min-width: 70px;
+        }
+    }
+}
+
+// Custom Checkbox Group
+
+.checkbox-group-header {
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 5px;
+    margin-bottom: 30px;
+}
+
+.checkbox-group {
+    &__single{
+        &:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+}

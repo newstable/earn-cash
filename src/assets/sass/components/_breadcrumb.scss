@@ -1,0 +1,241 @@
+@import "../../../assets/sass/mixins/mixins.scss";
+
+.breadcrumb-main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  margin-top: 32px;
+
+  @include sm {
+    flex-flow: column;
+    justify-content: center;
+    margin-top: 28px;
+  }
+  @include ssm {
+    margin-top: 28px;
+    margin-bottom: 23px;
+  }
+
+  .breadcrumb-title {
+    @include rfs(22px);
+  }
+
+  .breadcrumb-action {
+    display: flex;
+    margin: 0 -4px;
+
+    @include sm {
+      margin: 10px 4px 0 -4px;
+    }
+
+    @include ssm {
+      margin: 5px 4px 0 -4px;
+    }
+
+    .action-btn {
+      margin: 7.5px 4px;
+
+      .btn {
+        border-radius: 3px;
+        font-weight: 500;
+        height: 34px;
+        padding: 0 7.5px;
+        border-color: var(--color-white);
+        img,
+        i,
+        svg {
+          color: var(--color-primary);
+        }
+
+        &:focus,
+        &:active {
+          background: var(--color-white);
+          box-shadow: 0 3px 5px rgba(146, 153, 184, 0.05) !important;
+          border-color: transparent;
+        }
+      }
+
+      .btn-add {
+        padding: 0 9.125px;
+
+        &:focus,
+        &:active {
+          background: var(--color-primary);
+        }
+        img,
+        i,
+        svg {
+          color:var(--color-white);
+        }
+      }
+    }
+
+    .input-container {
+      &.icon-left {
+        input {
+          padding-left: 32px;
+
+          &::placeholder {
+            @include ofs(12px, lh(12px, 15px), 500);
+            color:var(--color-gray);
+          }
+        }
+      }
+
+      .icon-left {
+        left: 12px;
+
+        @include xxs {
+          left: 8px;
+        }
+
+        svg,
+        i {
+          color: var(--color-primary);
+        }
+      }
+
+      .icon-right {
+        right: 8px;
+
+        @include xxs {
+          right: 4px;
+        }
+      }
+
+      input {
+        padding: 10px 1rem;
+        font-weight: 500;
+        font-size: 12px;
+        color:var(--color-gray);
+      }
+    }
+
+    .form-control {
+      border: 0 none;
+      height: 34px;
+    }
+  }
+
+  .user-member__form {
+    @include cms3(575px) {
+      width: 350px;
+    }
+  }
+}
+
+// Breadcrumb Css
+
+.custom-breadcrumb {
+  @include e("item") {
+
+    a,
+    span {
+      font-size: 14px;
+      color:var(--color-gray);
+
+      &:hover {
+        color: var(--color-info);
+      }
+    }
+
+    &:first-child {
+      a {
+        color: var(--color-primary);
+
+        span {
+          color: var(--color-primary);
+        }
+
+        &:hover span {
+          color: var(--color-info);
+        }
+      }
+    }
+
+    &:last-child {
+      span {
+        color:var(--color-light);
+      }
+    }
+
+    span {
+      &.la {
+        font-size: 14px;
+      }
+
+      &.la-slash {
+        /*rtl:ignore*/
+        transform: rotate(-20deg);
+      }
+    }
+  }
+}
+
+// Breadcrumb Dropdown Item
+
+.custom-breadcrumb {
+  @include e("item") {
+    .dropdown {
+      >a {
+        &:after {
+          font-size: 10px;
+          font-family: "Line Awesome Free";
+          font-weight: 700;
+          content: "\f107";
+        }
+      }
+    }
+  }
+}
+
+
+//Bootsrap default breadcrumb
+.breadcrumb {
+  margin-right: 5px;
+  margin-bottom: 0;
+  padding: 0;
+  &-item {
+    display: inline-flex;
+    align-items: center;
+    a {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      color: var(--color-gray);
+      &:hover{
+        opacity: 0.70;
+      }
+
+      i,
+      span {
+        color: var(--color-light);
+        margin-right: 8px;
+        font-size: 16px;
+      }
+    }
+
+    &.active {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      color: var(--color-light);
+      display: flex;
+      align-items: center;
+      text-transform: capitalize;
+    }
+  }
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  float: left;
+  padding-right: 0;
+  background-color: var(--color-lighten);
+  border-radius: 50%;
+  margin-right: 7px;
+}
