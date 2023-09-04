@@ -1,8 +1,9 @@
 # render.yaml
 
 # Specify the web service for your application.
-web:
-  - name: JustEarn - Production
+services:
+  - type: web
+    name: JustEarn
     buildCommand: npm ci && npm run build
     startCommand: ./start.sh
     env:
