@@ -43,10 +43,13 @@ export const GET = async(request) => {
 
     var rewards = [];
     for (var i = 0; i < Rewards.length; i++) {
-        rewards.push({
-            reward: Rewards[i],
-            user: await User.findById(Rewards[i].user)
-        });
+        let user = await User.findById(Rewards[i].user);
+        if(user != null) {
+            rewards.push({
+                reward: Rewards[i],
+                user: user
+            });
+        }
     }
 
     return response({

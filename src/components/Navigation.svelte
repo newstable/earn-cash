@@ -15,6 +15,7 @@
     <!-- <NavItem icon="iconoir:leaderboard-star" url="/leaderboard">Leaderboard</NavItem>
     <NavItem icon="tabler:medal-2" url="/rewards">Rewards</NavItem> -->
     <NavItem icon="fluent:people-team-20-filled" url="/affiliates">Affiliates</NavItem>
+    <NavItem icon="bxs:game" url="/rps">RPS</NavItem>
 </div>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->

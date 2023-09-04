@@ -76,7 +76,13 @@
                                 {#each items as item}
                                     <tr>
                                         <td>
-                                            <a href="/admin/user/{item.user._id}">{item.user.username}</a>
+                                            <a href="/admin/user/{item.user._id}">
+                                                {#if item.user.username}
+                                                    {item.user.username}
+                                                {:else}
+                                                    {item.user.firstName}
+                                                {/if}
+                                            </a>
                                         </td>
                                         <td>
                                             {getCountryName(item.offerDone.country)}

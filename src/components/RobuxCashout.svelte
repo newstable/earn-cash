@@ -17,8 +17,9 @@
     var error = "";
     var invalidUsername;
     var invalidAmount;
+    var isInProgress = false;
     const defaultVal = 1;
-    const doWithdraw = async () => {
+    const doWithdraw = () => {
         error = "";
 
         if (username.length < 2) {
@@ -28,9 +29,9 @@
         if (typeof coins !== "number" || coins < data.minimum) {
             return invalidAmount.open();
         }
-
+        isInProgress = true;
         const token = get(tokenStore);
-        const response = await fetch("/api/user/withdraw", {
+        fetch("/api/user/withdraw", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -41,14 +42,22 @@
                 option: coins,
                 info: username
             })
-        });
-        const body = await response.json();
-
-        if (body.success) {
-            // TODO: redirecet to table with withdrawal requests
-        } else {
-            error = body.message;
-        }
+        })
+            .then(res=>res.json())
+            .then(data=>{
+                isInProgress = false;
+                if (data.success) {
+                    // TODO: redirecet to table with withdrawal requests
+                    alert("Success withdraw action")
+                    coins = 0
+                } else {
+                    error = data.message;
+                }
+            })
+            .catch(e=>{
+                isInProgress = false;
+                error = "Failed withdraw action"
+            })
     }
 </script>
 
@@ -106,9 +115,9 @@
     </div>
 
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class="withdraw" on:click={doWithdraw}>
-        withdraw
-    </div>
+    <button class="withdraw" on:click={doWithdraw} disabled={isInProgress}>
+        {isInProgress? 'Withdrawing...': 'Withdraw'}
+    </button>
 </div>
 
 <p class="error">
@@ -170,7 +179,7 @@
         }
     }
 
-    div.withdraw {
+    button.withdraw {
         width: 298px;
         height: 60px;
         line-height: 60px;
@@ -183,11 +192,23 @@
         text-align: center;
         cursor: pointer;
         text-transform: uppercase;
+        border: 0;
+        transition: background .2s;
 
         @media only screen and (max-width: 700px) {
             margin-top: 30px;
             width: 100%;
         }
+    }
+    button.withdraw:hover {
+        background: rgb(255 130 131 / 70%)
+    }
+    button.withdraw:active {
+        background: rgb(247 66 67 / 70%)
+    }
+    button.withdraw:disabled {
+        background: rgb(255 130 131 / 70%) !important;
+        cursor: unset;
     }
 
     div.checkout {

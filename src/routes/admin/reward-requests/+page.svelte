@@ -138,6 +138,7 @@
                                     <th></th>
                                     <th>Username</th>
                                     <th>Reward</th>
+                                    <th>Email</th>
                                     <th>Country</th>
                                     <th>Date Purchased</th>
                                     <th>Days Waited</th>
@@ -158,10 +159,19 @@
                                             {/key}
                                         </td>
                                         <td>
-                                            <a href="/admin/user/{item.user._id}">{item.user.username}</a>
+                                            <a href="/admin/user/{item.user._id}">
+                                                {#if item.user.username}
+                                                    {item.user.username}
+                                                {:else}
+                                                    {item.user.firstName}
+                                                {/if}
+                                            </a>
                                         </td>
                                         <td>
                                             {item.reward.reward}
+                                        </td>
+                                        <td>
+                                            {item.user.email}
                                         </td>
                                         <td>
                                             {getCountryName(item.user.country)}

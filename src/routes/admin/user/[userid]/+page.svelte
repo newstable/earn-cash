@@ -148,8 +148,12 @@
                                     Last offer done
                                 </Col>
                                 <Col>
-                                    {date2readable(data.user.lastPaidSurvey)} ({dateFormatter(data.user.lastPaidSurvey)})
-                                </Col>
+                                    {#if typeof data.user.lastPaidSurvey !== "undefined" }
+                                        {date2readable(data.user.lastPaidSurvey)} ({dateFormatter(data.user.lastPaidSurvey)})
+                                    {:else}
+                                        N/A
+                                    {/if}
+                                 </Col>
                             </Row>
 
                             <Row>
