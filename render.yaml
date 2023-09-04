@@ -1,0 +1,12 @@
+# render.yaml
+
+# Specify the web service for your application.
+web:
+  - name: app
+    buildCommand: npm install && npm run build
+    startCommand: |
+      PORT=2053 node dev.js &
+      node build/index.js
+    env:
+      - key: NODE_ENV
+        value: production
