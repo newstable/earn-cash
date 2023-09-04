@@ -2,7 +2,7 @@
 
 # Specify the web service for your application.
 web:
-  - name: app
+  - name: JustEarn - Production
     buildCommand: npm install && npm run build
     startCommand: |
       PORT=2053 node dev.js &
