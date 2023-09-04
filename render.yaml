@@ -3,10 +3,8 @@
 # Specify the web service for your application.
 web:
   - name: JustEarn - Production
-    buildCommand: npm install && npm run build
-    startCommand: |
-      PORT=2053 node dev.js &
-      node build/index.js
+    buildCommand: npm ci && npm run build
+    startCommand: ./start.sh
     env:
       - key: NODE_ENV
         value: production
