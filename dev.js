@@ -15,8 +15,8 @@ if(process.env.PUBLIC_WS_ENV === "production") {
     const httpsServer = https.createServer(serverOptions, app);
     create(httpsServer);
 
-    server.listen(process.env.PORT || 2053, () => {
-        console.log(`Server started on port ${server.address().port} :)`);
+    httpsServer.listen(process.env.PORT || 2053, () => {
+        console.log(`Server started on port ${httpsServer.address().port} :)`);
     });
 } else {
     const server = http.createServer(app);
