@@ -8,16 +8,12 @@ const app = express();
 
 if(process.env.PUBLIC_WS_ENV === "production") {
     // Load SSL/TLS certificate and key
-    /*
     const serverOptions = {
         cert: fs.readFileSync('/ssl/justearn.gg.pem'),
         key: fs.readFileSync('/ssl/justearn.gg.key')
     };
     const httpsServer = https.createServer(serverOptions, app);
     create(httpsServer);
-    */
-    const server = http.createServer(app);
-    create(server);
 
     server.listen(process.env.PORT || 2053, () => {
         console.log(`Server started on port ${server.address().port} :)`);
