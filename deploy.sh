@@ -5,11 +5,11 @@ git pull origin $APP_ENV
 
 # Run any necessary composer/npm commands
 npm ci
+npm run build
 
 # Restart daemons based on environment
 if [ "$APP_ENV" = "production" ]; then
-    npm run build
-    pm2 restart 1 0
+    pm2 restart 0 1
 elif [ "$APP_ENV" = "staging" ]; then
-    sudo -S supervisorctl restart daemon-758287:*
+    pm2 restart 2 3
 fi
