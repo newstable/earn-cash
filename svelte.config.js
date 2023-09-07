@@ -6,7 +6,6 @@ const config = {
     kit: {
         adapter: adapter(),
     },
-
     preprocess: [
         preprocess({
             scss: {
