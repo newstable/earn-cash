@@ -1,0 +1,35 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - staging
+      - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH key
+        run: echo "$SSH_PRIVATE_KEY" > deploy_key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          mv deploy_key ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          
+      - name: Deploy to Forge
+        run: |
+          if [ "$GITHUB_REF" == "refs/heads/staging" ]; then
+            ssh -o StrictHostKeyChecking=no forge@${{ secrets.SERVER_IP }} "export APP_ENV=staging; cd /var/www/staging && sh deploy.sh"
+          elif [ "$GITHUB_REF" == "refs/heads/production" ]; then
+            ssh -o StrictHostKeyChecking=no forge@${{ secrets.SERVER_IP }} "export APP_ENV=production; cd /var/www/production && sh deploy.sh"
+          fi
