@@ -32,7 +32,7 @@
             const makeConnection = () => {
                 var typeListeners = {};
 
-                const websocket = new WebSocket(PUBLIC_WS_ENV == "production"? PUBLIC_WSS_URL: PUBLIC_WS_URL);
+                const websocket = new WebSocket(PUBLIC_WS_URL);
 
                 websocket.onopen = () => {
                     if (get(loggedInStore)) {
