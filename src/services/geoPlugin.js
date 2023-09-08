@@ -1,5 +1,5 @@
 import logger from '../lib/log';
-import { PUBLIC_GEO_URL } from "$env/static/public";
+import { PUBLIC_GEO_URL } from "$env/static/private";
 
 const getGeoInfo = async (userIp='') => {
     var ip = userIp
