@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { PUBLIC_WS_URL, PUBLIC_WSS_URL, PUBLIC_WS_ENV } from "$env/static/public";
+    import { PUBLIC_WS_URL, PUBLIC_WS_ENV } from "$env/static/public";
     import "../app.scss";
     import Chat from "../components/Chat.svelte";
     import Cookies from "../components/Cookies.svelte";

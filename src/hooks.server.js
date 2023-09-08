@@ -12,6 +12,7 @@ import WallBan from "./models/WallBan.model";
 import getNewOffers from './lib/server/getNewOffers';
 
 import { MONGODB_CONNECTION, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '$env/static/private';
+import { PUBLIC_GEO_URL } from "$env/static/public";
 import email from './lib/server/email';
 
 mongoose.connect(MONGODB_CONNECTION)
@@ -60,7 +61,7 @@ const auth = new SvelteGoogleAuthHook({
 export const handle = async({ event, resolve }) => {
     event.isAuthenticated = () => isAuthenticated(event);
     event.getAuthenticatedUser = () => getAuthenticatedUser(event);
-    const res = await fetch(`https://justearn.gg/geo-info`)
+    const res = await fetch(PUBLIC_GEO_URL)
     const resObj = await res.json()
     console.log(resObj)
     event.locals.clientIp = resObj.ip
