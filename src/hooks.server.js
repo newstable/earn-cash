@@ -11,7 +11,8 @@ import User from "./models/User.model";
 import WallBan from "./models/WallBan.model";
 import getNewOffers from './lib/server/getNewOffers';
 
-import { MONGODB_CONNECTION, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, PUBLIC_GEO_URL } from '$env/static/private';
+import { MONGODB_CONNECTION, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from '$env/static/private';
+import { PUBLIC_GEO_URL } from '$env/static/public'; 
 import email from './lib/server/email';
 
 mongoose.connect(MONGODB_CONNECTION)
