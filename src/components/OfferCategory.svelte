@@ -7,6 +7,7 @@
 
     export let iconUrl = "";
     export let title = "";
+	import '../pro.css';
 </script>
 
 <div class="category">
