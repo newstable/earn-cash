@@ -120,18 +120,23 @@ export const POST = async(request) => {
     }
 
     if (payoutMethod.type === "crypto") {
-        const btcAmount = parseFloat(data.option);
+        const cryptoAmount = parseFloat(data.option);
         const address = data.info;
-		
-		
-		const usdAmount = btcAmount * payoutMethod.rate;
-		const formattedUsdAmount = usdAmount.toFixed(2); // Format USD amount to 2 decimal places
-		const deductionAmount = usdAmount * 100; // Deduct $100 for every $1 USD
-		
-		console.log("BTC Amount:", btcAmount);
-		
-		console.log("USD Amount:", formattedUsdAmount);
-		console.log("Deduction Amount:", deductionAmount);
+
+        // Determine the cryptocurrency name from the selected payout method
+        const cryptocurrency = payoutMethod.name; // Assuming the name corresponds to the cryptocurrency (BTC, LTC, ETH)
+
+        // Fetch the corresponding cryptocurrency rate from the payout method
+        const cryptoRate = payoutMethod.rate;
+
+        // Calculate USD amount based on the selected cryptocurrency's rate
+        const usdAmount = cryptoAmount * cryptoRate;
+        const formattedUsdAmount = usdAmount.toFixed(2); // Format USD amount to 2 decimal places
+        const deductionAmount = usdAmount * 100; // Deduct $100 for every $1 USD
+
+        console.log(`${cryptocurrency} Amount:`, cryptoAmount);
+        console.log("USD Amount:", formattedUsdAmount);
+        console.log("Deduction Amount:", deductionAmount);
 
         if (usdAmount < payoutMethod.minimum) {
             return response({
@@ -154,16 +159,16 @@ export const POST = async(request) => {
             }, 406);
         }
 
-        const rewardAmount = (usdAmount - payoutMethod.fee) / payoutMethod.rate;
+        const rewardAmount = (usdAmount - payoutMethod.fee) / cryptoRate;
 
         user.cashedOut += usdAmount;
-		user.points -= deductionAmount;
+        user.points -= deductionAmount;
         await user.save();
 
         const reward = new Reward({
             user,
             type: payoutMethod.type,
-            reward: rewardAmount.toFixed(8) + " " + payoutMethod.name + " @ $" + formattedUsdAmount,
+            reward: `${rewardAmount.toFixed(8)} ${cryptocurrency} @ $${formattedUsdAmount}`,
             price: usdAmount,
             info: address
         });

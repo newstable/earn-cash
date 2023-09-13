@@ -2,38 +2,41 @@
     import { onMount } from 'svelte';
     import tokenStore from './../stores/token.store.js';
     import { get } from 'svelte/store';
-    import { validateBitcoinAddress } from './../services/validation.js'; // Removed other address validations for simplicity
+    import { validateBitcoinAddress } from './../services/validation.js';
     import Modal from "./Modal.svelte";
     import WithdrawSeperator from "./WithdrawSeperator.svelte";
 
     export let data;
-    let successMessage = ""; // Initialize with an empty string
+    let successMessage = "";
     var address;
     var usdAmount;
-    var btcRate = 0;
+    var cryptoRate = 0; // Initialize cryptocurrency rate with 0
     var error = "";
-	var invalidAmount;
+    var invalidAmount;
     var invalidAddress;
-    var coins = 0; // Initialize coins with 0
+    var cryptoName = ""; // Initialize cryptocurrency name with an empty string
+	var coins = 0; // Declare the 'coins' variable
 
-    const fetchBtcRate = async () => {
+
+    const fetchCryptoRate = async () => {
         try {
-            const response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd");
-            const data = await response.json();
-            btcRate = data.bitcoin.usd;
+            // Fetch the cryptocurrency rate based on the selected cryptocurrency name
+            const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${data.name.toLowerCase()}&vs_currencies=usd`);
+            const responseData = await response.json();
+            cryptoRate = responseData[data.name.toLowerCase()].usd;
         } catch (error) {
-            console.error("Error fetching BTC rate:", error);
-            btcRate = 0;
+            console.error("Error fetching cryptocurrency rate:", error);
+            cryptoRate = 0;
         }
     };
 
     const calculateCryptoAmount = () => {
-        if (usdAmount && btcRate > 0) {
-            coins = usdAmount / btcRate;
+        if (usdAmount && cryptoRate > 0) {
+            coins = usdAmount / cryptoRate;
         }
     };
 
-    onMount(fetchBtcRate);
+    onMount(fetchCryptoRate);
 
     const doWithdraw = async () => {
         error = "";
@@ -62,7 +65,7 @@
         const body = await response.json();
 
         if (body.success) {
-            successMessage = "Withdrawal sent for review successfully"; // Update the success message
+            successMessage = "Withdrawal sent for review successfully";
         } else {
             error = body.message;
         }
@@ -79,13 +82,13 @@
     <div class="section">
         <input placeholder="Enter USD amount..." autocomplete="off" type="number" min="0" step="1" bind:value={usdAmount} on:change={calculateCryptoAmount}>
         <div class="exchange">
-            <div>{(btcRate).toLocaleString(undefined, { currency: "USD", currencyDisplay: "symbol", style: "currency" })}</div>
+            <div>{(cryptoRate).toLocaleString(undefined, { currency: "USD", currencyDisplay: "symbol", style: "currency" })}</div>
             <div class="info">
-                {data.short} rate
+                {cryptoName} rate
             </div>
         </div>
     </div>
-    <div class="helper">Minimum: {(data.minimum / 100).toLocaleString(undefined, { currency: "USD", currencyDisplay: "symbol", style: "currency" })} equivalent in {data.short}.</div>
+    <div class="helper">Minimum: {(data.minimum / 100).toLocaleString(undefined, { currency: "USD", currencyDisplay: "symbol", style: "currency" })} equivalent in {cryptoName}.</div>
 </div>
 
 <WithdrawSeperator />
@@ -108,7 +111,7 @@
                 {#if typeof coins === "undefined"}
                     0
                 {:else}
-                    {(usdAmount / btcRate).toLocaleString(undefined, { maximumFractionDigits: 8 })} {data.short}
+                    {(usdAmount / cryptoRate).toLocaleString(undefined, { maximumFractionDigits: 8 })} {cryptoName}
                 {/if}
             </span>
         </div>
@@ -118,9 +121,7 @@
     <div class="withdraw" on:click={doWithdraw}>
         withdraw
     </div>
-	<p class="success">
-    {successMessage}
-</p>
+    <p class="success">{successMessage}</p>
 </div>
 
 <p class="error">
