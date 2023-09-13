@@ -65,7 +65,7 @@
       width: 187px;
       height: 71px;
     }
-    .descriptioning {
+    .description {
       position: absolute;
       top: 15px;
       left: 13px;
@@ -308,6 +308,14 @@
       z-index: 9999;
     }
 
+/* Override box-sizing for .popup-content and its descendants */
+.popup-content, .popup-content * {
+  box-sizing: content-box; /* or the desired box-sizing value */
+}
+
+*:not(.popup-content) {
+  box-sizing: border-box;
+}
 
 #hh1s {
   font-size: 18px;
