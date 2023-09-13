@@ -2,15 +2,10 @@ body {
     margin: 0 auto;
     font-family: 'Poppins', sans-serif;
     position: relative;
-    background-color: #232121 !important;
+    background-color: #232121;
     overflow-x: hidden;
     color: #fff;
     min-height: 100%;
-}
-
-* {
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 
 .carousel-item {
@@ -28,9 +23,6 @@ body {
     }
 }
 
-body input {
-    color: white;
-}
 body.chatActive div.chat {
     width: $chat-width !important;
 }
