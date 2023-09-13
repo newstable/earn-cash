@@ -161,7 +161,7 @@ function togglePopup() {
           </div>
 
           <div class="description-parent">
-            <div class="description">Description</div>
+            <div class="descriptioning">Description</div>
             <div class="play-diamond-treasure-container">
               <p class="play-diamond-treasure">
                 {description}

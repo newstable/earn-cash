@@ -65,7 +65,7 @@
       width: 187px;
       height: 71px;
     }
-    .descriptioning {
+    .description {
       position: absolute;
       top: 15px;
       left: 13px;
@@ -133,15 +133,19 @@
       position: absolute;
       width: 53px;
     }
- 
     .categoryboxers {
+      position: absolute;
+      width:53px;
+    }
+
+ 
+    .category {
       top: 14px;
       left: 0;
       font-weight: 600;
       color: var(--color-slategray);
       display: inline-block;
       height: 12px;
-      position: absolute;
     }
     .game-parent {
       top: 0;
