@@ -59,7 +59,7 @@ export const offerWalls = [{
         simple: "inbrain"
     },
     {
-        wallUrl: "https://offers.monlix.com/?appid=be7862a480c4eda3441ffcc9c77d8ef0&userid=[USERID]",
+        wallUrl: "https://offers.monlix.com/?appid=1915&userid=[USERID]",
         wallName: "Monlix",
         wallId: 11,
         simple: "monlix"
