@@ -33,7 +33,7 @@ export const GET = async (request) => {
     const tokens = parseFloat(searchParams.get("rewardValue"));
 
     const newOffer = new OfferDone({
-        user,
+        user: userId, // Pass userId here
         country,
         conversionId: searchParams.get("transactionId"),
         offerId: searchParams.get("taskName"),
@@ -65,7 +65,7 @@ export const GET = async (request) => {
         await newOffer.save();
 
         const refEarning = new RefEarning({
-            earner: user,
+            earner: userId, // Pass userId here
             master: refUser,
             offerDone: newOffer,
             points: tokens,
