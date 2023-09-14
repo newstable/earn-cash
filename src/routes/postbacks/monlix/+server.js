@@ -53,8 +53,8 @@ export const GET = async (request) => {
             offerName: searchParams.get("taskName"),
             ip,
             tokens,
-            wall: 4,
-            status: status === 1 ? 1 : 0, // Map status 1 to 1 and all others to 0
+            wall: 11,
+            status: status === 1 ? 1 : (status === 2 ? 0 : 0), // Map status 1 to 1, 2 to 0, and all others to 0
         });
         await newOffer.save();
 
