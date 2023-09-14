@@ -5,10 +5,24 @@
     import Offer from '../../components/Offer.svelte';
     import Wall from '../../components/Wall.svelte';
     import EarnHeader from '../../components/EarnHeader.svelte';
+	import loggedIn from '../../stores/loggedIn.store.js';
 
     export let data = {
-        revuOffers: []
+        userid: ''
     };
+    var revuOffers = [];
+
+    loggedIn.subscribe(async val => {
+        if (val) {
+            fetch('/api/offers/featured')
+                .then(res=>res.json())
+                .then(data=>{
+                    if (!data.success)
+                        return
+                    revuOffers = data.revuOffers
+                })
+        }
+    });
 </script>
 
 <svelte:head>
@@ -16,19 +30,26 @@
 </svelte:head>
 
 <EarnHeader name="Earn"/>
-
+{#if $loggedIn}
 <OfferCategory iconUrl="/flame-green.svg" title="Featured Offers">
     <a slot="right" href="/offers">View All</a>
     
     <SplideTrack slot="items">
-        {#each data.revuOffers as offer}
+        {#each revuOffers as offer}
             <SplideSlide class="carousel-item">
-                <Offer dollars={Math.floor(offer.currency_award / 100)} cents={parseInt(offer.currency_award % 100)} offerUrl={offer.offer_url} offerImage={offer.image_url} title={offer.name} description={offer.terms}/>
+                <Offer
+                    dollars={Math.floor(offer.currency_award / 100)}
+                    cents={parseInt(offer.currency_award % 100)}
+                    offerUrl={offer.offer_url}
+                    offerImage={offer.image_url}
+                    title={offer.name}
+                    description={offer.description}
+                />
             </SplideSlide>
         {/each}
     </SplideTrack>
 </OfferCategory>
-
+{/if}
 <OfferCategory iconUrl="/offer-wall-green.svg" title="Offer Partners">
     <SplideTrack slot="items">
 
@@ -59,11 +80,10 @@
         <SplideSlide class="carousel-item">
             <Wall wallName="Adscend" wallUrl="adscend" logoUrl="/AdscendMediaGlow.webp" backgroundUrl="/wall-adscend-card-bg.png"/>
         </SplideSlide>
-		
-        <SplideSlide class="carousel-item">
-            <Wall wallName="Monlix" wallUrl="monlix" logoUrl="/monlix.png" backgroundUrl="/wall-adscend-card-bg.png"/>
-        </SplideSlide>
 
+        <SplideSlide class="carousel-item">
+            <Wall wallName="Monlix" wallUrl="monlix" logoUrl="/monlix.jpg" backgroundUrl="/wall-adscend-card-bg.png"/>
+        </SplideSlide>
     </SplideTrack>
 </OfferCategory>
 
