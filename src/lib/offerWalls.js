@@ -63,6 +63,12 @@ export const offerWalls = [{
         wallName: "Monlix",
         wallId: 11,
         simple: "monlix"
+    },
+    {
+        wallUrl: "https://notik.me/coins?api_key=0nppFUgJObiHsbYm1INxmvENmod98EuF&pub_id=riHlIe&app_id=ReY37rkNzq&user_id=[USERID]",
+        wallName: "Notik",
+        wallId: 12,
+        simple: "notik"
     }
 
 ];

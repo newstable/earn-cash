@@ -82,8 +82,13 @@
         </SplideSlide>
 
         <SplideSlide class="carousel-item">
-            <Wall wallName="Monlix" wallUrl="monlix" logoUrl="/monlix.jpg" backgroundUrl="/wall-adscend-card-bg.png"/>
+            <Wall wallName="Monlix" wallUrl="monlix" logoUrl="/monlix.png" backgroundUrl="/wall-adscend-card-bg.png"/>
         </SplideSlide>
+		
+        <SplideSlide class="carousel-item">
+            <Wall wallName="Notik" wallUrl="notik" logoUrl="/logo_main.png" backgroundUrl="/wall-adscend-card-bg.png"/>
+        </SplideSlide>
+		
     </SplideTrack>
 </OfferCategory>
 
