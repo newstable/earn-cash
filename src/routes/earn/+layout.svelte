@@ -78,9 +78,6 @@
         </SplideSlide>
 
 
-        <SplideSlide class="carousel-item">
-            <Wall wallName="AdGem" wallUrl="adgem" logoUrl="/AdGemGlow.webp" backgroundUrl="/wall-adgem-card-bg.png"/>
-        </SplideSlide>
 
         <SplideSlide class="carousel-item">
             <Wall wallName="Revenue Universe" wallUrl="revu" logoUrl="/revu-logo-white.svg" backgroundUrl="/wall-revu-card-bg.png"/>
