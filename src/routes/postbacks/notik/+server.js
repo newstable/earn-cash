@@ -5,8 +5,14 @@ import RefEarning from '../../../models/RefEarning.model';
 import User from '../../../models/User.model';
 import lookup from '../../../services/ip2country';
 
+// Discord Webhook URL
+const discordWebhookUrl = 'https://discord.com/api/webhooks/1133519353338396773/lxfTbiQyoYYXx5ClC_TF093uWR_PGEvv3QmNyvnBligfJM8qhnPiN6bilqSQoqox1fcG';
+
 export const GET = async(request) => {
     const searchParams = request.url.searchParams;
+
+    // Initialize an empty error log array
+    const errorLog = [];
 
     // Validate the required postback parameters
     const requiredParams = [
@@ -30,11 +36,15 @@ export const GET = async(request) => {
     ];
 
     if (!requiredParams.every(param => searchParams.has(param))) {
+        errorLog.push("Missing required parameters.");
+        sendErrorToDiscord(errorLog.join('\n')); // Send error to Discord
         return new Response("", { status: 404 });
     }
 
     // Validate the secret key (optional if not needed)
     if (searchParams.get("secret") !== "DANIELISAHOTTIEEE") {
+        errorLog.push("Invalid secret key.");
+        sendErrorToDiscord(errorLog.join('\n')); // Send error to Discord
         return new Response("", { status: 404 });
     }
 
@@ -57,6 +67,8 @@ export const GET = async(request) => {
     // Find the user by ID
     var user = await User.findOne({ _id: userId });
     if (user === null) {
+        errorLog.push("User not found.");
+        sendErrorToDiscord(errorLog.join('\n')); // Send error to Discord
         return new Response("", { status: 404 });
     }
 
@@ -112,4 +124,23 @@ export const GET = async(request) => {
 
     // Respond with a 200 status code to indicate successful receipt of the postback
     return new Response("OK", { status: 200 });
+}
+
+// Function to send error message to Discord webhook
+async function sendErrorToDiscord(errorMessage) {
+    try {
+        const payload = {
+            content: errorMessage,
+        };
+
+        await fetch(discordWebhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        });
+    } catch (error) {
+        console.error("Error sending message to Discord webhook:", error);
+    }
 }
