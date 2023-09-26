@@ -52,18 +52,31 @@
 {/if}
 <OfferCategory iconUrl="/offer-wall-green.svg" title="Offer Partners">
     <SplideTrack slot="items">
-
+	
         <SplideSlide class="carousel-item">
-            <Wall hasBonus={true}/>
+            <Wall wallName="AdGate" wallUrl="adgate" logoUrl="/AdGatemediaGlow.png" backgroundUrl="/wall-adgate-card-bg.png"/>
         </SplideSlide>
 
         <SplideSlide class="carousel-item">
             <Wall wallName="Lootably" wallUrl="lootably" logoUrl="/lootably-logo.png" backgroundUrl="/wall-lootably-card-bg.png"/>
         </SplideSlide>
+		
+        <SplideSlide class="carousel-item">
+            <Wall wallName="Notik" wallUrl="notik" logoUrl="https://i.imgur.com/mrhsc2a.png" backgroundUrl="/wall-adscend-card-bg.png"/>
+        </SplideSlide>
 
+        <SplideSlide class="carousel-item">
+            <Wall wallName="Monlix" wallUrl="monlix" logoUrl="/monlix.png" backgroundUrl="/wall-adscend-card-bg.png"/>
+        </SplideSlide>
+		
         <SplideSlide class="carousel-item">
             <Wall wallName="OfferToro" wallUrl="offertoro" logoUrl="/offertoroLogo.webp" backgroundUrl="/wall-offertoro-card-bg.png"/>
         </SplideSlide>
+		
+        <SplideSlide class="carousel-item">
+            <Wall wallName="Revenue Universe" wallUrl="revu" logoUrl="/revu-logo-white.svg" backgroundUrl="/wall-revu-card-bg.png"/>
+        </SplideSlide>
+
 
         <SplideSlide class="carousel-item">
             <Wall wallName="AdGem" wallUrl="adgem" logoUrl="/AdGemGlow.webp" backgroundUrl="/wall-adgem-card-bg.png"/>
@@ -73,21 +86,15 @@
             <Wall wallName="Revenue Universe" wallUrl="revu" logoUrl="/revu-logo-white.svg" backgroundUrl="/wall-revu-card-bg.png"/>
         </SplideSlide>
 
-        <SplideSlide class="carousel-item">
-            <Wall wallName="AdGate" wallUrl="adgate" logoUrl="/AdGatemediaGlow.png" backgroundUrl="/wall-adgate-card-bg.png"/>
-        </SplideSlide>
+
 
         <SplideSlide class="carousel-item">
             <Wall wallName="Adscend" wallUrl="adscend" logoUrl="/AdscendMediaGlow.webp" backgroundUrl="/wall-adscend-card-bg.png"/>
         </SplideSlide>
 
-        <SplideSlide class="carousel-item">
-            <Wall wallName="Monlix" wallUrl="monlix" logoUrl="/monlix.png" backgroundUrl="/wall-adscend-card-bg.png"/>
-        </SplideSlide>
+
 		
-        <SplideSlide class="carousel-item">
-            <Wall wallName="Notik" wallUrl="notik" logoUrl="/logo_main.png" backgroundUrl="/wall-adscend-card-bg.png"/>
-        </SplideSlide>
+
 		
     </SplideTrack>
 </OfferCategory>
