@@ -83,7 +83,7 @@ export const GET = async(request) => {
         offerName,
         ip,
         tokens,
-        wall: 4,
+        wall: 12,
         status: tokens < 0 ? 0 : 1
     });
     await newOffer.save();
