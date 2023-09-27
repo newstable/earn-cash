@@ -81,4 +81,4 @@ export const offerWalls = [{
 
 export default {
     offerWalls
-}
+} 
