@@ -83,7 +83,7 @@
 
         <SplideSlide class="carousel-item">
             <Wall wallName="Timewall" wallUrl="timewall" logoUrl="https://i.imgur.com/eNQVAm7.png" backgroundUrl="/survey-inbrain-card-bg.png"/>
-        </SplideSlide>
+        </SplideSlide> 
 		
 
 		
