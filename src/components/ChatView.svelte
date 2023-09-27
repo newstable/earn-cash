@@ -11,7 +11,7 @@
 
     let chatBody;
     var message;
-    var showDropdown = false;
+    var showDropdown = false; 
     var currentChatI = 0;
     var messages = [];
 
