@@ -70,6 +70,12 @@ export const offerWalls = [{
         wallId: 12,
         simple: "notik"
     }
+    {
+        wallUrl: "https://timewall.io/users/login?oid=3c8e86c44eca02f1&uid=[USERID]",
+        wallName: "Timewall",
+        wallId: 13,
+        simple: "timewall"
+    }	
 
 ];
 

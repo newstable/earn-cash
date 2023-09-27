@@ -77,19 +77,13 @@
             <Wall wallName="Revenue Universe" wallUrl="revu" logoUrl="/revu-logo-white.svg" backgroundUrl="/wall-revu-card-bg.png"/>
         </SplideSlide>
 
-
-
-        <SplideSlide class="carousel-item">
-            <Wall wallName="Revenue Universe" wallUrl="revu" logoUrl="/revu-logo-white.svg" backgroundUrl="/wall-revu-card-bg.png"/>
-        </SplideSlide>
-
-
-
         <SplideSlide class="carousel-item">
             <Wall wallName="Adscend" wallUrl="adscend" logoUrl="/AdscendMediaGlow.webp" backgroundUrl="/wall-adscend-card-bg.png"/>
         </SplideSlide>
 
-
+        <SplideSlide class="carousel-item">
+            <Wall wallName="Timewall" wallUrl="timewall" logoUrl="https://i.imgur.com/eNQVAm7.png" backgroundUrl="/survey-inbrain-card-bg.png"/>
+        </SplideSlide>
 		
 
 		

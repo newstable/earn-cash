@@ -46,7 +46,7 @@ export const GET = async (request) => {
         payout: parseFloat(searchParams.get("revenue")),
         ip: "",
         tokens,
-        wall: 9,
+        wall: 13,
         status: tokens < 0 ? 0 : 1,
     });
     await newOffer.save();
