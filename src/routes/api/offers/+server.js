@@ -42,6 +42,7 @@ export const GET = async (request) => {
         conversion: 1,
         v: 1,
         category_name_readable: 1,
+        offerwall: 1,
       },
       sort: {
         amount: -1,
@@ -59,6 +60,7 @@ export const GET = async (request) => {
         conversion: 1,
         v: 1,
         category_name_readable: 1,
+        offerwall: 1,
       })
       .sort({ amount: -1 });
   }

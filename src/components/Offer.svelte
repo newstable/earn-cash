@@ -17,6 +17,7 @@
   // export let dollars = null;
   // export let cents = null;
   export let currencyAward;
+  export let offer;
 
   let dollars = Math.floor(currencyAward / 100);
   let cents = parseInt(currencyAward % 100);
@@ -24,7 +25,11 @@
   let userRecievingAmount =
     dollars * 70 + (cents !== "00" ? (parseInt(cents) * 70) / 100 : 0);
 
-  // $: console.log(dollars, cents, userRecievingAmount);
+  // $: {
+  //   if (isPopupOpen) {
+  //     console.log(offer, "offer", offerUrl);
+  //   }
+  // }
 
   export let type = "NONE"; // GAME / CASINO / SIGN UP / APP / QUIZ / FREE TRIAL / PURCHASE / OTHER / NONE
 
@@ -278,7 +283,7 @@
               </div>
             </div>
             <div class="ayetstudios-parent">
-              <div class="ayetstudios">AyetStudios</div>
+              <div class="ayetstudios name">{offer?.offerwall}</div>
               <div class="provider">
                 <p class="play-diamond-treasure">Provider</p>
               </div>
@@ -297,7 +302,7 @@
               </div>
             </div>
             <img class="rectangle-icon" alt="" src={offerImage} />
-            <img class="lootably-1-icon" alt="" src="/lootably.png" />
+            <!-- <img class="lootably-1-icon" alt="" src="/lootably.png" /> -->
             <h1 class="theoremreach" id="hh1s">{title}</h1>
             <div class="ellipse-parent">
               <div class="ellipse-div"></div>
@@ -305,6 +310,7 @@
                 class="x close-popup-button"
                 id="closePopup"
                 on:click={closePopup}
+                on:keypress={closePopup}
               >
                 &#215;
               </div>
@@ -323,6 +329,15 @@
 {/if}
 
 <style lang="scss">
+  .name {
+    text-transform: capitalize;
+  }
+  .game {
+    white-space: nowrap;
+    text-align: center;
+    margin: auto;
+    // background-color: red;
+  }
   a.offer {
     text-decoration: none;
     min-width: 0;
