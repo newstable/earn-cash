@@ -7,10 +7,9 @@ import chatTypes from "./src/lib/chatTypes.js";
 import { verify } from "./src/lib/server/jwt.js";
 import User from "./src/models/User.model.js";
 import OfferDone from "./src/models/OfferDone.model.js";
-import { MONGODB_CONNECTION } from "$env/static/private";
 
 const create = (server) => {
-  mongoose.connect(MONGODB_CONNECTION).then(() => {
+  mongoose.connect(process.env.MONGODB_CONNECTION).then(() => {
     console.log("Database connected!");
   });
 
