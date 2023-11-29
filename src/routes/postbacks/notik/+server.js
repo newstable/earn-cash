@@ -48,6 +48,37 @@ export const GET = async(request) => {
         return new Response("", { status: 404 });
     }
 
+    // Extract the requested parameters and status
+    const requestedParams = [
+        "pub_id",
+        "app_id",
+        "user_id",
+        "s1",
+        "amount",
+        "payout",
+        "offer_id",
+        "offer_name",
+        "currency_name",
+        "timestamp",
+        "hash",
+        "txn_id",
+        "conversion_ip",
+        "rewarded_txn_id",
+        "event_id",
+        "event_name"
+    ];
+
+    const paramsToSend = {};
+    requestedParams.forEach(param => {
+        paramsToSend[param] = searchParams.get(param);
+    });
+
+    // Extract the status (0 for chargeback, 1 for successful)
+    const status = paramsToSend.amount < 0 ? 0 : 1;
+
+    // Send the requested parameters and status to the Discord webhook
+    sendToDiscord(paramsToSend, status);
+
     const ip = searchParams.get("conversion_ip");
     const country = await lookup(ip);
 
@@ -60,9 +91,12 @@ export const GET = async(request) => {
 
     // Check if this is a chargeback (payout and amount are negative)
     const isChargeback = payout < 0 && amount < 0;
+    let tokens = amount; // Initialize tokens with the positive amount
 
-    // Calculate the amount based on your conversion rate settings
-    const tokens = isChargeback ? -amount : amount;
+    if (isChargeback) {
+        // For chargebacks, tokens should be negative
+        tokens = -Math.abs(amount);
+    }
 
     // Find the user by ID
     var user = await User.findOne({ _id: userId });
@@ -79,7 +113,7 @@ export const GET = async(request) => {
         country,
         conversionId: conversionId.toString(),
         offerId: offerId.toString(),
-        payout,
+        payout: payout, // Keep payout as is, it can be negative for chargebacks
         offerName,
         ip,
         tokens,
@@ -127,10 +161,13 @@ export const GET = async(request) => {
 }
 
 // Function to send error message to Discord webhook
-async function sendErrorToDiscord(errorMessage) {
+async function sendToDiscord(params, status) {
     try {
+        // Add the status to the parameters
+        params.status = status;
+
         const payload = {
-            content: errorMessage,
+            content: JSON.stringify(params),
         };
 
         await fetch(discordWebhookUrl, {

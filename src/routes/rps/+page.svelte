@@ -1,8 +1,9 @@
 <script>
-	import { goto } from '$app/navigation';
+    import { goto } from '$app/navigation';
     import { onMount } from "svelte";
     import { get } from "svelte/store";
     import loggedInStore from "../../stores/loggedIn.store";
+
     export let data;
 
     onMount(() => {
@@ -10,21 +11,34 @@
             goto("/");
             return;
         }
-        // const iframe = document.createElement("iframe");
-        const iframe = document.getElementById("rps-game");
-        iframe.onload = () => {
-            iframe.contentWindow.postMessage({ rps_token: data.token }, '*');
-        };
-        // iframe.src = "https://rps.justearn.gg/token.html#<?=$token?>";
-        iframe.src="https://justearn.gg:2083"
-        // iframe.src="https://localhost:2083"
+
+        // Log the token to the console.
+        console.log(data.token);
+
+        // Get the first iframe element and set its source.
+        const firstIframe = document.getElementById("first-iframe");
+        firstIframe.src = `https://justearn.gg:8443/token.html#${data.token}`;
+
+        // Wait for 2 seconds and then remove the first iframe.
+        setTimeout(() => {
+            firstIframe.parentNode.removeChild(firstIframe);
+
+            // Get the second iframe and set its source.
+            const secondIframe = document.getElementById("second-iframe");
+            secondIframe.src = "https://justearn.gg:8443";
+        }, 2000);
     });
 
 </script>
 
 <div class="container">
-    <iframe title="rps" id="rps-game"/>
+    <iframe title="rps" id="first-iframe"/>
 </div>
+
+<div class="container">
+    <iframe title="rps" id="second-iframe"/>
+</div>
+
 <style>
     iframe {
         width: 100%;
