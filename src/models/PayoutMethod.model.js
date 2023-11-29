@@ -51,6 +51,6 @@ const payoutMethod = new Schema({
     country: String
 });
 
-const PayoutMethod = mongoose.models.PayoutMethod || mongoose.model("payoutmethods", payoutMethod);
+const PayoutMethod = mongoose.models.payoutmethods || mongoose.model("payoutmethods", payoutMethod);
 
 export default PayoutMethod;
