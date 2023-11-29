@@ -54,26 +54,29 @@
         position: fixed;
         left: 0;
         right: 0;
-        padding: 0;
         width: 55%;
+        padding: 0;
         margin: auto;
         min-height: 580px;
         max-height: 580px;
         height: 580px;
-
         background-color: #262323;
         border-radius: 10px;
         overflow-y: hidden;
         will-change: top, opacity;
-
         z-index: 1003;
         opacity: 0;
         top: 4%;
         transform: scaleX(0.8) scaleY(0.8);
-
         box-shadow: 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%), 0 11px 15px -7px rgb(0 0 0 / 20%);
-
         transition: 350ms;
+
+        @media screen and (max-width: 768px) {
+            /* Apply styles for screens with a maximum width of 768px (adjust as needed) */
+            width: auto; /* Remove the fixed width */
+            left: 10px; /* Adjust the positioning as needed */
+            right: 10px; /* Adjust the positioning as needed */
+        }
 
         &.show {
             display: block;
@@ -148,7 +151,6 @@
                 align-items: center;
                 justify-content: center;
                 position: absolute;
-
                 cursor: pointer;
                 z-index: 2;
                 top: 8px;
@@ -171,14 +173,11 @@
         height: 125%;
         width: 100%;
         background: #000;
-
         z-index: 1002;
         display: block;
         opacity: 0;
-
         will-change: opacity;
         transition: 350ms;
-        
 
         &.show {
             opacity: 0.5;

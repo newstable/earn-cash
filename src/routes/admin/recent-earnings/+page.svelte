@@ -102,6 +102,10 @@
                                                 item.offerDone.wall === 8 ? "CPX Research" :
                                                 item.offerDone.wall === 9 ? "BitLabs" :
                                                 item.offerDone.wall === 10 ? "Inbrain" :
+                                                item.offerDone.wall === 11 ? "Monlix" :
+                                                item.offerDone.wall === 12 ? "Notik" :
+                                                item.offerDone.wall === 13 ? "Timewall" :
+												item.offerDone.wall === 14 ? "MM WALL" :
                                                 "IDK WHICH OFFERWALL MAN :(((("
                                             }
                                         </td>

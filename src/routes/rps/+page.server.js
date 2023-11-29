@@ -40,7 +40,7 @@ const getToken = (user) => {
     const headers = { typ: "JWT", alg: "HS256" };
     const json_headers = JSON.stringify(headers);
     const payload = {
-        iss: "https://justearn.gg:2083/",
+        iss: "https://justearn.gg",
         userid: user._id,
         username: user.username,
         balance: parseInt(user.points - user.cashedOut - user.removedPoints + user.addedPoints),

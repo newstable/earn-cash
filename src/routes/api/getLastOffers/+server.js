@@ -21,9 +21,10 @@ export const GET = async(_request) => {
             "",
             "bitlabs",
             "inbrain",
-            "",
-            "",
-            ""
+            "notik",
+            "monlix",
+            "timewall",
+			"mmwall"
         ][offer.wall];
 
         try {

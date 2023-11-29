@@ -5,7 +5,7 @@
     import ChatView from './ChatView.svelte';
 
 
-    var chatActive = true;
+    var chatActive = true; 
     const toggleChat = () => {
         document.body.classList.toggle("chatActive");
         chatActive = !chatActive;
