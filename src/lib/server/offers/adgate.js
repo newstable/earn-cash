@@ -115,7 +115,7 @@ export const persistAdgateLatestOffers = async (next, conversion) => {
       //   await o.save();
       amount++;
     } catch (err) {
-      console.log("Error in inserting adscends latest offers", err, offer);
+      console.log("Error in inserting adgate latest offers", err, offer);
     }
   }
 

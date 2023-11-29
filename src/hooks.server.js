@@ -63,14 +63,19 @@ const auth = new SvelteGoogleAuthHook({
 export const handle = async ({ event, resolve }) => {
   event.isAuthenticated = () => isAuthenticated(event);
   event.getAuthenticatedUser = () => getAuthenticatedUser(event);
-  // * uncomment this
-  const res = await fetch(PUBLIC_GEO_URL);
-  const resObj = await res.json();
-  // console.log(resObj)
-  event.locals.clientIp = resObj.ip;
-  // "2400:1a00:bde0:1e4c:fcf3:440f:1abd:8720" || resObj.ip;
+
+  if (process.env.NODE_ENV === "staging") {
+    const res = await fetch(PUBLIC_GEO_URL);
+    const resObj = await res.json();
+    // console.log(resObj)
+    event.locals.clientIp = resObj.ip;
+  } else {
+    event.locals.clientIp = "2400:1a00:bde0:1e4c:fcf3:440f:1abd:8720";
+  }
   // return resolve(event)
   return await auth.handleAuth({ event, resolve });
 };
 
-getNewOffers();
+if (process.env.NODE_ENV === "staging") {
+  getNewOffers();
+}
