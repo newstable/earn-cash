@@ -3,6 +3,8 @@
   import Icon from "@iconify/svelte";
   import "../pro.css";
   import "../animate.min.css";
+  import tokenStore from "../stores/token.store";
+  import { get } from "svelte/store";
 
   export let offerUrl = "";
   export let offerImage =
@@ -69,6 +71,27 @@
 
   // Function to toggle the popup visibility
   function togglePopup() {
+    const token = get(tokenStore);
+
+    const showLoginToast = () =>
+      Toastify({
+        text: "Please signin to view offers",
+        duration: 3000,
+        gravity: "bottom", // `top` or `bottom`
+        position: "left", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: "#059fdb",
+        },
+      }).showToast();
+
+    if (token === "") return showLoginToast();
+
+    const rawData = JSON.parse(atob(token.split(".")[1]));
+    const userId = rawData["uid"];
+
+    if (!userId) return showLoginToast();
+
     // console.log("Toggle popup function called");
     isPopupOpen = !isPopupOpen;
 
@@ -128,7 +151,7 @@
   href={offerUrl}
   target="_blank"
   rel="noreferrer"
-  on:click={preventDefault}
+  on:click|preventDefault
 >
   <div>
     <div class="container">

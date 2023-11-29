@@ -141,7 +141,5 @@
     height: 100px;
     width: 100%;
     background: #171515;
-
-    // background: red;
   }
 </style>
