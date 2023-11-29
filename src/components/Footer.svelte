@@ -54,7 +54,7 @@
                 <FooterIcon icon="ri:facebook-fill" url="https://www.youtube.com/@JustEarnGG" hoverColor="#4267b2"/>
                 <FooterIcon icon="mdi:instagram" url="https://www.instagram.com/justearngg/" hoverColor="radial-gradient(circle at 30% 107%,#fdf497 0,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285aeb 90%)"/>
                 <FooterIcon icon="mdi:reddit" url="https://www.reddit.com/r/Justearn/" hoverColor="#ff5700"/>
-                <FooterIcon icon="ic:baseline-discord" url="https://discord.gg/UVTypQSSfK" hoverColor="#7289da"/>
+                <FooterIcon icon="ic:baseline-discord" url="https://discord.gg/justearn" hoverColor="#7289da"/>
                 <FooterIcon icon="simple-icons:trustpilot" url="https://www.trustpilot.com/review/justearn.gg" hoverColor="#007f4e"/>
             </div>
         </div>

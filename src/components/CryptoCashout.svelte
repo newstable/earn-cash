@@ -2,7 +2,6 @@
     import { onMount } from 'svelte';
     import tokenStore from './../stores/token.store.js';
     import { get } from 'svelte/store';
-    import { validateBitcoinAddress } from './../services/validation.js';
     import Modal from "./Modal.svelte";
     import WithdrawSeperator from "./WithdrawSeperator.svelte";
 
@@ -15,8 +14,38 @@
     var invalidAmount;
     var invalidAddress;
     var cryptoName = ""; // Initialize cryptocurrency name with an empty string
-	var coins = 0; // Declare the 'coins' variable
+    var coins = 0; // Declare the 'coins' variable
 
+    const validateEthereumAddress = (address) => {
+        // Ethereum address regex
+        const ethRegex = /^0x[0-9a-fA-F]{40}$/;
+        return ethRegex.test(address);
+    };
+
+    const validateBitcoinAddress = (address) => {
+        // Bitcoin address regex (mainnet)
+        const btcRegex = /^(1|3)[0-9a-zA-Z]{25,34}$/;
+        // Bitcoin Bech32 address regex (mainnet)
+        const btcBech32Regex = /^bc1[0-9a-zA-Z]{25,39}$/;
+        // Bitcoin address regex (testnet)
+        const btcTestnetRegex = /^(m|n|2)[0-9a-zA-Z]{25,34}$/;
+        // Bitcoin Bech32 address regex (testnet)
+        const btcBech32TestnetRegex = /^tb1[0-9a-zA-Z]{25,39}$/;
+        return (
+            btcRegex.test(address) ||
+            btcBech32Regex.test(address) ||
+            btcTestnetRegex.test(address) ||
+            btcBech32TestnetRegex.test(address)
+        );
+    };
+
+    const validateLitecoinAddress = (address) => {
+        // Litecoin address regex (mainnet)
+        const ltcRegex = /^[LM3][0-9a-zA-Z]{26,33}$/;
+        // Litecoin address regex (testnet)
+        const ltcTestnetRegex = /^[Q2][0-9a-zA-Z]{26,33}$/;
+        return ltcRegex.test(address) || ltcTestnetRegex.test(address);
+    };
 
     const fetchCryptoRate = async () => {
         try {
@@ -40,8 +69,17 @@
 
     const doWithdraw = async () => {
         error = "";
+        cryptoName = data.name.toLowerCase();
 
-        if (!validateBitcoinAddress(address)) {
+        if (cryptoName === "bitcoin" && !validateBitcoinAddress(address)) {
+            return invalidAddress.open();
+        }
+
+        if (cryptoName === "ethereum" && !validateEthereumAddress(address)) {
+            return invalidAddress.open();
+        }
+
+        if (cryptoName === "litecoin" && !validateLitecoinAddress(address)) {
             return invalidAddress.open();
         }
 
@@ -71,6 +109,8 @@
         }
     }
 </script>
+
+
 
 <div class="crypto">
     <div class="section">
