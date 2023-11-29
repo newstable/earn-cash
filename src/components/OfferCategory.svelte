@@ -1,6 +1,7 @@
 <script>
     import { Splide, SplideSlide, SplideTrack } from '@splidejs/svelte-splide';
-
+    import OfferCategory from "./OfferCategory.svelte";
+    import Offer from './Offer.svelte';
     import "../app.scss";
     import '@splidejs/svelte-splide/css';
     import Icon from '@iconify/svelte';
@@ -8,7 +9,88 @@
     export let iconUrl = "";
     export let title = "";
 	import '../pro.css';
+	
+	
+	  let isPopupOpen = false;
+
+  // Function to toggle the popup visibility
+function togglePopup() {
+  console.log('Toggle popup function called');
+  isPopupOpen = !isPopupOpen;
+}
+
+  function closePopup() {
+    isPopupOpen = false;
+  }
+  
+  
 </script>
+
+{#if isPopupOpen}
+   <div class="popup-overlay" id="popupOverlay" style="display: {isPopupOpen ? 'block' : 'none'}">
+    <div class="popup-content">
+      <div class="frame-parent">
+        <section class="frame-child">
+          <div class="steps-parent">
+            <div class="steps">Steps:</div>
+            <div class="complete-a-survey"><b>1:</b>Click On Start Offer</div>
+            <div class="complete-a-survey1"><b>2:</b>Guidance will be provided</div>
+            <div class="complete-a-survey2"><b>3:</b>Earn Points by Completing it</div>
+          </div>
+
+          <div class="description-parent">
+            <div class="deskscription">Description</div>
+            <div class="play-diamond-treasure-container">
+              <p class="play-diamond-treasure">
+                {description}
+              </p>
+            </div>
+          </div>
+
+          <div class="rectangle-parent">
+            <div class="frame-item"></div>
+            <div class="frame-inner"></div>
+            <div class="line-div"></div>
+            <div class="game-parent">
+              <div class="game">{type}</div>
+              <div class="categoryboxers">
+                <p class="play-diamond-treasure">Category</p>
+              </div>
+            </div>
+            <div class="ayetstudios-parent">
+              <div class="ayetstudios">AyetStudios</div>
+              <div class="provider">
+                <p class="play-diamond-treasure">Provider</p>
+              </div>
+            </div>
+            <div class="not-started-parent">
+              <div class="ayetstudios">Not started</div>
+              <div class="status">Status</div>
+            </div>
+          </div>
+
+          <section class="frame-group">
+            <div class="faucetify-coin-small-1-parent">
+              <img class="faucetify-coin-small-1-icon" alt="" src="/coin.png"/>
+              <div class="div">{dollars}</div>
+            </div>
+            <img class="rectangle-icon" alt="" src="{offerImage}" />
+            <img class="lootably-1-icon" alt="" src="/lootably.png" />
+            <h1 class="theoremreach" id="hh1s">{title}</h1>
+            <div class="ellipse-parent">
+              <div class="ellipse-div"></div>
+              <div class="x close-popup-button" id="closePopup" on:click={closePopup}>&#215;</div>
+            </div>
+          </section>
+        </section>
+
+        <div class="start-offer-container">
+          <a href="{offerUrl}" class="start-offer-button">Start Offer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{/if}
 
 <div class="category">
     <div class="header">
