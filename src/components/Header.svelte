@@ -22,30 +22,52 @@
   const getAccount = async () => {
     const token = get(tokenStore);
 
-    fetch(PUBLIC_GEO_URL)
-      .then((res) => res.json())
-      .then((data) =>
-        fetch("/api/user/authenticate", {
-          headers: {
-            authentication: token,
-            ...data,
-          },
-        })
-      )
-      .then((res) => res.json())
-      .then((data) => {
-        if (!data.success) {
-          loggedIn.set(false);
-          tokenStore.set("");
-          deleteCookie("token");
-          return;
-        }
+    if (process.env.NODE_ENV === "staging") {
+      fetch(PUBLIC_GEO_URL)
+        .then((res) => res.json())
+        .then((data) =>
+          fetch("/api/user/authenticate", {
+            headers: {
+              authentication: token,
+              ...data,
+            },
+          })
+        )
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.success) {
+            loggedIn.set(false);
+            tokenStore.set("");
+            deleteCookie("token");
+            return;
+          }
 
-        username = data.user.username;
-        balance = data.user.balance;
-        picture = data.user.picture;
-        id = data.user.id;
-      });
+          username = data.user.username;
+          balance = data.user.balance;
+          picture = data.user.picture;
+          id = data.user.id;
+        });
+    } else {
+      fetch("/api/user/authenticate", {
+        headers: {
+          authentication: token,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.success) {
+            loggedIn.set(false);
+            tokenStore.set("");
+            deleteCookie("token");
+            return;
+          }
+
+          username = data.user.username;
+          balance = data.user.balance;
+          picture = data.user.picture;
+          id = data.user.id;
+        });
+    }
   };
 
   loggedIn.subscribe(async (val) => {
