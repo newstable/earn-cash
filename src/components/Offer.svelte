@@ -1,10 +1,9 @@
 <script>
-  import { onMount } from "svelte";
   import Icon from "@iconify/svelte";
   import "../pro.css";
   import "../animate.min.css";
   import tokenStore from "../stores/token.store";
-  import { get } from "svelte/store";
+  import { get, writable } from "svelte/store";
 
   export let offerUrl = "";
   export let offerImage =
@@ -19,17 +18,18 @@
   export let currencyAward;
   export let offer;
 
-  let dollars = Math.floor(currencyAward / 100);
-  let cents = parseInt(currencyAward % 100);
+  let dollars = currencyAward / 100;
+  // let dollars = Math.floor(currencyAward / 100);
+  // let cents = parseInt(currencyAward % 100);
 
-  let userRecievingAmount =
-    dollars * 70 + (cents !== "00" ? (parseInt(cents) * 70) / 100 : 0);
+  let userRecievingAmount = dollars * 70;
+  // dollars * 70 + (cents !== "00" ? (parseInt(cents) * 70) / 100 : 0);
 
-  // $: {
-  //   if (isPopupOpen) {
-  //     console.log(offer, "offer", offerUrl);
-  //   }
-  // }
+  $: {
+    if (isPopupOpen) {
+      console.log(offer, "offer", offerUrl);
+    }
+  }
 
   export let type = "NONE"; // GAME / CASINO / SIGN UP / APP / QUIZ / FREE TRIAL / PURCHASE / OTHER / NONE
 
@@ -37,13 +37,13 @@
     dollars = 0;
   }
 
-  if (cents == null) {
-    cents = 0;
-  }
+  // if (cents == null) {
+  //   cents = 0;
+  // }
 
-  if (cents <= 9) {
-    cents = "0" + cents.toString();
-  }
+  // if (cents <= 9) {
+  //   cents = "0" + cents.toString();
+  // }
 
   var color = "#545775";
   switch (type) {
@@ -74,12 +74,13 @@
 
   let isPopupOpen = false;
 
+  const userId = writable("");
+
   // Function to toggle the popup visibility
   function togglePopup() {
-    const token = get(tokenStore);
-
-    const showLoginToast = () =>
-      Toastify({
+    // if user isnt loggedin show toast and dont open popup
+    if (!$userId)
+      return Toastify({
         text: "Please signin to view offers",
         duration: 3000,
         gravity: "bottom", // `top` or `bottom`
@@ -89,13 +90,6 @@
           background: "#059fdb",
         },
       }).showToast();
-
-    if (token === "") return showLoginToast();
-
-    const rawData = JSON.parse(atob(token.split(".")[1]));
-    const userId = rawData["uid"];
-
-    if (!userId) return showLoginToast();
 
     // console.log("Toggle popup function called");
     isPopupOpen = !isPopupOpen;
@@ -117,13 +111,23 @@
     isPopupOpen = false;
   }
 
-  onMount(() => {
-    // Additional setup code or actions when the component mounts can be added here.
+  tokenStore.subscribe((token) => {
+    // console.log(token, "token");
+    const rawData = JSON.parse(atob(token.split(".")[1]));
+    // console.log(rawData, "rawData");
+    userId.set(rawData["uid"]);
   });
 
-  function preventDefault(event) {
-    event.preventDefault();
-  }
+  // $: console.log($userId, "userId");
+
+  // onMount(() => {
+  //   const token = get(tokenStore);
+
+  //   const rawData = JSON.parse(atob(token.split(".")[1]));
+  //   userId = rawData["uid"];
+  // });
+
+  const urlForThisOffer = offer.link.replace("[USERIDHERE]", $userId);
 </script>
 
 <head>
@@ -153,10 +157,10 @@
 
 <a
   class="offer"
-  href={offerUrl}
+  href={urlForThisOffer}
   target="_blank"
   rel="noreferrer"
-  on:click|preventDefault
+  on:click|preventDefault={togglePopup}
 >
   <div>
     <div class="container">
@@ -199,13 +203,7 @@
 
         <div class="earn-box-cover-action-overlay" />
 
-        <div
-          role="button"
-          tabindex="0"
-          class="earn-box-cover-action"
-          on:click={togglePopup}
-          on:keydown={togglePopup}
-        >
+        <div class="earn-box-cover-action">
           <div class="earn-box-play-button">
             <img src="/play-offer.svg" alt="Play icon" />
           </div>
@@ -298,7 +296,7 @@
             <div class="faucetify-coin-small-1-parent">
               <img class="faucetify-coin-small-1-icon" alt="" src="/coin.png" />
               <div class="div">
-                {userRecievingAmount}
+                {userRecievingAmount.toFixed(2)}
               </div>
             </div>
             <img class="rectangle-icon" alt="" src={offerImage} />
@@ -319,7 +317,7 @@
         </section>
 
         <div class="start-offer-container">
-          <a href={offerUrl} class="start-offer-button" target="_blank"
+          <a href={urlForThisOffer} class="start-offer-button" target="_blank"
             >Start Offer</a
           >
         </div>

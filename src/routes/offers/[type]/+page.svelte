@@ -198,6 +198,7 @@
           offer.mobile_app_type === null}
         computer={offer.mobile_app_type === null}
         offerUrl={offer.link.replace("[USERIDHERE]", userId)}
+        {offer}
       />
     {/each}
   </OfferPage>

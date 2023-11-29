@@ -164,7 +164,7 @@
     getCategories();
   });
 
-  $: console.log($offerStore, "$offerStore");
+  // $: console.log($offerStore, "$offerStore");
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
