@@ -22,7 +22,7 @@
 
 <div class="heading" class:loggedin={$loggedIn}>
     {#if $loggedIn}
-        <img src="/ipads.png" alt="Ipads" class="ipad"/>
+        <img src="/all.svg" alt="Ipads" class="ipad"/>
         <img src="/macbook.png" alt="Macbook" class="macbook"/>
     {/if}
     <div class="about">
@@ -505,7 +505,6 @@
         z-index: 2;
 
         @media only screen and (max-width: 700px) {
-            display: block;
             margin: 0 auto;
         }
     }
@@ -755,4 +754,9 @@
       height: auto;
       margin-right: 10px;
     }
+	        @media (max-width: 768px) {
+            .container {
+                justify-content: center;
+            }
+        }
 </style>
