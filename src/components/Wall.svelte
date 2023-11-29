@@ -1,41 +1,109 @@
 <script>
+    import { onMount, onDestroy } from 'svelte';
+    import { get } from "svelte/store"; 
     export let wallUrl = "ayetstudio";
     export let wallName = "Ayet Studios";
     export let logoUrl = "/ayetLogo.webp";
     export let backgroundUrl = "/wall-ayetstudios-card-bg.png";
     export let hasBonus = false;
+
+    // Define the minimum level required for each wall
+    const wallLevels = {
+        adgate: 0,
+        lootably: 0,
+        notik: 0,
+        monlix: 0,
+        offertoro: 0,
+        revu: 0,
+        adscend: 0,
+        timewall: 0,
+        cpxresearch: 4, // Example for survey walls
+        bitlabs: 0,
+        inbrain: 0,
+		mmwall: 0,
+    };
+
+    let user = {};
+    let errorMessage = null; // Add a variable to store the error message
+    let pollingInterval; // Variable to store the polling interval
+
+    // Function to fetch user details from the API and update the user and error message
+    function fetchUserDetails() {
+        fetch("/api/user/details")
+            .then((response) => response.json())
+            .then((data) => {
+                // Check if the response contains an error
+                if (data.error === "Authentication failed") {
+                    errorMessage = "Please Login To Continue";
+                    user = {}; // Clear user data when authentication fails
+                } else {
+                    user = data;
+                    errorMessage = null; // Clear the error message if authentication is successful
+                }
+            });
+    }
+
+    // Initial fetch of user details on component mount
+    onMount(() => {
+        fetchUserDetails();
+
+        // Start polling for user details every 10 seconds
+        pollingInterval = setInterval(fetchUserDetails, 10000);
+    });
+
+    // Clear the polling interval when the component is destroyed
+    onDestroy(() => {
+        clearInterval(pollingInterval);
+    });
 </script>
 
-<a href="/earn/{wallUrl}">
+<!-- Update the component to display the error message or lock message based on errorMessage -->
+<a href="/earn/{wallUrl}" class:disabled={errorMessage !== null || user.level < wallLevels[wallUrl]}>
     <div class="wall">
         <div style="background-image: url({backgroundUrl});">
-            <div class="overlay"/>
-    
-            <div class="action">
-                <div class="earn-box-play-button">
-                    <img src="/play-offer.svg" alt="Play button"/>
+            {#if errorMessage !== null}
+                <!-- Display the padlock icon and error message for login -->
+                <div class="lock-container">
+                    <div class="padlock">
+                        <img src="./padlock.svg" alt="Padlock"/>
+                    </div>
+                    <p class="lock-text">{errorMessage}</p>
                 </div>
-                <p class="earn-box-cover-action-text">View offers</p>
-            </div>
-    
-            <a href="/earn/{wallUrl}">
+            {:else}
+                {#if user.level >= wallLevels[wallUrl]} <!-- Check if user's level is sufficient -->
+                    <div class="overlay"/>
+                    <div class="action">
+                        <div class="earn-box-play-button disabled">
+                            <img src="/play-offer.svg" alt="Play button"/>
+                        </div>
+                        <p class="earn-box-cover-action-text">View offers</p>
+                    </div>
+                {:else}
+                    <!-- Display centered lock icon and text if user's level is not sufficient -->
+                    <div class="lock-container">
+                        <div class="padlock">
+                            <img src="./padlock.svg" alt="Padlock"/>
+                        </div>
+                        <p class="lock-text">You need to reach level {wallLevels[wallUrl]} to unlock</p>
+                    </div>
+                {/if}
+            {/if}
+            <a href="/earn/{wallUrl}" class:disabled={errorMessage !== null || user.level < wallLevels[wallUrl]}>
                 <div class="below"/>
-    
                 <div class="above">
                     {#if hasBonus}
                         <div class="bonus">BONUS</div>
                     {/if}
                 </div>
-                
                 <div class="offerWall">
-                    <img src={logoUrl} alt="Ayet studios logo"/>
+                    <img src={logoUrl} alt="{wallName} logo"/>
                 </div>
             </a>
-    
             <p class="wallName">{wallName}</p>
         </div>
     </div>
 </a>
+
 
 <style lang="scss">
     div.wall {
@@ -172,4 +240,47 @@
             }
         }
     }
+
+    .lock-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 4;
+        color: white;
+		backdrop-filter: blur(20px);
+		border-radius: 50px;
+
+        & > .padlock {
+            /* Style your padlock icon as needed */
+            img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        & > .lock-text {
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 10px;
+            text-align: center;
+        }
+    }
+
+    .earn-box-play-button.disabled {
+        /* Style your disabled play button as needed */
+        pointer-events: none; /* Disable interaction */
+        opacity: 0.5; /* Adjust opacity to visually indicate it's disabled */
+    }
+	
+	a.disabled {
+    pointer-events: none; /* Disable interaction */
+    opacity: 1; /* Adjust opacity to visually indicate it's disabled */
+    cursor: not-allowed; /* Change cursor to indicate it's disabled */
+}
 </style>
