@@ -1,6 +1,7 @@
 import Offer from "../../models/Offer.model";
 import { persistAdgateLatestOffers } from "./offers/adgate";
 import adscend from "./offers/adscend";
+import { persistBitlabsLatestOffers } from "./offers/bitlabs";
 import lootably from "./offers/lootably";
 import { persistMonlixLatestOffers } from "./offers/monlix";
 import { persistNotikLatestOffers } from "./offers/notik";
@@ -22,6 +23,7 @@ const runAndUpdate = async () => {
     persistOffertoroLatestOffers(next, conversion),
     persistNotikLatestOffers(next, conversion),
     persistMonlixLatestOffers(next, conversion),
+    persistBitlabsLatestOffers(next, conversion),
     //lootably(next, conversion)
   ]);
 
@@ -52,12 +54,12 @@ const getNewOffers = async () => {
   // call the run and update function every 5 minutes
   // to update our db to have latest offers from offerwalls
   // * uncomment this
-  const id = setInterval(runAndUpdate, 1000 * 60 * 5);
-  // 60000 * 5
+  if (process.env.NODE_ENV === "staging") {
+    const id = setInterval(runAndUpdate, 1000 * 60 * 5);
+    intervalId = id;
+  }
 
   running = true;
-  // * uncomment this
-  intervalId = id;
 };
 
 export default getNewOffers;
