@@ -21,33 +21,58 @@
     validate();
     if (emailValidated !== 1 || passwordValidated !== 1) return;
 
-    fetch(PUBLIC_GEO_URL)
-      .then(res=>res.json())
-      .then(data=>(
-        fetch("/api/user/authenticate", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...data,
-            email,
-            password,
-          }),
-        })
-      ))
-      .then(res=>res.json())
-      .then(data=>{
-        if (!data.success) {
-          error = data.userMessage;
-          return;
-        }
+    if (process.env.NODE_ENV === "staging") {
+      fetch(PUBLIC_GEO_URL)
+        .then((res) => res.json())
+        .then((data) =>
+          fetch("/api/user/authenticate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ...data,
+              email,
+              password,
+            }),
+          })
+        )
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.success) {
+            error = data.userMessage;
+            return;
+          }
 
-        get(modalStore).close();
-        saveToken(data.token);
-        goto("/earn");
+          get(modalStore).close();
+          saveToken(data.token);
+          goto("/earn");
+        });
+    } else {
+      // in development we dont have the geo location
+      fetch("/api/user/authenticate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       })
-  }
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.success) {
+            error = data.userMessage;
+            return;
+          }
+
+          get(modalStore).close();
+          saveToken(data.token);
+          goto("/earn");
+        });
+    }
+  };
 
   const doResetPassword = async () => {
     // TODO: Make it reset password
@@ -194,7 +219,9 @@
         transition: background-color 0.2s ease-out;
         &:hover {
           background: $alt-background-color;
-          box-shadow: 0 3px 3px 0 rgb(0 0 0 / 14%), 0 1px 7px 0 rgb(0 0 0 / 12%),
+          box-shadow:
+            0 3px 3px 0 rgb(0 0 0 / 14%),
+            0 1px 7px 0 rgb(0 0 0 / 12%),
             0 3px 1px -1px rgb(0 0 0 / 20%);
         }
       }
@@ -224,7 +251,10 @@
         margin: 0 0 8px 0;
         box-shadow: none;
         box-sizing: content-box;
-        transition: box-shadow 0.3s, border 0.3s, -webkit-box-shadow 0.3s;
+        transition:
+          box-shadow 0.3s,
+          border 0.3s,
+          -webkit-box-shadow 0.3s;
 
         background: $darkest-background-color;
         border: none;
@@ -266,7 +296,9 @@
         top: 0;
         font-size: 1rem;
         cursor: text;
-        transition: transform 0.2s ease-out, color 0.2s ease-out,
+        transition:
+          transform 0.2s ease-out,
+          color 0.2s ease-out,
           -webkit-transform 0.2s ease-out;
         text-align: initial;
 
@@ -280,7 +312,9 @@
           content: "";
           position: relative;
           top: 100%;
-          transition: 0.2s opacity ease-out, 0.2s color ease-out;
+          transition:
+            0.2s opacity ease-out,
+            0.2s color ease-out;
 
           width: 300px;
           margin-left: 10px;
