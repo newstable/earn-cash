@@ -18,6 +18,7 @@ import {
 } from "$env/static/private";
 import { PUBLIC_GEO_URL } from "$env/static/public";
 import email from "./lib/server/email";
+import { NODE_ENV } from "$env/static/private";
 
 await mongoose.connect(MONGODB_CONNECTION);
 
@@ -64,7 +65,7 @@ export const handle = async ({ event, resolve }) => {
   event.isAuthenticated = () => isAuthenticated(event);
   event.getAuthenticatedUser = () => getAuthenticatedUser(event);
 
-  if (process.env.NODE_ENV === "staging") {
+  if (NODE_ENV === "staging") {
     const res = await fetch(PUBLIC_GEO_URL);
     const resObj = await res.json();
     // console.log(resObj)
@@ -76,6 +77,6 @@ export const handle = async ({ event, resolve }) => {
   return await auth.handleAuth({ event, resolve });
 };
 
-if (process.env.NODE_ENV === "staging") {
+if (NODE_ENV === "staging") {
   getNewOffers();
 }

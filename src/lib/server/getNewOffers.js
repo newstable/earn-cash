@@ -6,6 +6,7 @@ import lootably from "./offers/lootably";
 import { persistMonlixLatestOffers } from "./offers/monlix";
 import { persistNotikLatestOffers } from "./offers/notik";
 import { persistOffertoroLatestOffers } from "./offers/offertoro";
+import { NODE_ENV } from "$env/static/private";
 
 const conversion = 30; // 30 tokens for 1$ earned
 
@@ -54,7 +55,7 @@ const getNewOffers = async () => {
   // call the run and update function every 5 minutes
   // to update our db to have latest offers from offerwalls
   // * uncomment this
-  if (process.env.NODE_ENV === "staging") {
+  if (NODE_ENV === "staging") {
     const id = setInterval(runAndUpdate, 1000 * 60 * 5);
     intervalId = id;
   }

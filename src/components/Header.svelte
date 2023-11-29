@@ -9,6 +9,7 @@
   import tokenStore from "../stores/token.store.js";
   import { deleteCookie } from "../lib/cookies.js";
   import { onMount } from "svelte";
+  import { PUBLIC_NODE_ENV } from "$env/static/public";
 
   export let modal;
 
@@ -22,7 +23,7 @@
   const getAccount = async () => {
     const token = get(tokenStore);
 
-    if (process.env.NODE_ENV === "staging") {
+    if (PUBLIC_NODE_ENV === "staging") {
       fetch(PUBLIC_GEO_URL)
         .then((res) => res.json())
         .then((data) =>

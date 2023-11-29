@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import validation from "$lib/validation";
   import { get } from "svelte/store";
-  import { PUBLIC_GEO_URL } from "$env/static/public";
+  import { PUBLIC_GEO_URL, PUBLIC_NODE_ENV } from "$env/static/public";
   import "../../app.scss";
   import modalStore from "../../stores/signinupmodal.store";
   import saveToken from "./../../lib/saveToken.js";
@@ -21,7 +21,7 @@
     validate();
     if (emailValidated !== 1 || passwordValidated !== 1) return;
 
-    if (process.env.NODE_ENV === "staging") {
+    if (PUBLIC_NODE_ENV === "staging") {
       fetch(PUBLIC_GEO_URL)
         .then((res) => res.json())
         .then((data) =>

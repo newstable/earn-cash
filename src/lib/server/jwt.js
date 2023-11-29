@@ -1,24 +1,27 @@
-import * as dotenv from 'dotenv'
-dotenv.config()
+import * as dotenv from "dotenv";
 
-import nJwt from 'njwt';
+import { SIGNINGKEY } from "$env/static/private";
 
-export const create = data => {
-    data = {
-        ...data
+dotenv.config();
+
+import nJwt from "njwt";
+
+export const create = (data) => {
+  data = {
+    ...data,
+  };
+  return nJwt.create(data, SIGNINGKEY);
+};
+
+export const verify = (token) => {
+  try {
+    return {
+      success: true,
+      data: nJwt.verify(token, SIGNINGKEY),
     };
-    return nJwt.create(data, process.env.SIGNINGKEY)
-}
-
-export const verify = token => {
-    try {
-        return {
-            success: true,
-            data: nJwt.verify(token, process.env.SIGNINGKEY)
-        }
-    } catch (e) {
-        return {
-            success: false
-        }
-    }
-}
+  } catch (e) {
+    return {
+      success: false,
+    };
+  }
+};

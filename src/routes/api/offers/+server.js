@@ -1,8 +1,12 @@
 import response from "$lib/response";
 import Offer from "../../../models/Offer.model";
+import { NODE_ENV } from "$env/static/private";
 
 export const GET = async (request) => {
-  const { country } = { country: "US" } || JSON.parse(process.env.geoInfo);
+  const { country } =
+    NODE_ENV === "development"
+      ? { country: "US" }
+      : JSON.parse(process.env.geoInfo);
 
   const latestOffer = await Offer.find().sort({ v: -1 }).limit(1);
   const v = latestOffer[0].v;

@@ -1,12 +1,15 @@
 import FormData from "form-data";
 import Mailgun from "mailgun.js";
+
+import { MAILGUN_API_KEY } from "$env/static/private";
+
 const mailgun = new Mailgun(FormData);
 
 const addToMailingList = (list, email, name, params) => {
   const mg = mailgun.client({
     username: "api",
     key:
-      process.env.MAILGUN_API_KEY ||
+      MAILGUN_API_KEY ||
       console.log("Bruh you're actually the stupidest dumbass I've ever seen"),
   });
 
@@ -23,7 +26,7 @@ const removeFromMailingList = (list, email) => {
   const mg = mailgun.client({
     username: "api",
     key:
-      process.env.MAILGUN_API_KEY ||
+      MAILGUN_API_KEY ||
       console.log("Bruh you're actually the stupidest dumbass I've ever seen"),
   });
 
@@ -34,7 +37,7 @@ const updateMailingList = (list, email, params) => {
   const mg = mailgun.client({
     username: "api",
     key:
-      process.env.MAILGUN_API_KEY ||
+      MAILGUN_API_KEY ||
       console.log("Bruh you're actually the stupidest dumbass I've ever seen"),
   });
 
@@ -47,7 +50,7 @@ const isInMailingList = async (list, email) => {
   const mg = mailgun.client({
     username: "api",
     key:
-      process.env.MAILGUN_API_KEY ||
+      MAILGUN_API_KEY ||
       console.log("Bruh you're actually the stupidest dumbass I've ever seen"),
   });
 
@@ -69,7 +72,7 @@ const sendEmail = async (
   const mg = mailgun.client({
     username: "api",
     key:
-      process.env.MAILGUN_API_KEY ||
+      MAILGUN_API_KEY ||
       console.log("Bruh you're actually the stupidest dumbass I've ever seen"),
   });
 
@@ -156,7 +159,7 @@ const sendResetPasswordEmail = (to, name, key, token) =>
     {
       Name: name,
       Key: key,
-      Token: token
+      Token: token,
     },
     {
       "o:tag": ["Forgot Password"],
