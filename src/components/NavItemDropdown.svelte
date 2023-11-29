@@ -1,177 +1,314 @@
 <script>
-    import Icon from '@iconify/svelte';
+  import Icon from "@iconify/svelte";
 
-    import { page } from '$app/stores';
-    import { goto } from '$app/navigation';
+  import { page } from "$app/stores";
+  import { goto } from "$app/navigation";
 
-    export let icon = "";
-    export let active = false;
-    var hovering = false;
+  export let icon = "";
+  export let active = false;
+  let hovering = false;
 
-    import "../app.scss";
-    import NavItemDropdownItem from './NavItemDropdownItem.svelte';
-    import { onMount } from 'svelte';
+  import "../app.scss";
+  import NavItemDropdownItem from "./NavItemDropdownItem.svelte";
+  import { onMount } from "svelte";
+  import { createQuery } from "@tanstack/svelte-query";
+  import { offerStore } from "$stores/offer.store";
 
-    const mouseEnter = () => {
-        hovering = true;
+  const mouseEnter = () => {
+    hovering = true;
+  };
+
+  const mouseLeave = () => {
+    hovering = false;
+  };
+
+  const hasBeenClick = () => {
+    if (!active) {
+      active = true;
+    } else {
+      goto("/offers/");
+      active = !active;
+    }
+  };
+
+  let categories = [];
+  let total = 0;
+
+  // each category for our available offers with their respective count
+  // const OfferCategories = {
+  //   "Sign Up": 0,
+  //   Game: 0,
+  //   App: 0,
+  //   Deposit: 0,
+  //   Crypto: 0,
+  //   Purchase: 0,
+  //   "Free Trial": 0,
+  //   Quiz: 0,
+  //   Casino: 0,
+  //   Surveys: 0,
+  //   Other: 0,
+  // };
+
+  // each category name that comes from our db that will be added to the
+  // fixed categories that we have above, else its count is added to other categories
+  // actual category in db : static category to show in ui
+  // const CategoryNameToOfferCategory = {
+  //   "Email Signup": "Sign Up",
+  //   "Create Account": "Sign Up",
+  //   "Sign Up": "Sign Up",
+  //   App: "App",
+  //   App: "App",
+  //   Game: "Game",
+  //   Deposit: "Deposit",
+  //   Crypto: "Crypto",
+  //   Purchase: "Purchase",
+  //   "Free Trial": "Free Trial",
+  //   Quiz: "Quiz",
+  //   Casino: "Casino",
+  //   Surveys: "Surveys",
+  //   Other: "Other",
+  // };
+
+  const getCategories = async () => {
+    const response = await fetch("/api/offers/categories");
+    const data = await response.json();
+
+    if (!data.success) {
+      // TODO: handle error if no categories
+      return;
     }
 
-    const mouseLeave = () => {
-        hovering = false;
-    }
+    // alphabetically sort categories
+    categories = data.categories.sort((a, b) => a.name.localeCompare(b.name));
 
-    const hasBeenClick = () => {
-        if (!active) {
-            active = true;
-        } else {
-            goto("/offers/");
-            active = !active;
-        }
-    }
+    // iterate over the categories that is returned from our db
+    // data.categories.forEach((category) => {
+    //   const { name, count } = category;
 
-    var categories = [];
-    var total = 0;
-    const getCategories = async() => {
-        const response = await fetch("/api/offers/categories");
-        const data = await response.json();
-        
-        if (!data.success) {
-            // TODO: handle error if no categories
-            return;
-        }
+    //   // if the category name is in our fixed categories, add the count to it
+    //   if (name in CategoryNameToOfferCategory) {
+    //     // the count for that respective category is added
+    //     OfferCategories[CategoryNameToOfferCategory[name]] += count;
+    //   } else {
+    //     // else, add the count to the other category
+    //     // OfferCategories.Other += count;
+    //   }
+    // });
 
-        categories = data.categories;
-        total = data.total;
-    }
+    total = data.total;
 
-    onMount(() => {
-        getCategories();
+    handleActiveCategory();
+    return data;
+  };
+
+  const handleClick = async (category) => {
+    // console.log(category, "category");
+    const searchCategory = category.toLowerCase().split(" ").join("-");
+    // console.log(searchCategory, "searchCategory");
+
+    // set the data for current category to empty so user see loading screen
+    offerStore.set({
+      ...$offerStore,
+      [searchCategory]: {
+        data: [],
+        loading: true,
+        apiResponse: {},
+      },
     });
+    // this category is static category
+    // we need to get all categoryName that fall under this static category
+    // FOR EX: Static category: Purchase may have db categories: "Purchase", "Credit Card", "CC";
+
+    // if our static category is compose of multiple db categories, we can send them all at once
+    // TODO: can be remove later after checking all distinct categories for offers
+    // Object.keys(CategoryNameToOfferCategory).forEach((key) => {
+    //   // console.log(CategoryNameToOfferCategory[key], category);
+    //   if (CategoryNameToOfferCategory[key] === category) {
+    //     // OfferCategories[category] += OfferCategories[key];
+    //     searchCategory.push(key);
+    //   }
+    // });
+
+    // console.log(searchCategory);
+
+    const response = await fetch(
+      "/api/offers?page=1&limit=40&categoryName=" + searchCategory
+    );
+
+    const responseData = await response.json();
+
+    if (!responseData.success) {
+      // TODO: handle error
+      return;
+    }
+
+    offerStore.set({
+      ...$offerStore,
+      [searchCategory]: {
+        data: responseData.offers.docs,
+        loading: false,
+        apiResponse: responseData,
+      },
+    });
+  };
+
+  const handleActiveCategory = () => {
+    if ($page.params.type) {
+      handleClick($page.params.type);
+    }
+    //
+  };
+
+  // $: console.log($page, "daata");
+  onMount(() => {
+    getCategories();
+  });
+
+  $: console.log($offerStore, "$offerStore");
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <div class="item">
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <a on:click={hasBeenClick} on:mouseenter={mouseEnter} on:mouseleave={mouseLeave} class={
-            (active ? "active " : "") +
-            ($page.url.pathname.includes("offers") ? " here" : "")
-        }>
-        <span class="icon">
-            {#if $page.url.pathname.includes("offers")}
-                <Icon icon={icon} color="#ff5a5c" width="20" height="20" />
-            {:else}
-                {#if hovering}
-                    <Icon icon={icon} color="#ff6668" width="20" height="20" />
-                {:else}
-                    {#if active}
-                        <Icon icon={icon} color="#ff5a5c" width="20" height="20" />
-                    {:else}
-                        <Icon icon={icon} color="#a9a9ca" width="20" height="20" />
-                    {/if}
-                {/if}
-            {/if}
-        </span>
-        <span class="text">
-            <slot/>
-        </span>
-        <span class="toggle_icon">
-            {#if active}
-                <Icon icon="material-symbols:arrow-back-ios-new" color="#ff5a5c" width="12" height="12" rotate={1}/>
-            {:else}
-                {#if $page.url.pathname.includes("offers")}
-                    <Icon icon="material-symbols:arrow-back-ios-new" color="#ff5a5c" width="12" height="12" rotate={3}/>
-                {:else}
-                    <Icon icon="material-symbols:arrow-back-ios-new" color="#a9a9ca" width="12" height="12" rotate={3}/>
-                {/if}
-            {/if}
-        </span>
-    </a>
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <a
+    on:click={hasBeenClick}
+    on:mouseenter={mouseEnter}
+    on:mouseleave={mouseLeave}
+    class={(active ? "active " : "") +
+      ($page.url.pathname.includes("offers") ? " here" : "")}
+  >
+    <span class="icon">
+      {#if $page.url.pathname.includes("offers")}
+        <Icon {icon} color="#ff5a5c" width="20" height="20" />
+      {:else if hovering}
+        <Icon {icon} color="#ff6668" width="20" height="20" />
+      {:else if active}
+        <Icon {icon} color="#ff5a5c" width="20" height="20" />
+      {:else}
+        <Icon {icon} color="#a9a9ca" width="20" height="20" />
+      {/if}
+    </span>
+    <span class="text">
+      <slot />
+    </span>
+    <span class="toggle_icon">
+      {#if active}
+        <Icon
+          icon="material-symbols:arrow-back-ios-new"
+          color="#ff5a5c"
+          width="12"
+          height="12"
+          rotate={1}
+        />
+      {:else if $page.url.pathname.includes("offers")}
+        <Icon
+          icon="material-symbols:arrow-back-ios-new"
+          color="#ff5a5c"
+          width="12"
+          height="12"
+          rotate={3}
+        />
+      {:else}
+        <Icon
+          icon="material-symbols:arrow-back-ios-new"
+          color="#a9a9ca"
+          width="12"
+          height="12"
+          rotate={3}
+        />
+      {/if}
+    </span>
+  </a>
 
-    <div class="dropdown" class:active={active}>
-        <div class="inner">
-            <NavItemDropdownItem name="all" amount={total}/>
-            {#each categories as category}
-                {#if category.count > 0}
-                    <NavItemDropdownItem name={category.name} amount={category.count}/>
-                {/if}
-            {/each}
-        </div>
+  <div class="dropdown" class:active>
+    <div class="inner">
+      <NavItemDropdownItem name="all" amount={total} />
+      {#each categories as category}
+        <!-- {#if category.count > 0} -->
+        <NavItemDropdownItem
+          name={category.name}
+          amount={category.count}
+          onClick={() => handleClick(category.name)}
+        />
+        <!-- {/if} -->
+      {/each}
     </div>
+  </div>
 </div>
 
 <style lang="scss">
-    @import "../variables.scss";
+  @import "../variables.scss";
 
-    div.dropdown {
-        border-left: 1px solid #322d2d;
-        overflow: hidden;
-        transition: height 200ms;
-        height: 0;
-        margin: 0;
-        transition: 200ms;
-        width: 100%;
+  div.dropdown {
+    border-left: 1px solid #322d2d;
+    overflow: hidden;
+    transition: height 200ms;
+    height: 0;
+    margin: 0;
+    transition: 200ms;
+    width: 100%;
 
-        &.active {
-            margin: 20px 0 0 9px;
-            height: auto;
-        }
-
-        & > .inner {
-            width: 100%;
-            height: 100%;
-        }
+    &.active {
+      margin: 20px 0 0 9px;
+      height: auto;
     }
 
-    div.item {
-        padding-bottom: 20px;
+    & > .inner {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  div.item {
+    padding-bottom: 20px;
+  }
+
+  a {
+    cursor: pointer;
+    padding: 9px;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 160%;
+    color: $nav-text-color;
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    text-decoration: none;
+
+    &:hover {
+      color: #ff6668 !important;
     }
 
-    a {
-        cursor: pointer;
-        padding: 9px;
-        font-style: normal;
-        font-size: 14px;
-        line-height: 160%;
-        color: $nav-text-color;
-        display: flex;
-        align-items: center;
-        border-radius: 6px;
-        text-decoration: none;
-
-        &:hover {
-            color: #ff6668 !important;
-        }
-
-        &.active {
-            background: #2c2727;
-            color: $active-color;
-        }
-
-        &.here {
-            background: #2c2727;
-            color: $active-color;
-        }
-
-        span.icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        span.text {
-            flex: 1;
-            display: flex;
-            align-items: center;
-        }
-
-        span.toggle_icon {
-            font-style: normal;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 160%;
-        }
+    &.active {
+      background: #2c2727;
+      color: $active-color;
     }
+
+    &.here {
+      background: #2c2727;
+      color: $active-color;
+    }
+
+    span.icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    span.text {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    span.toggle_icon {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 160%;
+    }
+  }
 </style>
