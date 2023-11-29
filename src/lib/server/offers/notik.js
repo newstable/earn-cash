@@ -1,4 +1,5 @@
 import Offer from "../../../models/Offer.model";
+import { NODE_ENV } from "$env/static/private";
 
 const API_KEY = "0nppFUgJObiHsbYm1INxmvENmod98EuF";
 const PUB_ID = "riHlIe";
@@ -87,7 +88,9 @@ export const persistNotikLatestOffers = async (next, conversion) => {
       //   await o.save();
       amount++;
     } catch (err) {
-      console.log("Error in inserting notik's latest offers", err, offer);
+      if (NODE_ENV === "development") {
+        console.log("Error in inserting notik's latest offers", err, offer);
+      }
     }
   }
 

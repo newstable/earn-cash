@@ -1,4 +1,5 @@
 import Offer from "../../../models/Offer.model";
+import { NODE_ENV } from "$env/static/private";
 
 const AFF_ID = "60813";
 const API_KEY = "b55499f868330c3a5d659a153b3e51be";
@@ -115,7 +116,9 @@ export const persistAdgateLatestOffers = async (next, conversion) => {
       //   await o.save();
       amount++;
     } catch (err) {
-      console.log("Error in inserting adgate latest offers", err, offer);
+      if (NODE_ENV === "development") {
+        console.log("Error in inserting adgate latest offers", err, offer);
+      }
     }
   }
 

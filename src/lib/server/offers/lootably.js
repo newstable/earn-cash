@@ -1,8 +1,9 @@
 import Offer from "../../../models/Offer.model";
+import { NODE_ENV } from "$env/static/private";
 
 const categories = {
   app: {
-    a: "app_install",
+    a: "app",
     b: "App",
   },
   survey: {
@@ -10,24 +11,24 @@ const categories = {
     b: "Surveys",
   },
   signup: {
-    a: "email_submit",
-    b: "Email Signup",
+    a: "sign-up",
+    b: "Sign Up",
   },
   video: {
-    a: "videos",
-    b: "Videos",
+    a: "other",
+    b: "Other",
   },
   quiz: {
-    a: "quiz",
-    b: "Quiz",
+    a: "game",
+    b: "Game",
   },
   freetrial: {
-    a: "trial",
-    b: "Trial",
+    a: "free-trial",
+    b: "Free Trial",
   },
 };
 
-const lootably = async (next, conversion) => {
+export const persistLootablyLatestOffers = async (next, conversion) => {
   const response = await fetch(
     "https://api.lootably.com/api/v1/offers/get?apiKey=w0n4d5i536dnjwk1jhzcl82embvrj9stygjj9nw5ioem&placementID=ckrw6b5gd001z01wy2cre0uga&categories=app,survey,signup,video,quiz,freetrial"
   );
@@ -46,7 +47,7 @@ const lootably = async (next, conversion) => {
       const o = new Offer({
         title: offer.name,
         description: offer.description,
-        link: offer.click_url.replace("{userID}", "[USERIDHERE]"),
+        link: offer.link.replace("{userID}", "[USERIDHERE]"),
         amount: offer.revenue,
         tokens: offer.revenue * conversion,
         category_name: categories[offer.categories[0]].a,
@@ -69,13 +70,17 @@ const lootably = async (next, conversion) => {
 
       await o.save();
       amount++;
-    } catch (err) {}
+    } catch (err) {
+      if (NODE_ENV === "development") {
+        console.log("Error in inserting lootably's latest offers", err, offer);
+      }
+    }
   }
 
   return amount;
 };
 
-export default lootably;
+export default persistLootablyLatestOffers;
 
 // idk if this is working
 // TODO: check

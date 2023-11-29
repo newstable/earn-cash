@@ -1,4 +1,5 @@
 import Offer from "../../../models/Offer.model";
+import { NODE_ENV } from "$env/static/private";
 
 const PubID = "20243";
 const AppID = "8023";
@@ -48,7 +49,9 @@ export const persistOffertoroLatestOffers = async (next, conversion) => {
       //   await o.save();
       amount++;
     } catch (err) {
-      console.log("Error in inserting offertoro latest offers", err, offer);
+      if (NODE_ENV === "development") {
+        console.log("Error in inserting offertoro latest offers", err, offer);
+      }
     }
   }
 

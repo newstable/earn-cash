@@ -1,4 +1,5 @@
 import Offer from "../../../models/Offer.model";
+import { NODE_ENV } from "$env/static/private";
 
 const username = "115580";
 const password = "1608556036";
@@ -91,7 +92,9 @@ const adscend = async (next, conversion) => {
       await o.save();
       amount++;
     } catch (err) {
-      console.log("Error in inserting adscends latest offers", err, offer);
+      if (NODE_ENV === "development") {
+        console.log("Error in inserting adscends latest offers", err, offer);
+      }
     }
   }
 

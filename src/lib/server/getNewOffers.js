@@ -2,7 +2,7 @@ import Offer from "../../models/Offer.model";
 import { persistAdgateLatestOffers } from "./offers/adgate";
 import adscend from "./offers/adscend";
 import { persistBitlabsLatestOffers } from "./offers/bitlabs";
-import lootably from "./offers/lootably";
+import lootably, { persistLootablyLatestOffers } from "./offers/lootably";
 import { persistMonlixLatestOffers } from "./offers/monlix";
 import { persistNotikLatestOffers } from "./offers/notik";
 import { persistOffertoroLatestOffers } from "./offers/offertoro";
@@ -25,6 +25,7 @@ const runAndUpdate = async () => {
     persistNotikLatestOffers(next, conversion),
     persistMonlixLatestOffers(next, conversion),
     persistBitlabsLatestOffers(next, conversion),
+    persistLootablyLatestOffers(next, conversion),
     //lootably(next, conversion)
   ]);
 

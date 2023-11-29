@@ -1,4 +1,5 @@
 import Offer from "../../../models/Offer.model";
+import { NODE_ENV } from "$env/static/private";
 
 const APP_ID = "1915";
 const TOKEN = "da9a30a60184a9adfb9cac24502bb5a5";
@@ -92,7 +93,9 @@ export const persistMonlixLatestOffers = async (next, conversion) => {
       //   await o.save();
       amount++;
     } catch (err) {
-      console.log("Error in inserting monlix's latest offers", err, offer);
+      if (NODE_ENV === "development") {
+        console.log("Error in inserting monlix's latest offers", err, offer);
+      }
     }
   }
 

@@ -1,8 +1,5 @@
 import Offer from "../../../models/Offer.model";
-
-const AFF_ID = "60813";
-const API_KEY = "b55499f868330c3a5d659a153b3e51be";
-const WALL_CODE = "n6-VsA";
+import { NODE_ENV } from "$env/static/private";
 
 const S2S_TOKEN = "8e15e6d4-2b36-4e65-b101-b6e327657be4";
 
@@ -79,7 +76,7 @@ export const persistBitlabsLatestOffers = async (next, conversion) => {
   );
   const data = await response.json();
 
-  console.log(data, "bitlabs");
+  // console.log(data, "bitlabs");
 
   var amount = 0;
 
@@ -131,7 +128,9 @@ export const persistBitlabsLatestOffers = async (next, conversion) => {
       //   await o.save();
       amount++;
     } catch (err) {
-      console.log("Error in inserting bitlabs latest offers", err, offer);
+      if (NODE_ENV === "development") {
+        console.log("Error in inserting bitlabs latest offers", err, offer);
+      }
     }
   }
 
