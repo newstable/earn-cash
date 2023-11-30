@@ -25,12 +25,6 @@
   let userRecievingAmount = dollars * 70;
   // dollars * 70 + (cents !== "00" ? (parseInt(cents) * 70) / 100 : 0);
 
-  $: {
-    if (isPopupOpen) {
-      console.log(offer, "offer", offerUrl);
-    }
-  }
-
   export let type = "NONE"; // GAME / CASINO / SIGN UP / APP / QUIZ / FREE TRIAL / PURCHASE / OTHER / NONE
 
   if (dollars == null) {
@@ -128,6 +122,12 @@
   // });
 
   const urlForThisOffer = offer.link.replace("[USERIDHERE]", $userId);
+
+  $: {
+    if (isPopupOpen) {
+      console.log(offer, "offer", urlForThisOffer);
+    }
+  }
 </script>
 
 <head>

@@ -100,6 +100,11 @@
 
   // $: console.log(offers, filteredOffers, "page");
   // $: console.log(offerPageNode?.scrollHeight);
+  // $: console.log(
+  //   filteredOffers.map((offer) => offer.offerwall),
+  //   "filteredOffers",
+  //   filteredOffers.filter((offer) => offer.offerwall === "adgate")
+  // );
 </script>
 
 <svelte:head>
@@ -111,6 +116,7 @@
 <div style="" bind:this={offerPageNode}>
   <OfferPage>
     {#each filteredOffers as offer}
+      <!-- {#if offer.offerwall === "adgate"} -->
       <Offer
         currencyAward={offer.tokens}
         offerImage={offer.creative}
@@ -125,6 +131,7 @@
         offerUrl={offer.link.replace("[USERIDHERE]", userId)}
         {offer}
       />
+      <!-- {/if} -->
     {/each}
   </OfferPage>
 </div>

@@ -119,9 +119,12 @@
     });
 
     const response = await fetch(
+      // `/api/offers?categoryName=${searchCategory}`
       `/api/offers?page=${page}&limit=${limit}&categoryName=${searchCategory}`
     );
     const data = await response.json();
+
+    // console.log(data, "data fom api");
 
     if (!data.success) {
       // TODO: handle error
@@ -165,6 +168,18 @@
   // $: console.log($offers, "$offers");
   // $: console.log(devices, "devices");
   // $: console.log($offerStore, "offerstore");
+
+  // $: console.log(
+  //   filteredOffers.map((offer) => offer.offerwall),
+  //   "filteredOffers",
+  //   filteredOffers.filter((offer) => offer.offerwall === "bitlabs")
+  // );
+
+  // $: console.log(
+  //   filteredOffers.map((offer) => offer.offerwall),
+  //   "filteredOffers",
+  //   filteredOffers.filter((offer) => offer.offerwall === "adgate")
+  // );
 </script>
 
 <svelte:head>
@@ -186,6 +201,8 @@
 <div bind:this={offerPageNode}>
   <OfferPage>
     {#each filteredOffers as offer}
+      <!-- {#if offer.offerwall === "bitlabs"} -->
+      <!-- {#if offer.offerwall === "adgate"} -->
       <Offer
         currencyAward={offer.tokens}
         offerImage={offer.creative}
@@ -200,6 +217,7 @@
         offerUrl={offer.link.replace("[USERIDHERE]", userId)}
         {offer}
       />
+      <!-- {/if} -->
     {/each}
   </OfferPage>
 </div>
