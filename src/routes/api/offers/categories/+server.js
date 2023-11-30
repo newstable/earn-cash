@@ -4,13 +4,13 @@ import response from "$lib/response";
 
 import { NODE_ENV } from "$env/static/private";
 
-// TODO: Remove "US" hard code
+// TODO: Remove "NP" hard code
 export const GET = async (request) => {
   console.log(NODE_ENV);
 
   const { country } =
     NODE_ENV === "development"
-      ? { country: "US" }
+      ? { country: "NP" }
       : JSON.parse(process.env.geoInfo);
   // const { country } = JSON.parse(process.env.geoInfo);
 

@@ -5,7 +5,7 @@ import { NODE_ENV } from "$env/static/private";
 export const GET = async (request) => {
   const { country } =
     NODE_ENV === "development"
-      ? { country: "US" }
+      ? { country: "NP" }
       : JSON.parse(process.env.geoInfo);
 
   const latestOffer = await Offer.find().sort({ v: -1 }).limit(1);
@@ -28,7 +28,7 @@ export const GET = async (request) => {
   //   search["category_name_readable"] = param;
   // }
 
-  console.log(page, limit, "page ,limit");
+  // console.log(page, limit, "page ,limit");
 
   let offers;
 
