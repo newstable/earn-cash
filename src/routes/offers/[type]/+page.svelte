@@ -164,7 +164,7 @@
 
   // $: console.log($offers, "$offers");
   // $: console.log(devices, "devices");
-  $: console.log($offerStore, "offerstore");
+  // $: console.log($offerStore, "offerstore");
 </script>
 
 <svelte:head>

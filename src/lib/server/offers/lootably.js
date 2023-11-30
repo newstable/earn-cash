@@ -34,17 +34,22 @@ export const persistLootablyLatestOffers = async (next, conversion) => {
   );
   const data = await response.json();
 
+  // let returnedCount = 0;
+
   if (!data.success) return 0;
 
-  var amount = 0;
+  let amount = 0;
   for (var i = 0; i < data.data.length; i++) {
     const offer = data.data[i];
 
-    if (offer.revenue === "variable") return;
-    if (offer.revenue < 0.03) continue;
+    if (offer.revenue === "variable") continue;
+    if (offer.revenue < 0.03) {
+      // returnedCount++;
+      continue;
+    }
 
     try {
-      const o = new Offer({
+      Offer.create({
         title: offer.name,
         description: offer.description,
         link: offer.link.replace("{userID}", "[USERIDHERE]"),
@@ -68,7 +73,6 @@ export const persistLootablyLatestOffers = async (next, conversion) => {
         offerwall: "lootably",
       });
 
-      await o.save();
       amount++;
     } catch (err) {
       if (NODE_ENV === "development") {
@@ -77,6 +81,8 @@ export const persistLootablyLatestOffers = async (next, conversion) => {
     }
   }
 
+  // console.log(data.data.length, "total offers length");
+  // console.log(returnedCount, "returned count");
   return amount;
 };
 
