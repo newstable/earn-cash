@@ -67,7 +67,7 @@ const adscend = async (next, conversion) => {
       const o = new Offer({
         title: offer.name,
         description: offer.adwall_description,
-        link: offer.click_url + "&subid1=[USERIDHERE]",
+        link: offer.click_url + "&sub1=[USERIDHERE]",
         amount: offer.payout,
         tokens: offer.payout * conversion,
         category_name: categories[offer.category_id]?.a || "other",

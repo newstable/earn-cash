@@ -20,13 +20,13 @@ const runAndUpdate = async () => {
 
   const amounts = await Promise.all([
     adscend(next, conversion),
-    persistAdgateLatestOffers(next, conversion),
-    persistOffertoroLatestOffers(next, conversion),
-    persistNotikLatestOffers(next, conversion),
-    persistMonlixLatestOffers(next, conversion),
-    persistBitlabsLatestOffers(next, conversion),
-    persistLootablyLatestOffers(next, conversion),
-    //lootably(next, conversion)
+    // persistAdgateLatestOffers(next, conversion),
+    // persistOffertoroLatestOffers(next, conversion),
+    // persistNotikLatestOffers(next, conversion),
+    // persistMonlixLatestOffers(next, conversion),
+    // persistBitlabsLatestOffers(next, conversion),
+    // persistLootablyLatestOffers(next, conversion),
+    // lootably(next, conversion),
   ]);
 
   console.log(

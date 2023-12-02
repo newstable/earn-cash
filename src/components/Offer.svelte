@@ -107,9 +107,11 @@
 
   tokenStore.subscribe((token) => {
     // console.log(token, "token");
-    const rawData = JSON.parse(atob(token.split(".")[1]));
-    // console.log(rawData, "rawData");
-    userId.set(rawData["uid"]);
+    if (token) {
+      const rawData = JSON.parse(atob(token.split(".")[1]));
+      // console.log(rawData, "rawData");
+      userId.set(rawData["uid"]);
+    }
   });
 
   // $: console.log($userId, "userId");
