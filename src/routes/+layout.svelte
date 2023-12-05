@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { PUBLIC_WS_URL, PUBLIC_WS_ENV } from "$env/static/public";
+  import { PUBLIC_WS_URL, PUBLIC_NODE_ENV } from "$env/static/public";
   import "../app.scss";
   import Chat from "../components/Chat.svelte";
   import Cookies from "../components/Cookies.svelte";
@@ -43,7 +43,9 @@
       const makeConnection = () => {
         var typeListeners = {};
 
-        const websocket = new WebSocket(PUBLIC_WS_URL);
+        const websocket = new WebSocket(PUBLIC_WS_URL, {
+          reconnection: PUBLIC_NODE_ENV === "development" ? false : true,
+        });
 
         websocket.onopen = () => {
           if (get(loggedInStore)) {
