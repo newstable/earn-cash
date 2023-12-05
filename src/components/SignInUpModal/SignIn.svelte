@@ -21,7 +21,30 @@
     validate();
     if (emailValidated !== 1 || passwordValidated !== 1) return;
 
-    if (PUBLIC_NODE_ENV === "staging") {
+    if (PUBLIC_NODE_ENV === "development") {
+      // in development we dont have the geo location
+      fetch("/api/user/authenticate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.success) {
+            error = data.userMessage;
+            return;
+          }
+
+          get(modalStore).close();
+          saveToken(data.token);
+          goto("/earn");
+        });
+    } else {
       fetch(PUBLIC_GEO_URL)
         .then((res) => res.json())
         .then((data) =>
@@ -39,29 +62,8 @@
         )
         .then((res) => res.json())
         .then((data) => {
-          if (!data.success) {
-            error = data.userMessage;
-            return;
-          }
+          console.log(data, "data");
 
-          get(modalStore).close();
-          saveToken(data.token);
-          goto("/earn");
-        });
-    } else {
-      // in development we dont have the geo location
-      fetch("/api/user/authenticate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
           if (!data.success) {
             error = data.userMessage;
             return;

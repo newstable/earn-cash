@@ -23,17 +23,12 @@
   const getAccount = async () => {
     const token = get(tokenStore);
 
-    if (PUBLIC_NODE_ENV === "staging") {
-      fetch(PUBLIC_GEO_URL)
-        .then((res) => res.json())
-        .then((data) =>
-          fetch("/api/user/authenticate", {
-            headers: {
-              authentication: token,
-              ...data,
-            },
-          })
-        )
+    if (PUBLIC_NODE_ENV === "development") {
+      fetch("/api/user/authenticate", {
+        headers: {
+          authentication: token,
+        },
+      })
         .then((res) => res.json())
         .then((data) => {
           if (!data.success) {
@@ -49,11 +44,16 @@
           id = data.user.id;
         });
     } else {
-      fetch("/api/user/authenticate", {
-        headers: {
-          authentication: token,
-        },
-      })
+      fetch(PUBLIC_GEO_URL)
+        .then((res) => res.json())
+        .then((data) =>
+          fetch("/api/user/authenticate", {
+            headers: {
+              authentication: token,
+              ...data,
+            },
+          })
+        )
         .then((res) => res.json())
         .then((data) => {
           if (!data.success) {

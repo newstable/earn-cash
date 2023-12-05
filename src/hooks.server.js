@@ -20,19 +20,19 @@ import { PUBLIC_GEO_URL } from "$env/static/public";
 import email from "./lib/server/email";
 import { NODE_ENV } from "$env/static/private";
 
-await mongoose.connect(MONGODB_CONNECTION);
+mongoose.connect(MONGODB_CONNECTION).then(() => console.log("connected db"));
 
-console.log("Database connected!");
+// // console.log("Database connected!");
 
-// (async () => {
-//   await Featured.findOne({});
-//   await Offer.findOne({});
-//   await OfferDone.findOne({});
-//   await PayoutMethod.findOne({});
-//   await Reward.findOne({});
-//   await User.findOne({});
-//   await WallBan.findOne({});
-// })();
+(async () => {
+  await Featured.findOne({});
+  await Offer.findOne({});
+  await OfferDone.findOne({});
+  await PayoutMethod.findOne({});
+  await Reward.findOne({});
+  await User.findOne({});
+  await WallBan.findOne({});
+})();
 
 const isAuthenticated = async (event) => {
   const authenticationToken = event.request.headers.get("authentication");
@@ -65,7 +65,7 @@ export const handle = async ({ event, resolve }) => {
   event.isAuthenticated = () => isAuthenticated(event);
   event.getAuthenticatedUser = () => getAuthenticatedUser(event);
 
-  if (NODE_ENV === "staging") {
+  if (NODE_ENV !== "development") {
     const res = await fetch(PUBLIC_GEO_URL);
     const resObj = await res.json();
     // console.log(resObj)
@@ -77,6 +77,6 @@ export const handle = async ({ event, resolve }) => {
   return await auth.handleAuth({ event, resolve });
 };
 
-if (NODE_ENV === "staging") {
+if (NODE_ENV !== "development") {
   getNewOffers();
 }
