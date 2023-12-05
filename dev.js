@@ -18,7 +18,7 @@ if (process.env.PUBLIC_WS_ENV === "production") {
   const httpsServer = https.createServer(serverOptions, app);
   create(httpsServer);
 
-  httpsServer.listen(process.env.PORT || 2053, () => {
+  httpsServer.listen(2053, () => {
     console.log(`Server started on port ${httpsServer.address().port} :)`);
   });
 } else if (process.env.PUBLIC_WS_ENV === "staging") {
@@ -30,14 +30,14 @@ if (process.env.PUBLIC_WS_ENV === "production") {
   const httpsServer = https.createServer(serverOptions, app);
   create(httpsServer);
 
-  httpsServer.listen(process.env.PORT || 2083, () => {
+  httpsServer.listen(2083, () => {
     console.log(`Server started on port ${httpsServer.address().port} :)`);
   });
 } else {
   const server = http.createServer(app);
   create(server);
 
-  server.listen(process.env.PORT || 8999, () => {
+  server.listen(8999, () => {
     console.log(`Server started on port ${server.address().port} :)`);
   });
 }
