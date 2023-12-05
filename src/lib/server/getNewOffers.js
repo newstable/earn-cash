@@ -20,13 +20,13 @@ const runAndUpdate = async () => {
 
   const amounts = await Promise.all([
     adscend(next, conversion),
-    // persistAdgateLatestOffers(next, conversion),
-    // persistOffertoroLatestOffers(next, conversion),
-    // persistNotikLatestOffers(next, conversion),
-    // persistMonlixLatestOffers(next, conversion),
-    // persistBitlabsLatestOffers(next, conversion),
-    // persistLootablyLatestOffers(next, conversion),
-    // lootably(next, conversion),
+    persistAdgateLatestOffers(next, conversion),
+    persistOffertoroLatestOffers(next, conversion),
+    persistNotikLatestOffers(next, conversion),
+    persistMonlixLatestOffers(next, conversion),
+    persistBitlabsLatestOffers(next, conversion),
+    persistLootablyLatestOffers(next, conversion),
+    lootably(next, conversion),
   ]);
 
   console.log(
@@ -56,10 +56,10 @@ const getNewOffers = async () => {
   // call the run and update function every 5 minutes
   // to update our db to have latest offers from offerwalls
   // * uncomment this
-  if (NODE_ENV === "staging") {
-    const id = setInterval(runAndUpdate, 1000 * 60 * 5);
-    intervalId = id;
-  }
+  // if (NODE_ENV === "staging") {
+  const id = setInterval(runAndUpdate, 1000 * 60 * 5);
+  intervalId = id;
+  // }
 
   running = true;
 };
