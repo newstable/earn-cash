@@ -7,12 +7,16 @@
   import Wall from "../../components/Wall.svelte";
   import EarnHeader from "../../components/EarnHeader.svelte";
   import loggedIn from "../../stores/loggedIn.store.js";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
 
   export let data = {
     userid: "",
   };
   var revuOffers = [];
+
+  let user = {};
+  let pollingInterval; // Variable to store the polling interval
+  let errorMessage = "";
 
   loggedIn.subscribe(async (val) => {
     if (val) {
@@ -25,6 +29,36 @@
           });
       });
     }
+  });
+
+  // * currently moved from Wall.svelte to here as component was fetching multiple times
+  // Function to fetch user details from the API and update the user and error message
+  function fetchUserDetails() {
+    fetch("/api/user/details")
+      .then((response) => response.json())
+      .then((data) => {
+        // Check if the response contains an error
+        if (data.error === "Authentication failed") {
+          errorMessage = "Please Login To Continue";
+          user = {}; // Clear user data when authentication fails
+        } else {
+          user = data;
+          errorMessage = null; // Clear the error message if authentication is successful
+        }
+      });
+  }
+
+  // Initial fetch of user details on component mount
+  onMount(() => {
+    fetchUserDetails();
+
+    // Start polling for user details every 10 seconds
+    pollingInterval = setInterval(fetchUserDetails, 10000);
+  });
+
+  // Clear the polling interval when the component is destroyed
+  onDestroy(() => {
+    clearInterval(pollingInterval);
   });
 
   // $: console.log({ revuOffers });
@@ -58,6 +92,8 @@
   <SplideTrack slot="items">
     <SplideSlide class="carousel-item">
       <Wall
+        {user}
+        {errorMessage}
         wallName="AdGate"
         wallUrl="adgate"
         logoUrl="/AdGatemediaGlow.png"
@@ -67,6 +103,8 @@
 
     <SplideSlide class="carousel-item">
       <Wall
+        {user}
+        {errorMessage}
         wallName="Lootably"
         wallUrl="lootably"
         logoUrl="/lootably-logo.png"
@@ -76,6 +114,8 @@
 
     <SplideSlide class="carousel-item">
       <Wall
+        {user}
+        {errorMessage}
         wallName="Notik"
         wallUrl="notik"
         logoUrl="https://i.imgur.com/mrhsc2a.png"
@@ -85,6 +125,8 @@
 
     <SplideSlide class="carousel-item">
       <Wall
+        {user}
+        {errorMessage}
         wallName="Monlix"
         wallUrl="monlix"
         logoUrl="/monlix.png"
@@ -94,6 +136,8 @@
 
     <SplideSlide class="carousel-item">
       <Wall
+        {user}
+        {errorMessage}
         wallName="OfferToro"
         wallUrl="offertoro"
         logoUrl="/offertoroLogo.webp"
@@ -103,6 +147,8 @@
 
     <SplideSlide class="carousel-item">
       <Wall
+        {user}
+        {errorMessage}
         wallName="Revenue Universe"
         wallUrl="revu"
         logoUrl="/revu-logo-white.svg"
@@ -112,6 +158,8 @@
 
     <SplideSlide class="carousel-item">
       <Wall
+        {user}
+        {errorMessage}
         wallName="Adscend"
         wallUrl="adscend"
         logoUrl="/AdscendMediaGlow.webp"
@@ -121,6 +169,8 @@
 
     <SplideSlide class="carousel-item">
       <Wall
+        {user}
+        {errorMessage}
         wallName="MM WALL"
         wallUrl="mmwall"
         logoUrl="https://i.imgur.com/9MLoezH.png"
@@ -130,6 +180,8 @@
 
     <SplideSlide class="carousel-item">
       <Wall
+        {user}
+        {errorMessage}
         wallName="Timewall"
         wallUrl="timewall"
         logoUrl="https://i.imgur.com/eNQVAm7.png"
@@ -143,6 +195,8 @@
   <SplideTrack slot="items">
     <SplideSlide class="carousel-item">
       <Wall
+        {user}
+        {errorMessage}
         wallName="CPX Research"
         wallUrl="cpxresearch"
         logoUrl="/logo-cpx-reserach-white.svg"
@@ -152,6 +206,8 @@
 
     <SplideSlide class="carousel-item">
       <Wall
+        {user}
+        {errorMessage}
         wallName="BitLabs"
         wallUrl="bitlabs"
         logoUrl="/BitLabsWhiteLogo.png"
@@ -161,6 +217,8 @@
 
     <SplideSlide class="carousel-item">
       <Wall
+        {user}
+        {errorMessage}
         wallName="Inbrain"
         wallUrl="inbrain"
         logoUrl="/inbrain-logo-white-colored.svg"
