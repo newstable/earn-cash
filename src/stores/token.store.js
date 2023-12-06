@@ -10,8 +10,10 @@ tokenStore.subscribe((token) => {
 
   // console.log("current cookie store", get(cookieStore));
   if (token !== "" && typeof cookieStore !== "undefined") {
-    // console.log("try to set", get(cookieStore));
+    // console.log("currently cookie store is", get(cookieStore));
+    // console.log("token is", token);
 
+    // console.log("if condiation", get(cookieStore));
     if (get(cookieStore)) {
       // console.log("setting cookie for token", get(cookieStore));
       setCookie("token", token, 2);
