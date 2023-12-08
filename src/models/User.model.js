@@ -106,7 +106,11 @@ const user = new Schema({
         default: "https://eu.ui-avatars.com/api/"
     },
     RPKey: String,
-    ActivationKey: String
+    ActivationKey: String,
+    customCommissionRate: {
+        type: Number,
+        default: 0
+    }
 });
 
 const User = mongoose.models.User || mongoose.model("User", user);
