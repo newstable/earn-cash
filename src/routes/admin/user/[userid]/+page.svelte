@@ -296,7 +296,9 @@
               <Row>
                 <Col>Withdrawn</Col>
                 <Col>
-                  {data.user.cashedOut.toLocaleString()} (${data.user.cashedOut.toLocaleString()})
+                  {data.user.cashedOut.toLocaleString()} (${(
+                    data.user.cashedOut / 100
+                  ).toLocaleString()})
                 </Col>
               </Row>
 
