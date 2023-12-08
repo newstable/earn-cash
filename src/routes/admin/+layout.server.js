@@ -1,6 +1,6 @@
-import { redirect } from '@sveltejs/kit';
-import { verify } from '../../lib/server/jwt.js';
-import User from '../../models/User.model.js';
+import { redirect } from "@sveltejs/kit";
+import { verify } from "../../lib/server/jwt.js";
+import User from "../../models/User.model.js";
 import RefEarning from "../../models/RefEarning.model";
 import OfferDone from "../../models/OfferDone.model";
 import Game from "../../models/Game.model";
@@ -90,197 +90,243 @@ const getOffers = async () => {
 };
 
 const getGameInfo = async () => {
-    const round = await Game.count();
-    const circulation = (
-      await Game.aggregate([
-        {
-          $group: {
-            _id: null, // Group all documents together
-            totalAmount: { $sum: "$player1_amount" }, // Calculate the sum of the 'amount' field
-          },
+  const round = await Game.count();
+  const circulation = (
+    await Game.aggregate([
+      {
+        $group: {
+          _id: null, // Group all documents together
+          totalAmount: { $sum: "$player1_amount" }, // Calculate the sum of the 'amount' field
         },
-      ])
-    )[0].totalAmount;
-    return {
-      round,
-      circulation: circulation * 2,
-      tax: Math.round((circulation * 2) / 10),
-    };
+      },
+    ])
+  )[0].totalAmount;
+  return {
+    round,
+    circulation: circulation * 2,
+    tax: Math.round((circulation * 2) / 10),
   };
+};
 
-  const getUserInfo = async () => {
-    const todaysDate = new Date(new Date().toLocaleDateString());
-    const yesterdaysDate = new Date(
-      new Date(Date.now() - 86400000).toLocaleDateString()
-    );
-    const weekDate = new Date(Date.now() - 7 * 24 * 3600 * 1000);
-    const monthStartDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-    const lastMonthStartDate = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1);
+const getUserInfo = async () => {
+  const todaysDate = new Date(new Date().toLocaleDateString());
+  const yesterdaysDate = new Date(
+    new Date(Date.now() - 86400000).toLocaleDateString()
+  );
+  const weekDate = new Date(Date.now() - 7 * 24 * 3600 * 1000);
+  const monthStartDate = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    1
+  );
+  const lastMonthStartDate = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth() - 1,
+    1
+  );
 
-    const total = await User.count();
-    const email = await User.find({ emailConfirmed: true }).count();
-    const today = await User.find({ joinDate: { $gte: todaysDate } }).count();
-    const yesterday = await User.find({
-      joinDate: { $gte: yesterdaysDate, $lt: todaysDate },
-    }).count();
-    const week = await User.find({ joinDate: { $gte: weekDate } }).count();
-    const month = await User.find({ joinDate: { $gte: monthStartDate } }).count();
-    const lastMonth = await User.find({ joinDate: { $gte: lastMonthStartDate, $lt: monthStartDate } }).count();
-    return {
-      total,
-      email,
-      today,
-      yesterday,
-      week,
-      month,
-      lastMonth
-    };
+  const total = await User.count();
+  const email = await User.find({ emailConfirmed: true }).count();
+  const today = await User.find({ joinDate: { $gte: todaysDate } }).count();
+  const yesterday = await User.find({
+    joinDate: { $gte: yesterdaysDate, $lt: todaysDate },
+  }).count();
+  const week = await User.find({ joinDate: { $gte: weekDate } }).count();
+  const month = await User.find({ joinDate: { $gte: monthStartDate } }).count();
+  const lastMonth = await User.find({
+    joinDate: { $gte: lastMonthStartDate, $lt: monthStartDate },
+  }).count();
+  return {
+    total,
+    email,
+    today,
+    yesterday,
+    week,
+    month,
+    lastMonth,
   };
+};
 
-export const load = async(request) => {
-    const token = request.cookies.get("token");
+export const load = async (request) => {
+  const token = request.cookies.get("token");
 
-    if (typeof token === "undefined") {
-        throw redirect(302, '/');
-    }
+  if (typeof token === "undefined") {
+    throw redirect(302, "/");
+  }
 
-    const jwt = verify(token);
-    if (!jwt.success) {
-        throw redirect(302, '/');
-    }
+  const jwt = verify(token);
+  if (!jwt.success) {
+    throw redirect(302, "/");
+  }
 
-    const user = await User.findById(jwt.data.body.uid);
+  const user = await User.findById(jwt.data.body.uid);
 
-    if (!user) {
-        throw redirect(302, '/');
-    }
+  if (!user) {
+    throw redirect(302, "/");
+  }
 
-    if (user.rank != 3) {
-        throw redirect(302, '/');
-    }
-    const earnings = await getEarnings();
-    const offers = await getOffers();
-    const game = await getGameInfo();
-    const userinfo = await getUserInfo();
+  if (user.rank != 3) {
+    throw redirect(302, "/");
+  }
 
-    const mostAppearWallInfo = (await OfferDone.aggregate([
-        {
-          $group: {
-            _id: '$wall', // Group by the field you want to count
-            count: { $sum: 1 } // Count occurrences of the field
-          }
-        },
-        {
-          $sort: {
-            count: -1 // Sort by count in descending order
-          }
-        },
-        {
-          $limit: 1 // Limit to the first result, which will be the field with the highest count
-        }
-    ]))[0];
-    const mostGrossingWallInfo = (await OfferDone.aggregate([
-        {
-          $group: {
-            _id: '$wall', // Group by the field you want to count
-            highest: { $sum: '$payout' } // Sum value of the field
-          }
-        },
-        {
-          $sort: {
-            highest: -1 // Sort by count in descending order
-          }
-        },
-        {
-          $limit: 1 // Limit to the first result, which will be the field with the highest count
-        }
-    ]))[0];
-    const mostAppearWall = offerWalls.filter((wall) => wall.wallId === mostAppearWallInfo._id);
-    const mostGrossingWall = offerWalls.filter((wall) => wall.wallId === mostGrossingWallInfo._id);
+  // console.time("start: ");
 
-    const mostAppearOfferInfo = (await OfferDone.aggregate([
-        {
-          $group: {
-            _id: '$offerId', // Group by the field you want to count
-            count: { $sum: 1 }, // Count occurrences of the field
-            offerName:  { $first: '$offerName' }
-          }
-        },
-        {
-          $sort: {
-            count: -1 // Sort by count in descending order
-          }
-        },
-        {
-          $limit: 1 // Limit to the first result, which will be the field with the highest count
-        }
-    ]))[0];
-    const mostGrossingOfferInfo = (await OfferDone.aggregate([
-        {
-          $group: {
-            _id: '$offerId', // Group by the field you want to count
-            highest: { $sum: '$payout' }, // Sum value of the field
-            offerName:  { $first: '$offerName' }
-          }
-        },
-        {
-          $sort: {
-            highest: -1 // Sort by count in descending order
-          }
-        },
-        {
-          $limit: 1 // Limit to the first result, which will be the field with the highest count
-        }
-    ]))[0];
-    const mostCountry = (await User.aggregate([
-        {
-          $group: {
-            _id: '$country', // Group by the field you want to count
-            highest: { $sum: 1 }, // Count the field
-          }
-        },
-        {
-          $sort: {
-            highest: -1 // Sort by count in descending order
-          }
-        },
-        {
-          $limit: 1 // Limit to the first result, which will be the field with the highest count
-        }
-    ]))[0];
+  const earningsPromise = getEarnings();
+  const offersPromise = getOffers();
+  const gamePromise = getGameInfo();
+  const userinfoPromise = getUserInfo();
 
-    return {
-        info: {
-            earnings,
-            offers,
-            game,
-            user: userinfo,
+  const mostAppearWallInfoPromise = OfferDone.aggregate([
+    {
+      $group: {
+        _id: "$wall", // Group by the field you want to count
+        count: { $sum: 1 }, // Count occurrences of the field
+      },
+    },
+    {
+      $sort: {
+        count: -1, // Sort by count in descending order
+      },
+    },
+    {
+      $limit: 1, // Limit to the first result, which will be the field with the highest count
+    },
+  ]);
+  const mostGrossingWallInfoPromise = OfferDone.aggregate([
+    {
+      $group: {
+        _id: "$wall", // Group by the field you want to count
+        highest: { $sum: "$payout" }, // Sum value of the field
+      },
+    },
+    {
+      $sort: {
+        highest: -1, // Sort by count in descending order
+      },
+    },
+    {
+      $limit: 1, // Limit to the first result, which will be the field with the highest count
+    },
+  ]);
+
+  const mostAppearOfferInfoPromise = OfferDone.aggregate([
+    {
+      $group: {
+        _id: "$offerId", // Group by the field you want to count
+        count: { $sum: 1 }, // Count occurrences of the field
+        offerName: { $first: "$offerName" },
+      },
+    },
+    {
+      $sort: {
+        count: -1, // Sort by count in descending order
+      },
+    },
+    {
+      $limit: 1, // Limit to the first result, which will be the field with the highest count
+    },
+  ]);
+  const mostGrossingOfferInfoPromise = OfferDone.aggregate([
+    {
+      $group: {
+        _id: "$offerId", // Group by the field you want to count
+        highest: { $sum: "$payout" }, // Sum value of the field
+        offerName: { $first: "$offerName" },
+      },
+    },
+    {
+      $sort: {
+        highest: -1, // Sort by count in descending order
+      },
+    },
+    {
+      $limit: 1, // Limit to the first result, which will be the field with the highest count
+    },
+  ]);
+  const mostCountryPromise = User.aggregate([
+    {
+      $group: {
+        _id: "$country", // Group by the field you want to count
+        highest: { $sum: 1 }, // Count the field
+      },
+    },
+    {
+      $sort: {
+        highest: -1, // Sort by count in descending order
+      },
+    },
+    {
+      $limit: 1, // Limit to the first result, which will be the field with the highest count
+    },
+  ]);
+
+  const [
+    earnings,
+    offers,
+    game,
+    userinfo,
+    mostAppearWallInfo,
+    mostGrossingWallInfo,
+    mostAppearOfferInfo,
+    mostGrossingOfferInfo,
+    mostCountry,
+  ] = await Promise.all([
+    earningsPromise,
+    offersPromise,
+    gamePromise,
+    userinfoPromise,
+    mostAppearWallInfoPromise,
+    mostGrossingWallInfoPromise,
+    mostAppearOfferInfoPromise,
+    mostGrossingOfferInfoPromise,
+    mostCountryPromise,
+  ]);
+
+  const mostAppearWall = offerWalls.filter(
+    (wall) => wall.wallId === mostAppearWallInfo[0]._id
+  );
+  const mostGrossingWall = offerWalls.filter(
+    (wall) => wall.wallId === mostGrossingWallInfo[0]._id
+  );
+
+  // console.timeEnd("start: ");
+
+  return {
+    info: {
+      earnings,
+      offers,
+      game,
+      user: userinfo,
+    },
+    popular: {
+      wall: {
+        quantity: {
+          name: mostAppearWall[0].wallName,
+          amount: mostAppearWallInfo[0].count,
         },
-        popular: {
-            wall: {
-                quantity : {
-                    name: mostAppearWall[0].wallName,
-                    amount: mostAppearWallInfo.count
-                },
-                grossing: {
-                    name: mostGrossingWall[0].wallName,
-                    amount: mostGrossingWallInfo.highest
-                }
-            },
-            offer: {
-                quantity: {
-                    name: mostAppearOfferInfo.offerName ? mostAppearOfferInfo.offerName : '_',
-                    amount: mostAppearOfferInfo.count
-                },
-                grossing: {
-                    name: mostGrossingOfferInfo.offerName ? mostGrossingOfferInfo.offerName : '_',
-                    amount: mostGrossingOfferInfo.highest
-                }
-            },
+        grossing: {
+          name: mostGrossingWall[0].wallName,
+          amount: mostGrossingWallInfo[0].highest,
         },
-        sign: {
-            country: mostCountry._id,
-            count: mostCountry.highest
-        }
-    };
-}
+      },
+      offer: {
+        quantity: {
+          name: mostAppearOfferInfo[0].offerName
+            ? mostAppearOfferInfo[0].offerName
+            : "_",
+          amount: mostAppearOfferInfo[0].count,
+        },
+        grossing: {
+          name: mostGrossingOfferInfo[0].offerName
+            ? mostGrossingOfferInfo[0].offerName
+            : "_",
+          amount: mostGrossingOfferInfo[0].highest,
+        },
+      },
+    },
+    sign: {
+      country: mostCountry[0]._id,
+      count: mostCountry[0].highest,
+    },
+  };
+};
