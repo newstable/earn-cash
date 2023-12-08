@@ -83,19 +83,22 @@
   };
 
   onMount(() => {
-    fetch(PUBLIC_GEO_URL)
-      .then((res) => res.json())
-      .then((data) =>
-        fetch("/api/setGeoInfo", {
-          method: "POST",
-          headers: data,
-        })
-      );
-    const intervalId = setInterval(() => {
-      if (get(loggedIn)) {
-        getAccount();
-      }
-    }, 25000);
+    let intervalId;
+    if (process.env.NODE_ENV !== "development") {
+      fetch(PUBLIC_GEO_URL)
+        .then((res) => res.json())
+        .then((data) =>
+          fetch("/api/setGeoInfo", {
+            method: "POST",
+            headers: data,
+          })
+        );
+      intervalId = setInterval(() => {
+        if (get(loggedIn)) {
+          getAccount();
+        }
+      }, 25000);
+    }
 
     return () => {
       clearInterval(intervalId);
