@@ -2,9 +2,11 @@
   import { Button, Col, Column, Container, Row, Table } from "sveltestrap";
   import BreadcrumbOne from "../../../../../components/admin/breadcrumbs/BreadcrumbOne.svelte";
 
-  export var data;
+  export let data;
 
-  var breadcrumbData = {
+  // $: console.log({ data });
+
+  let breadcrumbData = {
     pageTitle: "Holds",
     bcItem2: "User Search",
     bcItem2Url: "/admin/search",
@@ -34,22 +36,22 @@
       <Col lg={12}>
         <Table striped hover responsive rows={data.holds} let:row>
           <Column header="Price">
-            {row.price}
+            {row?.price}
           </Column>
           <Column header="Reward">
-            {row.reward}
+            {row?.reward}
           </Column>
 
           <Column header="Country/Email/Address">
-            {row.info}
+            {row?.info}
           </Column>
 
           <Column header="Date Purchased">
-            {row.date.toLocaleString()}
+            {row?.date.toLocaleString()}
           </Column>
 
           <Column header="Cashout Status">
-            {row.hold}
+            {row?.hold}
           </Column>
         </Table>
       </Col>
