@@ -43,9 +43,7 @@
       const makeConnection = () => {
         var typeListeners = {};
 
-        const websocket = new WebSocket(PUBLIC_WS_URL, {
-          reconnection: PUBLIC_NODE_ENV === "development" ? false : true,
-        });
+        const websocket = new WebSocket(PUBLIC_WS_URL);
 
         websocket.onopen = () => {
           if (get(loggedInStore)) {
