@@ -14,7 +14,10 @@ export const load = async (req) => {
   }
 
   var user = await User.findOne({ email: locals.user.email.toLowerCase() });
-  const { ip } = JSON.parse(process.env.geoInfo)
+  // const { ip } = JSON.parse(process.env.geoInfo);
+
+  const ip = req.request.headers.get("cf-connecting-ip");
+
   if (user === null) {
     user = new User({
       username: locals.user.name,

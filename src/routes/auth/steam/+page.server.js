@@ -13,7 +13,9 @@ export const load = async (req) => {
   req.url = req.url.href;
   const steamUser = await steam.authenticate(req);
 
-  const { ip, country } = JSON.parse(process.env.geoInfo)
+  // const { ip, country } = JSON.parse(process.env.geoInfo)
+  const ip = req.request.headers.get("cf-connecting-ip");
+  const country = req.request.headers.get("cf-ipcountry");
 
   var user = await User.findOne({
     OAuthProvider: "steam",

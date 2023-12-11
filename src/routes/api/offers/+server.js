@@ -6,7 +6,8 @@ export const GET = async (request) => {
   const { country } =
     NODE_ENV === "development"
       ? { country: "NP" }
-      : JSON.parse(process.env.geoInfo);
+      : // : JSON.parse(process.env.geoInfo);
+        request.request.headers.get("cf-ipcountry");
 
   const latestOffer = await Offer.find().sort({ v: -1 }).limit(1);
   const v = latestOffer[0].v;

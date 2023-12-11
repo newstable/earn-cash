@@ -11,7 +11,8 @@ export const GET = async (request) => {
   const { country } =
     NODE_ENV === "development"
       ? { country: "NP" }
-      : JSON.parse(process.env.geoInfo);
+      : // : JSON.parse(process.env.geoInfo);
+        request.request.headers.get("cf-ipcountry");
   // const { country } = JSON.parse(process.env.geoInfo);
 
   // const latestOffer = await Offer.find().sort({ _id: -1 }).limit(1);
