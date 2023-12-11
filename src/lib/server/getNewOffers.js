@@ -53,11 +53,11 @@ const getNewOffers = async () => {
   }
 
   await runAndUpdate();
-  // call the run and update function every 5 minutes
+  // call the run and update function every 15 minutes
   // to update our db to have latest offers from offerwalls
   // * uncomment this
   // if (NODE_ENV === "staging") {
-  const id = setInterval(runAndUpdate, 1000 * 60 * 5);
+  const id = setInterval(runAndUpdate, 1000 * 60 * 15);
   intervalId = id;
   // }
 

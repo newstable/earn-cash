@@ -34,6 +34,8 @@ mongoose.connect(MONGODB_CONNECTION).then(() => console.log("connected db"));
   await WallBan.findOne({});
 })();
 
+// console.log("Hooks ran");
+
 const isAuthenticated = async (event) => {
   const authenticationToken = event.request.headers.get("authentication");
   if (authenticationToken === null) return false;
@@ -71,7 +73,7 @@ export const handle = async ({ event, resolve }) => {
     // console.log(resObj)
     event.locals.clientIp = resObj.ip;
   } else {
-    console.log("in else");
+    console.log("in hooks handle's else");
     event.locals.clientIp = "2400:1a00:bde0:1e4c:fcf3:440f:1abd:8720";
   }
   // return resolve(event)

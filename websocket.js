@@ -130,9 +130,9 @@ const create = (server) => {
     ws.chat = null;
 
     ws.on("message", async (message) => {
-      message = message.toString();
+      message = message?.toString();
 
-      if (message.startsWith("{")) {
+      if (message?.startsWith("{")) {
         const data = JSON.parse(message);
 
         if (data.type === "pong") {
@@ -210,6 +210,7 @@ const create = (server) => {
   (async () => {
     var prev = (await OfferDone.find().sort({ _id: -1 }).limit(1))[0];
 
+    // * this
     while (true) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       const offers = await OfferDone.find({ date: { $gt: prev?.date } }).sort({
