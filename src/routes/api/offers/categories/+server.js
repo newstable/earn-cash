@@ -8,9 +8,9 @@ import { NODE_ENV } from "$env/static/private";
 export const GET = async (request) => {
   console.log(NODE_ENV);
 
-  const { country } =
+  const country =
     NODE_ENV === "development"
-      ? { country: "NP" }
+      ? "NP"
       : // : JSON.parse(process.env.geoInfo);
         request.request.headers.get("cf-ipcountry");
   // const { country } = JSON.parse(process.env.geoInfo);

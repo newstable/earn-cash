@@ -3,9 +3,9 @@ import Offer from "../../../models/Offer.model";
 import { NODE_ENV } from "$env/static/private";
 
 export const GET = async (request) => {
-  const { country } =
+  const country =
     NODE_ENV === "development"
-      ? { country: "NP" }
+      ? "NP"
       : // : JSON.parse(process.env.geoInfo);
         request.request.headers.get("cf-ipcountry");
 
