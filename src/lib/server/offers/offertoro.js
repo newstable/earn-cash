@@ -16,13 +16,39 @@ export const persistOffertoroLatestOffers = async (next, conversion) => {
   if (!json.response.offers) return amount;
 
   const offers = json.response.offers;
+
+  const offersToInsert = [];
+
   for (var i = 0; i < offers.length; i++) {
     const offer = offers[i];
     // if (offer.category_id === 26) continue;
     if (offer.payout < 0.03) continue;
 
     try {
-      Offer.create({
+      // Offer.create({
+      //   title: offer.offer_name,
+      //   description: offer.offer_desc,
+      //   link: offer.offer_url
+      //     .replace("[USER_ID]", "[USERIDHERE]")
+      //     .replace("?tag=[tag]", ""),
+      //   amount: offer.payout,
+      //   tokens: offer.payout * conversion,
+      //   category_name: "other",
+      //   category_name_readable: "Other",
+      //   campid: offer.offer_id,
+      //   creative: offer.image_url,
+      //   mobile_app: offer?.platform?.toLowerCase().includes("mobile"),
+      //   mobile_app_type: offer.device.toLowerCase().includes("android")
+      //     ? "android"
+      //     : offer.name.toLowerCase().includes("ipad")
+      //     ? "ipad"
+      //     : "ios",
+      //   conversion: offer.disclaimer,
+      //   v: next,
+      //   country: offer.countries,
+      //   offerwall: "offertoro",
+      // });
+      offersToInsert.push({
         title: offer.offer_name,
         description: offer.offer_desc,
         link: offer.offer_url
@@ -55,5 +81,15 @@ export const persistOffertoroLatestOffers = async (next, conversion) => {
     }
   }
 
+  try {
+    const startTime = Date.now();
+    await Offer.insertMany(offersToInsert);
+    const endTime = Date.now();
+    console.log(
+      `[OFFERTORO] ${offersToInsert.length} offers in ${endTime - startTime} ms`
+    );
+  } catch (error) {
+    console.log("Error in inserting OFFERTORO latest offers", err);
+  }
   return amount;
 };

@@ -84,6 +84,7 @@ export const persistBitlabsLatestOffers = async (next, conversion) => {
 
   const offers = data.data.offers;
 
+  const offersToInsert = [];
   for (var i = 0; i < offers.length; i++) {
     const offer = offers[i];
     const { category_name, category_name_readable } = getOurCategory(
@@ -93,7 +94,39 @@ export const persistBitlabsLatestOffers = async (next, conversion) => {
     if (offer.epc < 0.03) continue;
 
     try {
-      Offer.create({
+      // Offer.create({
+      //   title: offer.anchor,
+      //   description: offer.description,
+      //   link: offer.click_url + "[USERIDHERE]",
+      //   amount: Number(offer.epc),
+      //   tokens: Number(offer.epc) * conversion,
+      //   category_name,
+      //   category_name_readable,
+      //   campid: offer.id,
+      //   creative: offer.icon,
+      //   mobile_app: offer.device_targeting.platforms.some(
+      //     (el) =>
+      //       el.name.toLowerCase() === "smartphone" ||
+      //       el.name.toLowerCase() === "tablet"
+      //   ),
+      //   mobile_app_type: offer.device_targeting.operating_systems.some(
+      //     (el) => el.name === "android"
+      //   )
+      //     ? "android"
+      //     : offer.device_targeting.operating_systems.some(
+      //         (el) => el.name.toLowerCase() === "ipad"
+      //       )
+      //     ? "ipad"
+      //     : "ios",
+      //   conversion: offer.requirements,
+      //   v: next,
+      //   country: offer.geo_targeting.countries.map(
+      //     (country) => country.country_code
+      //   ),
+      //   offerwall: "bitlabs",
+      // });
+
+      offersToInsert.push({
         title: offer.anchor,
         description: offer.description,
         link: offer.click_url + "[USERIDHERE]",
@@ -128,10 +161,21 @@ export const persistBitlabsLatestOffers = async (next, conversion) => {
       //   await o.save();
       amount++;
     } catch (err) {
-      if (NODE_ENV === "development") {
-        console.log("Error in inserting bitlabs latest offers", err, offer);
-      }
+      // if (NODE_ENV === "development") {
+      //   console.log("Error in inserting bitlabs latest offers", err, offer);
+      // }
     }
+  }
+
+  try {
+    const startTime = Date.now();
+    await Offer.insertMany(offersToInsert);
+    const endTime = Date.now();
+    console.log(
+      `[BITLABS] ${offersToInsert.length} offers in ${endTime - startTime} ms`
+    );
+  } catch (error) {
+    console.log("Error in inserting BITLABS latest offers", err);
   }
 
   return amount;

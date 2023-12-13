@@ -53,6 +53,8 @@ export const persistNotikLatestOffers = async (next, conversion) => {
 
   const offers = data.offers.data;
 
+  const offersToInsert = [];
+
   for (var i = 0; i < offers.length; i++) {
     const offer = offers[i];
     const { category_name, category_name_readable } = getOurCategory(
@@ -62,7 +64,30 @@ export const persistNotikLatestOffers = async (next, conversion) => {
     if (offer.payout < 0.03) continue;
 
     try {
-      Offer.create({
+      // Offer.create({
+      //   title: offer.name,
+      //   description: offer.description2,
+      //   link: offer.click_url.replace("[user_id]", "[USERIDHERE]"),
+      //   amount: offer.payout,
+      //   tokens: offer.payout * conversion,
+      //   category_name,
+      //   category_name_readable,
+      //   campid: offer.offer_id,
+      //   creative: offer.image_url,
+      //   mobile_app:
+      //     offer.devices.includes("mobile") || offer.devices.includes("tablet"),
+      //   mobile_app_type: offer.os.includes("android")
+      //     ? "android"
+      //     : offer.os.includes("ipad")
+      //     ? "ipad"
+      //     : "ios",
+      //   conversion: offer.description1,
+      //   v: next,
+      //   country: offer.country_code,
+      //   offerwall: "notik",
+      // });
+
+      offersToInsert.push({
         title: offer.name,
         description: offer.description2,
         link: offer.click_url.replace("[user_id]", "[USERIDHERE]"),
@@ -88,10 +113,21 @@ export const persistNotikLatestOffers = async (next, conversion) => {
       //   await o.save();
       amount++;
     } catch (err) {
-      if (NODE_ENV === "development") {
-        console.log("Error in inserting notik's latest offers", err, offer);
-      }
+      // if (NODE_ENV === "development") {
+      //   console.log("Error in inserting notik's latest offers", err, offer);
+      // }
     }
+  }
+
+  try {
+    const startTime = Date.now();
+    await Offer.insertMany(offersToInsert);
+    const endTime = Date.now();
+    console.log(
+      `[NOTIK] ${offersToInsert.length} offers in ${endTime - startTime} ms`
+    );
+  } catch (error) {
+    console.log("Error in inserting NOTIK latest offers", err);
   }
 
   return amount;

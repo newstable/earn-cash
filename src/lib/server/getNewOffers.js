@@ -11,7 +11,8 @@ import { NODE_ENV } from "$env/static/private";
 const conversion = 30; // 30 tokens for 1$ earned
 
 const runAndUpdate = async () => {
-  console.log("running and updating");
+  console.log("Fetching and adding new offers at, ", new Date().toISOString());
+
   var next = 1;
   const latest = await Offer.findOne().sort({ v: -1 });
   if (latest !== null) {
@@ -33,7 +34,7 @@ const runAndUpdate = async () => {
     `Saved ${amounts.reduce(
       (partialSum, a) => partialSum + a,
       0
-    )} new offers as ${next} at: ${new Date()}`
+    )} new offers as ${next} at: ${new Date().toISOString()}`
   );
 
   if (next !== 1) {

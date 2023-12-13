@@ -39,6 +39,8 @@ export const persistLootablyLatestOffers = async (next, conversion) => {
   if (!data.success) return 0;
 
   let amount = 0;
+
+  const offersToInsert = [];
   for (var i = 0; i < data.data.length; i++) {
     const offer = data.data[i];
 
@@ -49,7 +51,31 @@ export const persistLootablyLatestOffers = async (next, conversion) => {
     }
 
     try {
-      Offer.create({
+      // Offer.create({
+      //   title: offer.name,
+      //   description: offer.description,
+      //   link: offer.link.replace("{userID}", "[USERIDHERE]"),
+      //   amount: offer.revenue,
+      //   tokens: offer.revenue * conversion,
+      //   category_name: categories[offer.categories[0]].a,
+      //   category_name_readable: categories[offer.categories[0]].b,
+      //   campid: offer.offerID,
+      //   creative: offer.image,
+      //   mobile_app:
+      //     offer.devices.includes("ipad") ||
+      //     offer.devices.includes("iphone") ||
+      //     offer.devices.includes("android"),
+      //   mobile_app_type: offer.devices.includes("android")
+      //     ? "android"
+      //     : offer.devices.includes("ipad")
+      //     ? "ipad"
+      //     : "ios",
+      //   v: next,
+      //   country: offer.countries,
+      //   offerwall: "lootably",
+      // });
+
+      offersToInsert.push({
         title: offer.name,
         description: offer.description,
         link: offer.link.replace("{userID}", "[USERIDHERE]"),
@@ -75,10 +101,21 @@ export const persistLootablyLatestOffers = async (next, conversion) => {
 
       amount++;
     } catch (err) {
-      if (NODE_ENV === "development") {
-        console.log("Error in inserting lootably's latest offers", err, offer);
-      }
+      // if (NODE_ENV === "development") {
+      //   console.log("Error in inserting lootably's latest offers", err, offer);
+      // }
     }
+  }
+
+  try {
+    const startTime = Date.now();
+    await Offer.insertMany(offersToInsert);
+    const endTime = Date.now();
+    console.log(
+      `[LOOTABLY] ${offersToInsert.length} offers in ${endTime - startTime} ms`
+    );
+  } catch (error) {
+    console.log("Error in inserting LOOTABLY latest offers", err);
   }
 
   // console.log(data.data.length, "total offers length");

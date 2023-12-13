@@ -76,6 +76,8 @@ export const persistAdgateLatestOffers = async (next, conversion) => {
 
   if (data.status !== "success") return amount;
 
+  const offersToInsert = [];
+
   for (var i = 0; i < data.data.length; i++) {
     const offer = data.data[i];
     const { category_name, category_name_readable } = getOurCategory(
@@ -85,7 +87,34 @@ export const persistAdgateLatestOffers = async (next, conversion) => {
     if (offer.payout < 0.03) continue;
 
     try {
-      Offer.create({
+      // Offer.create({
+      //   title: offer.anchor,
+      //   description: offer.description,
+      //   link: offer.click_url + "[USERIDHERE]",
+      //   amount: offer.epc,
+      //   tokens: offer.epc * conversion,
+      //   category_name,
+      //   category_name_readable,
+      //   campid: offer.id,
+      //   creative: offer.creatives.icon,
+      //   mobile_app:
+      //     offer.name.toLowerCase().includes("app") ||
+      //     offer.name.toLowerCase().includes("ios") ||
+      //     offer.name.toLowerCase().includes("android") ||
+      //     offer.name.toLowerCase().includes("ipad"),
+      //   mobile_app_type: offer.name.toLowerCase().includes("android")
+      //     ? "android"
+      //     : offer.name.toLowerCase().includes("ipad")
+      //     ? "ipad"
+      //     : "ios",
+      //   conversion: offer.requirements,
+      //   v: next,
+      //   country: offer.geo_targeting.countries.map(
+      //     (country) => country.country_code
+      //   ),
+      //   offerwall: "adgate",
+      // });
+      offersToInsert.push({
         title: offer.anchor,
         description: offer.description,
         link: offer.click_url + "[USERIDHERE]",
@@ -116,10 +145,21 @@ export const persistAdgateLatestOffers = async (next, conversion) => {
       //   await o.save();
       amount++;
     } catch (err) {
-      if (NODE_ENV === "development") {
-        console.log("Error in inserting adgate latest offers", err, offer);
-      }
+      // if (NODE_ENV === "development") {
+      //   console.log("Error in inserting adgate latest offers", err, offer);
+      // }
     }
+  }
+
+  try {
+    const startTime = Date.now();
+    await Offer.insertMany(offersToInsert);
+    const endTime = Date.now();
+    console.log(
+      `[ADGATE] ${offersToInsert.length} offers in ${endTime - startTime} ms`
+    );
+  } catch (error) {
+    console.log("Error in inserting adgate latest offers", err);
   }
 
   return amount;

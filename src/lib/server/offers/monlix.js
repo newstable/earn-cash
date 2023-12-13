@@ -59,6 +59,8 @@ export const persistMonlixLatestOffers = async (next, conversion) => {
 
   const offers = data.campaigns;
 
+  const offersToInsert = [];
+
   for (var i = 0; i < offers.length; i++) {
     const offer = offers[i];
     const { category_name, category_name_readable } = getOurCategory(
@@ -68,7 +70,29 @@ export const persistMonlixLatestOffers = async (next, conversion) => {
     if (offer.payout < 0.03) continue;
 
     try {
-      Offer.create({
+      // Offer.create({
+      //   title: offer.name,
+      //   description: offer.description,
+      //   link: offer.url.replace("{{userid}}", "[USERIDHERE]"),
+      //   amount: offer.payout,
+      //   tokens: offer.payout * conversion,
+      //   category_name,
+      //   category_name_readable,
+      //   campid: offer.id,
+      //   creative: offer.image,
+      //   mobile_app:
+      //     offer.name.toLowerCase().includes("app") ||
+      //     offer.name.toLowerCase().includes("ios") ||
+      //     offer.name.toLowerCase().includes("android") ||
+      //     offer.name.toLowerCase().includes("ipad"),
+      //   mobile_app_type: offer?.oss || offer.os,
+      //   conversion: offer.description,
+      //   v: next,
+      //   country: offer.countries,
+      //   offerwall: "monlix",
+      // });
+
+      offersToInsert.push({
         title: offer.name,
         description: offer.description,
         link: offer.url.replace("{{userid}}", "[USERIDHERE]"),
@@ -93,11 +117,21 @@ export const persistMonlixLatestOffers = async (next, conversion) => {
       //   await o.save();
       amount++;
     } catch (err) {
-      if (NODE_ENV === "development") {
-        console.log("Error in inserting monlix's latest offers", err, offer);
-      }
+      // if (NODE_ENV === "development") {
+      //   console.log("Error in inserting monlix's latest offers", err, offer);
+      // }
     }
   }
 
+  try {
+    const startTime = Date.now();
+    await Offer.insertMany(offersToInsert);
+    const endTime = Date.now();
+    console.log(
+      `[MONLIX] ${offersToInsert.length} offers in ${endTime - startTime} ms`
+    );
+  } catch (error) {
+    console.log("Error in inserting MONLIX latest offers", err);
+  }
   return amount;
 };
