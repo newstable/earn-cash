@@ -18,17 +18,17 @@
   let pollingInterval; // Variable to store the polling interval
   let errorMessage = "";
 
-  loggedIn.subscribe(async (val) => {
-    if (val) {
-      onMount(() => {
+  onMount(() => {
+    loggedIn.subscribe(async (val) => {
+      if (val) {
         fetch("/api/offers/featured")
           .then((res) => res.json())
           .then((data) => {
             if (!data.success) return;
             revuOffers = data.revuOffers;
           });
-      });
-    }
+      }
+    });
   });
 
   // * currently moved from Wall.svelte to here as component was fetching multiple times
