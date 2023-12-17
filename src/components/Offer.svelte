@@ -123,7 +123,7 @@
   //   userId = rawData["uid"];
   // });
 
-  const urlForThisOffer = offer.link.replace("[USERIDHERE]", $userId);
+  const urlForThisOffer = offer?.link?.replace("[USERIDHERE]", $userId);
 
   $: {
     if (isPopupOpen) {

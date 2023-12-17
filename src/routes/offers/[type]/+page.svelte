@@ -214,7 +214,7 @@
         apple={offer.mobile_app_type === "ios" ||
           offer.mobile_app_type === null}
         computer={offer.mobile_app_type === null}
-        offerUrl={offer.link.replace("[USERIDHERE]", userId)}
+        offerUrl={offer?.link?.replace("[USERIDHERE]", userId)}
         {offer}
       />
       <!-- {/if} -->

@@ -2,7 +2,7 @@
 
 <script>
   import Icon from "@iconify/svelte";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
 
   export let name;
 
@@ -51,9 +51,13 @@
 
   onMount(() => {
     document.body.addEventListener("click", onPageClick);
-
-    return () => document.body.removeEventListener("click", onPageClick);
   });
+
+  // onDestroy(() => {
+  //   if (document) {
+  //     document.body.removeEventListener("click", onPageClick);
+  //   }
+  // });
 </script>
 
 <div class="header">

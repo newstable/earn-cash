@@ -27,7 +27,7 @@ const wall = async (request) => {
     const offerWall = offerWalls[i];
 
     if (wall === offerWall.simple) {
-      wallUrl = offerWall.wallUrl.replace("[USERID]", USER_ID);
+      wallUrl = offerWall?.wallUrl?.replace("[USERID]", USER_ID);
       wallName = offerWall.wallName;
       wallId = offerWall.wallId;
     }
