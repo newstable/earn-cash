@@ -39,26 +39,35 @@ export const load = async (request) => {
   const withdrawals = rewards.map((reward) => {
     return {
       reward: reward.reward,
+      type: reward.type,
+      info: reward.info,
       price: reward.price,
       processing: reward.processing,
+      holdDate: reward.holdDate,
       hold: reward.hold,
       revoked: reward.revoked,
       date: reward.date,
       id: reward._id.toString(),
     };
   });
+  const reverseactivities = activities.reverse();
+  const reversewithdrawals = withdrawals.reverse();
+
 
   return {
     username: user.username,
     picture: user.picture,
+    email: user.email,
     level: user.level,
     offersCompleted: user.paidSurveyCount,
     usersReferred: await User.countDocuments({ refBy: user }),
     totalEarnings,
     totalEarnings30Days,
     activities,
+    reverseactivities,
     country: user.registerCountry || "WW",
     countryFull: getCountryName(user.registerCountry || "WW"),
     withdrawals,
+    reversewithdrawals
   };
 };

@@ -7,7 +7,7 @@
     export var data;
 </script>
 
-<div class="page">
+<div class="page bg-bye">
     <a href="/cashout">
         <img src="/arrowLeftV2.svg" alt="Arrow back"/>
         <span>Back to shop</span>
@@ -68,7 +68,7 @@
             text-decoration: none;
 
             & > img:first-child {
-                height: 15px;
+                height: 5px;
                 margin-right: 11px;
                 position: relative;
                 top: -1px;
@@ -85,14 +85,14 @@
                 position: relative;
                 top: 1px;
                 text-transform: uppercase;
-                color: #9696d1;
+                color: #fafaff;
                 font-size: 10px;
                 font-weight: 500;
             }
         }
 
         & > div.container {
-            background: rgba(0,0,0,0.1);
+            background: rgba(198, 190, 190, 0.1);
             padding: 36px;
             margin: 0 auto;
             flex: 1;

@@ -59,7 +59,7 @@ const user = new Schema({
     },
     addedPoints: {
         type: Number,
-        default: 0
+        default: 50
     },
     pointsByRef: {
         type: Number,

@@ -100,7 +100,7 @@
                 General
             </span>
             <iconify-icon icon="material-symbols:chevron-right" width="24" height="24" rotate="90deg"></iconify-icon>
-
+                
             <div class="menu" class:show={showDropdown}>
                 <div class="items">
                     {#each chatTypes as chatType, i}
@@ -140,7 +140,7 @@
             </span>
 
              Online
-            <span class="online">{$onlineStore}</span>
+            <span class="online">{$onlineStore +62}</span>
         </div>
     </div>
 </div>
@@ -372,7 +372,7 @@
 
             div.bottomOnline {
                 text-align: left;
-                color: $active-color;
+                color: rgb(88, 163, 88);
                 padding-left: 18px;
                 font-weight: normal;
                 font-size: 13px;
@@ -380,7 +380,7 @@
                 span.chatOnlineOuter {
                     height: 17px;
                     width: 17px;
-                    background: rgba(255, 90, 92,0.2);
+                 
                     border-radius: 100%;
                     display: inline-block;
                     position: relative;
@@ -389,7 +389,7 @@
                     span.chatOnlineInner {
                         height: 9px;
                         width: 9px;
-                        background: $active-color;
+                        background: rgb(88, 163, 88);
                         border-radius: 100%;
                         display: inline-block;
                         position: relative;

@@ -14,7 +14,7 @@
           <CardBody>
             <Col>
               <Row>Today's Profit</Row>
-              <Row>{info ? info.earnings.todaysEarning : 0}</Row>
+              <Row>{info ? info.todaysProfit : 0}</Row>
             </Col>
           </CardBody>
         </Card>
@@ -89,31 +89,31 @@
         <Row>
           <div class="list-item px-20">
             <span>Todays Earnings</span>
-            <span>${info ? info.earnings.todaysEarning / 100 : 0}</span>
+            <span>${info ? info.earnings.todaysEarning : 0}</span>
           </div>
         </Row>
         <Row>
           <div class="list-item px-20">
             <span>Yesterdays Earnings</span>
-            <span>${info ? info.earnings.yesterdaysEarning / 100 : 0}</span>
+            <span>${info ? info.earnings.yesterdaysEarning : 0}</span>
           </div>
         </Row>
         <Row>
           <div class="list-item px-20">
             <span>Weeks Earnings</span>
-            <span>${info ? info.earnings.weeksEarning / 100 : 0}</span>
+            <span>${info ? info.earnings.weeksEarning : 0}</span>
           </div>
         </Row>
         <Row>
           <div class="list-item px-20">
             <span>Months Earnings</span>
-            <span>${info ? info.earnings.monthsEarning / 100 : 0}</span>
+            <span>${info ? info.earnings.monthsEarning : 0}</span>
           </div>
         </Row>
         <Row>
           <div class="list-item px-20">
             <span>Last Months Earnings</span>
-            <span>${info ? info.earnings.lastMonthsEarning / 100 : 0}</span>
+            <span>${info ? info.earnings.lastMonthsEarning : 0}</span>
           </div>
         </Row>
       </Col>

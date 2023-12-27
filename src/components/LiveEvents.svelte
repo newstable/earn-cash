@@ -33,7 +33,7 @@
 
     div.feed {
         height: $earn-feed-height;
-        background: #171616;
+        background: #521119;
         padding-left: 13px;
         display:flex;
         position: fixed;
@@ -41,7 +41,7 @@
         left: 0;
         width: 100%;
         transition: .25s;
-        z-index: 6;
+        z-index: 10;
 
         @media only screen and (min-width: 1200px) {
             margin-left: $nav-width;

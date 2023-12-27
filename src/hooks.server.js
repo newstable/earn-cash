@@ -81,5 +81,5 @@ export const handle = async ({ event, resolve }) => {
 };
 
 if (NODE_ENV !== "development") {
-  getNewOffers();
+   getNewOffers();
 }

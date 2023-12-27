@@ -34,7 +34,7 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 160%;
-    color: #a9a9ca;
+    color: #ffff;
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -49,16 +49,16 @@
 
     &.active {
       background: #2c2727;
-      color: #ff5a5c;
+      color: #2c2727;
       background: linear-gradient(
         90deg,
         rgba(255, 90, 92, 0.1) 0,
         rgba(255, 90, 92, 0) 100%
       ) !important;
-      border-left: 1px solid #ff5a5c;
+      border-left: 1px solid #ffff;
 
       & > span > span {
-        background-color: #195047;
+        background-color: #ffff;
       }
     }
 
@@ -75,7 +75,7 @@
 
       & > span {
         border-radius: 12px;
-        background: #322d2d;
+        background: #000000;
         padding: 2px 8px;
         height: 24px;
         align-items: center;

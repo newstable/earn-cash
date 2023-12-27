@@ -124,24 +124,16 @@
 
 <div class="headerHolder">
   <header>
-    <div class="logo">
-      <a href="/">
-        <img src="/logoicon.png" alt="Favicon" />
-        <span>
-          <img src="/logoicontext.png" alt="Logo" />
-        </span>
+    <div class="logo flex content-center w-[220px] h-[100%]">
+      <a href="/earn" class="flex flex-row">
+          <img src="/coin.svg" alt="Logo" class="w-[100%] h-[48px] mt-3 ml-4" />
+          <img src="/logo1.png" alt="Logo" class="w-[80%] h-[60%] scale-90 -ml-0 mt-4 hidden sm:block" />
       </a>
-    </div>
+  </div>
 
-    <div class="widgets"></div>
 
     <div class="account">
-      <div class="discord-button">
-        <a href="https://discord.gg/justearn" target="_blank">
-          <img src="/discord.webp" alt="Discord" />
-          Join
-        </a>
-      </div>
+     
       {#if !$loggedIn}
         <button on:click={() => modal.open()}>
           <Icon icon="mdi:user" color="white" width="17" height="17" />
@@ -156,7 +148,7 @@
         <div class="account-item">
           <a href="/cashout">
             <span>
-              <img src="/favicon.png" alt="Favicon" width="18" />
+              <img src="/coin.svg" alt="Favicon" width="25" />
             </span>
             <span style="color: white; text-decoration: none; cursor: default;">
               {(+balance).toFixed(2)}
@@ -211,7 +203,7 @@
           </ul>
         </div>
         <div class="account-item site-notifications__bell">
-          <Icon icon="mdi:bell" color="#7d7d9e" width="24" height="24" />
+          <Icon icon="mdi:bell" color="#ffff" width="24" height="24" />
         </div>
       {/if}
     </div>
@@ -302,7 +294,8 @@
   }
 
   .account-item {
-    margin-left: 20px;
+    margin-left: 10px;
+    
 
     &.dropdown {
       position: relative;
@@ -360,7 +353,7 @@
     &:first-child > a {
       display: flex;
       align-items: center;
-      background: #171515;
+      background: #4A4845;
       border-radius: 6px;
       font-size: 14px;
       line-height: 160%;
@@ -394,37 +387,7 @@
     transition: 0.25s;
     z-index: 11;
 
-    div.logo {
-      width: $nav-width;
-      display: flex;
-      align-items: center;
-      height: 100%;
-
-      a {
-        position: relative;
-        z-index: 11;
-        margin-left: 18px;
-        font-size: 2px;
-
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        & > img {
-          margin-right: 14px;
-          height: 48px;
-        }
-
-        span {
-          img {
-            @media only screen and (max-width: 700px) {
-              display: none;
-            }
-            height: 24px;
-          }
-        }
-      }
-    }
+    
 
     div.widgets {
       margin-left: 20px;
@@ -450,7 +413,7 @@
         border: 0;
         margin: 0;
 
-        background: $alt-background-color;
+        background: #6f1521;
         padding: 0 20px;
         text-align: left;
         border-radius: 4px;
@@ -468,7 +431,8 @@
         gap: 0;
 
         &.alt {
-          background: $active-color;
+          background: #171515;
+          
         }
 
         @media only screen and (max-width: 700px) {

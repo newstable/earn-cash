@@ -19,7 +19,7 @@ export const GET = async(request) => {
     ) {
         return new Response("", { status: 404 });
     }
-    if (searchParams.get("secret") !== "DANIELISAHOTTIEEE") return new Response("", { status: 404 });
+    if (searchParams.get("secret") !== "DANIELISAHOTTIEEE") return new Response("", { status: 404  });
 
     var user = await User.findOne({ _id: searchParams.get("u") });
     if (user === null) return new Response("", { status: 404 });

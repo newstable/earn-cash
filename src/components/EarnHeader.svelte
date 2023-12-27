@@ -190,7 +190,7 @@
   @import "../variables.scss";
 
   .header {
-    background: #171515;
+    background: #5f141e;
     padding: calc($footer-height * 0.7) $footer-height;
     display: flex;
     flex-direction: row;
@@ -314,12 +314,13 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                   
                     width: 20px;
                     height: 20px;
                   }
 
                   & > span.text {
-                    color: #a9a9ca;
+                    color: #ffff;
                     font-weight: 500;
                     padding: 0;
                     margin-left: 10px;

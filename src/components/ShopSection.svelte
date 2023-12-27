@@ -13,8 +13,9 @@
 <style lang="scss">
     div.section {
         h2 {
-            color: rgba(177,177,255,0.5);
-            font-size: 10px;
+            color: white;
+            
+            font-size: 14px;
             font-weight: 700;
             margin-top: 18px;
             margin-bottom: 21px;

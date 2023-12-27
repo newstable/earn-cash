@@ -54,56 +54,9 @@
 
         <div class="container">
             <div class="left">
-                <div class="welcome">Welcome</div>
+            <img src="justearnsignup.png" class="-mt-6"/>   
 
-                <div class="title">
-                    <Gift/>
-                    
-                    <div class="inner">
-                        <h1>Sign Up Bonus</h1>
-                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 5.5L2.5 4.5H8L10.5 5.5L8 6H2.5L0 5.5Z" fill="#888FC2"></path>
-                            <path d="M2 5.5L5.5 0L8.5 5.5L5.5 10.5L2 5.5Z" fill="#888FC2"></path>
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="content">
-                    <div class="option">
-                        <span>1</span>
-                        Create an account
-                    </div>
-
-                    <div class="option">
-                        <span>2</span>
-                        Start earning from offers and accumulate points!
-                    </div>
-
-                    <div class="winnings">
-                        <div class="title">Use your coins to cash out, or play our Rock, Paper, Scissors gamemode.</div>
-
-                        <div class="container">
-                            <div class="block">
-                                <div class="item" style="background-image: url(/rewards/goldLayer.svg)">
-                                    <div class="icon" style="background-image: url(/rewards/coinsWin1.png)"></div>
-                                    <div class="amount">$250,00</div>
-                                </div>
-                                <div class="item" style="background-image: url(/rewards/greenLayer.svg)">
-                                    <div class="icon" style="background-image: url(/rewards/coinsWin2.png)"></div>
-                                    <div class="amount">$2,50</div>
-                                </div>
-                                <div class="item">
-                                    <div class="icon" style="background-image: url(/rewards/coinsWin3.png)"></div>
-                                    <div class="amount">$0,25</div>
-                                </div>
-                                <div class="item">
-                                    <div class="icon" style="background-image: url(/rewards/coinsWin4.png)"></div>
-                                    <div class="amount">$0,05</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
 
             <div class="right">
@@ -145,7 +98,10 @@
         max-height: 100vh;
         width: 100%;
         max-width: 720px;
-        background: #262323;
+        background: linear-gradient(to top, #35181a, #0E0C1D);
+
+
+
         border-radius: 10px;
         
         position: fixed;
@@ -167,7 +123,8 @@
         & > div {
             padding-bottom: 0;
             overflow: hidden;
-            padding: 24px;
+            padding: 0px 5px 0px 0px;
+
 
             div.cross {
                 position: absolute;
@@ -181,6 +138,7 @@
                 max-width: 720px;
                 display: flex;
                 width: 100%;
+                margin-top: 20px;
                 justify-content: space-between;
 
                 & > .right {
@@ -202,7 +160,7 @@
                                 transition: 400ms all ease-in-out;
                                 position: relative;
                                 cursor: pointer;
-                                color: #444564;
+                                color: red;
                                 font-size: 1.25rem;
                                 font-weight: 400;
                                 text-decoration: none;
@@ -239,7 +197,8 @@
                     display: flex;
                     flex-direction: column;
                     width: 35%;
-                    height: auto;
+                    height: 550px;
+
 
                     div.welcome {
                         color: #fff;
@@ -300,7 +259,7 @@
                     div.content {
                         font-weight: 500;
                         text-align: center;
-                        font-size: 10px;
+                        font-size: 1px;
 
                         & > .option:first-child {
                             margin-bottom: 9px;

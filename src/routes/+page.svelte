@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-    <title>Justearn: Cash, Bitcoin, PayPal &amp; more! | justearn.gg </title>
+    <title>Earn Cash & R$ | justearn.gg </title>
 </svelte:head>
 
 <div class="home">
@@ -21,6 +21,7 @@
         letter-spacing: -0.03em;
         padding-top: 57px;
         margin: 0 auto 67px auto;
+        
 
         &::before {
             content: "";
@@ -29,7 +30,7 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            /* background-image: url(/home-background.png); TODO: give different image */
+            /* background-image: url(/coin.svg); TODO: give different image */
             background-repeat: no-repeat;
             z-index: -1;
         }

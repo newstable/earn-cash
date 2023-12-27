@@ -132,7 +132,7 @@
             By signing up, you are agreeing to our
             <a href="/privacy" target="_blank">Privacy Policy</a>
             and
-            <a href="/terms" target="_blank">Terms of Service</a>.
+            <a href="/terms" target="_blank">Terms</a>
         </span>
     </div>
 
@@ -162,7 +162,7 @@
 
         .check {
             left: 0;
-            color: #63658e;
+            color: #ffff;
             position: relative;
             top: -10px;
             display: block;
@@ -188,7 +188,7 @@
                     width: 18px;
                     height: 18px;
                     z-index: 0;
-                    border: 2px solid #474971;
+                    border: 2px solid #ffff;
                     border-radius: 5px;
                     margin-top: 3px;
                     transition: .2s;
@@ -224,6 +224,9 @@
             position: relative;
             margin-top: 1rem;
             margin-bottom: 1rem;
+            scale: 90%;
+            margin-right: 20px;
+            margin-left: -20px;
 
             input {
                 outline: none;
@@ -240,7 +243,8 @@
                 width: calc(100% - 2rem);
                 margin-top: .75rem;
                 border-radius: 5px;
-                color: $alt-navbar-color;
+                color: black;
+                font-weight: bold;
 
                 overflow: visible;
                 line-height: 1.15;
@@ -307,8 +311,8 @@
         justify-content: center;
         height: 44px;
         min-width: 130px;
-        background: $alt-background-color;
-        color: #e64c4e;
+        background: #5f141e;
+        color: white;
         border-radius: 5px;
         box-shadow: none;
         text-shadow: 0 0 15px #e64c4e;

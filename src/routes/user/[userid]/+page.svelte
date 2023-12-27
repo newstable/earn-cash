@@ -8,7 +8,7 @@
     const maxPage = () => Math.ceil(data.activities.length / 5);
     const setPage = newPage => page = newPage;
 </script>
-
+<div class="bg-bye">
 <div class="profile">
     <div>
         <h1>Profile</h1>
@@ -122,8 +122,8 @@
 
                             <div class="cardInfo">
                                 <div>
-                                    <img src="/favicon.png" alt="Currency"/>
-                                    {data.totalEarnings}
+                                    <img src="/coin.svg" alt="Currency" />
+                                    {Math.ceil(data.totalEarnings)}
                                 </div>
                                 <div>Total Earnings</div>
                             </div>
@@ -151,8 +151,8 @@
 
                             <div class="cardInfo">
                                 <div>
-                                    <img src="/favicon.png" alt="Currency"/>
-                                    {data.totalEarnings30Days}
+                                    <img src="/coin.svg" alt="Currency"/>
+                                    {Math.ceil(data.totalEarnings30Days)}
                                 </div>
                                 <div>Earnings last 30 days</div>
                             </div>
@@ -183,7 +183,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {#each data.activities.slice((page - 1) * 5, 5) as activity}
+                    {#each data.activities.slice((page - 1) * 5, (page * 5)) as activity}
                         <tr>
                             <td>
                                 {activity.name}
@@ -192,7 +192,7 @@
                                 {date2readable(activity.time)}
                             </td>
                             <td>
-                                <img src="/favicon.png" alt="Currency"/>
+                                <img src="/coin.svg" class="scale-150 mt-4" alt="Currency"/>
                                 <span>{activity.reward}</span>
                             </td>
                         </tr>
@@ -261,8 +261,17 @@
         </div>
     </div>
 </div>
+</div>
 
 <style lang="scss">
+     div.userProfileAvatar {
+        z-index: 5 !important;
+     }
+     div.userProfileLevel {
+        z-index: 6 !important;
+            
+        }
+
     @media only screen and (max-width: 1199px) {
         div.info {
             flex-direction: column;
@@ -278,6 +287,7 @@
         div.userProfileAvatar {
             width: 90px !important;
             height: 90px !important;
+           
 
             img {
                 width: 80px !important;
@@ -287,6 +297,7 @@
 
         div.userProfileLevel {
             margin: -12px 0 0 26px !important;
+            
         }
 
         div.userStatsCard {
@@ -590,7 +601,7 @@
             width: 50%;
             flex: none;
             min-height: 230px;
-            background: #232121;
+            background: #5f141e;
             border-radius: 6px;
 
             &:first-child {
@@ -602,7 +613,7 @@
                 width: 50%;
                 flex: none;
                 min-height: 230px;
-                background: #232121;
+                background: #5f141e;
                 border-radius: 6px;
                 padding: 25px;
             }

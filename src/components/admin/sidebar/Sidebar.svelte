@@ -6,6 +6,13 @@
 	let urlPath;
 	$: urlPath = $page.url.pathname;
 
+	let isSidebarCollapsed = false; // Reactive variable to track sidebar state
+
+// Function to toggle sidebar
+function toggleSidebar() {
+	isSidebarCollapsed = !isSidebarCollapsed;
+};
+
 	onMount(() => {
 		/* Navbar list dropdown */
 		const sidebarNav = document.querySelector('.sidebar_nav');
@@ -138,10 +145,7 @@
 			document.querySelector('.svlr-viewport').scrollTop = activeLinkOffset;
 		}
 
-		//collapse sidebar if window is < 991px
-		if (window.innerWidth < 991) {
-			mainSidebar.classList.add('sidebar--collapsed');
-		}
+		
 	});
 
 	function handleLayoutDirecction(e, direction) {
@@ -163,7 +167,9 @@
 	}
 </script>
 
-<aside class="sidebar">
+<aside class="sidebar" class:sidebar--collapsed={isSidebarCollapsed}>
+    <button on:click={toggleSidebar}>Minify</button>
+
 	<Svroller width="100%" height="100%">
 		<div class="sidebar__menu-group">
 			<ul class="sidebar_nav">
@@ -835,6 +841,12 @@
     @import '../../../assets/sass/mixins/directional.scss';
 	@import './style.scss';
     $dir: ltr;
+
+	  /* CSS for collapsed sidebar */
+	  .sidebar--collapsed {
+        width: 50px; /* Adjust the width as per your design */
+        /* Other styles for collapsed state */
+    }
 
 	/* :global(aside.sidebar) {
 		@import '../../../assets/sass/mixins/directional.scss';

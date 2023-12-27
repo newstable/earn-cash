@@ -12,14 +12,10 @@
 </script>
 
 <div class="content">
-    <Statistics totalEarned={totalEarned}/>
-    <GetStarted/>
-    <Why/>
+   
 </div>
 
-<Faq/>
-<Testimonals/>
-<Banners/>
+
 
 <style lang="scss">
     div.content {

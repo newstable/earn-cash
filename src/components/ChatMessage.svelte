@@ -51,10 +51,10 @@
 
     div.chatMessage {
         padding: 9px;
-        margin: 4px 0;
+        margin: 20px 0;
         border-radius: 3px;
         width: 100%;
-        background: rgba(44,44,70,0.25);
+        background: #F5F5F5;
         display: inline-block;
         text-align: left;
 
@@ -79,7 +79,7 @@
                 padding-top: 0;
                 font-weight: 500;
                 font-size: 11px;
-                color: rgba(255,255,255,0.8);
+                color: #5f141e;
                 text-align: center;
                 border-radius: 2px;
                 margin-right: 7px;
@@ -96,7 +96,8 @@
                     text-decoration: none;
 
                     div.usernameInner {
-                        color: $active-text-color;
+                        color: black;
+                        font-size: 12px;
                         max-width: 130px;
                         display: block;
                         white-space: nowrap;
@@ -114,7 +115,7 @@
             line-height: 133%;
             text-align: right;
             letter-spacing: -0.03em;
-            color: rgba(135,135,202,0.3);
+            color: black;
             margin-top: -20px;
             float: right;
         }
@@ -125,9 +126,9 @@
             font-size: 13px;
             font-weight: 500;
             line-height: 133%;
-            color: rgba(135,135,202,0.7);
+            color: black;
             margin-left: 0;
-            margin-top: 10px;
+            margin-top: 0px;
         }
     }
 </style>

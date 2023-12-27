@@ -17,7 +17,7 @@
     revu: 0,
     adscend: 0,
     timewall: 0,
-    cpxresearch: 4, // Example for survey walls
+    cpxresearch: 0, // Example for survey walls
     bitlabs: 0,
     inbrain: 0,
     mmwall: 0,
@@ -75,7 +75,7 @@
           </div>
           <p class="lock-text">{errorMessage}</p>
         </div>
-      {:else if user.level >= wallLevels[wallUrl]}
+      {:else}
         <!-- Check if user's level is sufficient -->
         <div class="overlay" />
         <div class="action">
@@ -84,16 +84,7 @@
           </div>
           <p class="earn-box-cover-action-text">View offers</p>
         </div>
-      {:else}
-        <!-- Display centered lock icon and text if user's level is not sufficient -->
-        <div class="lock-container">
-          <div class="padlock">
-            <img src="./padlock.svg" alt="Padlock" />
-          </div>
-          <p class="lock-text">
-            You need to reach level {wallLevels[wallUrl]} to unlock
-          </p>
-        </div>
+      
       {/if}
       <a
         href="/earn/{wallUrl}"
@@ -103,13 +94,14 @@
         <div class="below" />
         <div class="above">
           {#if hasBonus}
-            <div class="bonus">BONUS</div>
+            <div class="bonus">+20%</div>
           {/if}
         </div>
         <div class="offerWall">
           <img src={logoUrl} alt="{wallName} logo" />
         </div>
       </a>
+      
       <p class="wallName">{wallName}</p>
     </div>
   </div>
@@ -133,7 +125,7 @@
       min-width: 20px;
       min-height: 50px;
       background: #222121;
-      border-radius: 5px;
+      border-radius: 10px;
       position: relative;
       width: 100%;
 
@@ -144,6 +136,7 @@
         top: 0;
         right: 0;
         bottom: 0;
+        border-radius: 10px;
         left: 0;
         display: flex;
         opacity: 0;

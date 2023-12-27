@@ -10,7 +10,7 @@
     width: 100%;
     max-width: 100vw;
     padding: 24px;
-    background: #171515;
+    background: linear-gradient(to top, #5f141e, #0E0C1D 70%);
     box-sizing: border-box;
   }
 

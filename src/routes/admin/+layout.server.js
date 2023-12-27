@@ -5,174 +5,235 @@ import RefEarning from "../../models/RefEarning.model";
 import OfferDone from "../../models/OfferDone.model";
 import Game from "../../models/Game.model";
 import { offerWalls } from "../../lib/offerWalls";
+import Reward from "../../models/Reward.model.js";
 
 const lastMonthStartDate = new Date(Date.now() - 61 * 24 * 3600 * 1000);
 
 const getEarnings = async () => {
-  const earnings = await RefEarning.find({
-    date: { $gte: lastMonthStartDate },
-  });
+  // const earnings = await RefEarning.find({
+  //   date: { $gte: lastMonthStartDate },
+  // });
+  // const earnings = await OfferDone.find({
+  //   date: { $gte: lastMonthStartDate },
+  // });
   let todaysEarning = 0;
   let yesterdaysEarning = 0;
   let weeksEarning = 0;
   let monthsEarning = 0;
   let lastMonthsEarning = 0;
 
-  // const todaysEarningAggregatedPromise = RefEarning.aggregate([
-  //   {
-  //     $match: {
-  //       date: { $gte: new Date(new Date().setHours(0, 0, 0, 0)) },
-  //     },
-  //   },
-  //   {
-  //     $group: {
-  //       _id: null, // Group all documents together
-  //       totalAmount: { $sum: "$pointsForRef" }, // Calculate the sum of the 'amount' field
-  //     },
-  //   },
-  // ]);
+  // console.log(
+  //   // new Date(new Date(new Date().setHours(0, 0, 0, 0)).toISOString()),
+  //   new Date(new Date().setUTCHours(0, 0, 0, 0)),
+  //   "this"
+  // );
 
-  // const yesterdaysEarningAggregatedPromise = RefEarning.aggregate([
-  //   {
-  //     $match: {
-  //       date: {
-  //         $gte: new Date(new Date().setHours(0, 0, 0, 0) - 86400000),
-  //         $lt: new Date(new Date().setHours(0, 0, 0, 0)),
-  //       },
-  //     },
-  //   },
-  //   {
-  //     $group: {
-  //       _id: null, // Group all documents together
-  //       totalAmount: { $sum: "$pointsForRef" }, // Calculate the sum of the 'amount' field
-  //     },
-  //   },
-  // ]);
+  // console.log(new Date(new Date().setUTCHours(0, 0, 0, 0)), "there");
 
-  // const weeksEarningAggregatedPromise = RefEarning.aggregate([
-  //   {
-  //     $match: {
-  //       date: {
-  //         $gte: new Date(
-  //           new Date().setHours(0, 0, 0, 0) - 7 * 24 * 3600 * 1000
-  //         ),
-  //       },
-  //     },
-  //   },
-  //   {
-  //     $group: {
-  //       _id: null, // Group all documents together
-  //       totalAmount: { $sum: "$pointsForRef" }, // Calculate the sum of the 'amount' field
-  //     },
-  //   },
-  // ]);
+  const todayStart = new Date(new Date().setUTCHours(0, 0, 0, 0));
+  const yesterdayStart = new Date(
+    new Date().setUTCHours(0, 0, 0, 0) - 86400000
+  );
 
-  // const monthsEarningAggregatedPromise = RefEarning.aggregate([
-  //   {
-  //     $match: {
-  //       date: {
-  //         $gte: new Date(
-  //           new Date().setHours(0, 0, 0, 0) - 30 * 24 * 3600 * 1000
-  //         ),
-  //       },
-  //     },
-  //   },
-  //   {
-  //     $group: {
-  //       _id: null, // Group all documents together
-  //       totalAmount: { $sum: "$pointsForRef" }, // Calculate the sum of the 'amount' field
-  //     },
-  //   },
-  // ]);
+  const todaysEarningAggregatedPromise = OfferDone.aggregate([
+    {
+      $match: {
+        // date: { $gte: new Date(new Date().setHours(0, 0, 0, 0)) },
+        date: {
+          $gte: todayStart,
 
-  // const lastMonthsEarningAggregatedPromise = RefEarning.aggregate([
-  //   {
-  //     $match: {
-  //       date: {
-  //         $gte: new Date(
-  //           new Date().setHours(0, 0, 0, 0) - 61 * 24 * 3600 * 1000
-  //         ),
-  //       },
-  //     },
-  //   },
-  //   {
-  //     $group: {
-  //       _id: null, // Group all documents together
+          // new Date(
+          //   // new Date(new Date().setHours(0, 0, 0, 0)).toISOString()
+          // ),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: null, // Group all documents together
+        totalAmount: { $sum: "$payout" }, // Calculate the sum of the 'amount' field
+      },
+    },
+  ]);
 
-  //       totalAmount: { $sum: "$pointsForRef" }, // Calculate the sum of the 'amount' field
-  //     },
-  //   },
-  // ]);
+  const yesterdaysEarningAggregatedPromise = OfferDone.aggregate([
+    {
+      $match: {
+        date: {
+          $gte: yesterdayStart,
+          $lt: todayStart,
+        },
+      },
+    },
+    {
+      $group: {
+        _id: null, // Group all documents together
+        totalAmount: { $sum: "$payout" }, // Calculate the sum of the 'amount' field
+      },
+    },
+  ]);
 
-  // const [
-  //   todaysEarningAggregated,
-  //   yesterdaysEarningAggregated,
-  //   weeksEarningAggregated,
-  //   monthsEarningAggregated,
-  //   lastMonthsEarningAggregated,
-  // ] = await Promise.all([
-  //   todaysEarningAggregatedPromise,
-  //   yesterdaysEarningAggregatedPromise,
-  //   weeksEarningAggregatedPromise,
-  //   monthsEarningAggregatedPromise,
-  //   lastMonthsEarningAggregatedPromise,
-  // ]);
+  // const currentWeekStart = new Date(
+  //   Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), 1)
+  // );
 
-  // if (todaysEarningAggregated?.[0]?.totalAmount) {
-  //   todaysEarning = todaysEarningAggregated?.[0]?.totalAmount;
-  //   weeksEarning += todaysEarningAggregated?.[0]?.totalAmount;
-  //   monthsEarning += todaysEarningAggregated?.[0]?.totalAmount;
-  // }
+  const currentDate = new Date();
 
-  // if (yesterdaysEarningAggregated?.[0]?.totalAmount) {
-  //   yesterdaysEarning = yesterdaysEarningAggregated?.[0]?.totalAmount;
-  //   weeksEarning += yesterdaysEarningAggregated?.[0]?.totalAmount;
-  //   monthsEarning += yesterdaysEarningAggregated?.[0]?.totalAmount;
-  // }
+  // Calculate the difference in days between the current day and the last Sunday
+  const daysUntilLastSunday = (currentDate.getUTCDay() + 7 - 0) % 7;
+  const lastSunday = new Date(currentDate);
+  lastSunday.setUTCHours(0, 0, 0, 0);
+  lastSunday.setUTCDate(currentDate.getUTCDate() - daysUntilLastSunday);
 
-  // if (weeksEarningAggregated?.[0]?.totalAmount) {
-  //   weeksEarning += weeksEarningAggregated?.[0]?.totalAmount;
-  //   monthsEarning += weeksEarningAggregated?.[0]?.totalAmount;
-  // }
+  // If today is Sunday, reset lastSunday to the current date
+  if (daysUntilLastSunday === 0) {
+    lastSunday.setUTCDate(currentDate.getUTCDate());
+  }
 
-  // if (monthsEarningAggregated?.[0]?.totalAmount) {
-  //   monthsEarning += monthsEarningAggregated?.[0]?.totalAmount;
-  // }
+  // console.log({ lastSunday });
 
-  // if (lastMonthsEarningAggregated?.[0]?.totalAmount) {
-  //   lastMonthsEarning += lastMonthsEarningAggregated?.[0]?.totalAmount;
-  // }
+  const weeksEarningAggregatedPromise = OfferDone.aggregate([
+    {
+      $match: {
+        date: {
+          $gte: lastSunday,
+          // new Date(
+          //   new Date().setHours(0, 0, 0, 0) - 7 * 24 * 3600 * 1000
+          // ),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: null, // Group all documents together
+        totalAmount: { $sum: "$payout" }, // Calculate the sum of the 'amount' field
+      },
+    },
+  ]);
+
+  const currentMonthStart = new Date(
+    Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), 1)
+  );
+
+  const prevMonthStart = new Date(
+    Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth() - 1, 1)
+  );
+
+  // console.log(currentMonthStart, prevMonthStart);
+
+  const monthsEarningAggregatedPromise = OfferDone.aggregate([
+    {
+      $match: {
+        date: {
+          $gte: currentMonthStart,
+          // $gte: new Date(
+          //   new Date().setHours(0, 0, 0, 0) - 30 * 24 * 3600 * 1000
+          // ),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: null, // Group all documents together
+        totalAmount: { $sum: "$payout" }, // Calculate the sum of the 'amount' field
+      },
+    },
+  ]);
+
+  const lastMonthsEarningAggregatedPromise = OfferDone.aggregate([
+    {
+      $match: {
+        date: {
+          $gte: prevMonthStart,
+          $lt: currentMonthStart,
+        },
+      },
+    },
+    {
+      $group: {
+        _id: null, // Group all documents together
+        totalAmount: { $sum: "$payout" }, // Calculate the sum of the 'amount' field
+      },
+    },
+  ]);
+
+  const [
+    todaysEarningAggregated,
+    yesterdaysEarningAggregated,
+    weeksEarningAggregated,
+    monthsEarningAggregated,
+    lastMonthsEarningAggregated,
+  ] = await Promise.all([
+    todaysEarningAggregatedPromise,
+    yesterdaysEarningAggregatedPromise,
+    weeksEarningAggregatedPromise,
+    monthsEarningAggregatedPromise,
+    lastMonthsEarningAggregatedPromise,
+  ]);
+
+  console.log({
+    todaysEarningAggregated,
+    yesterdaysEarningAggregated,
+    weeksEarningAggregated,
+    monthsEarningAggregated,
+    lastMonthsEarningAggregated,
+  });
+
+  if (todaysEarningAggregated?.[0]?.totalAmount) {
+    todaysEarning = todaysEarningAggregated?.[0]?.totalAmount;
+    // weeksEarning += todaysEarningAggregated?.[0]?.totalAmount;
+    // monthsEarning += todaysEarningAggregated?.[0]?.totalAmount;
+  }
+
+  if (yesterdaysEarningAggregated?.[0]?.totalAmount) {
+    yesterdaysEarning = yesterdaysEarningAggregated?.[0]?.totalAmount;
+    // weeksEarning += yesterdaysEarningAggregated?.[0]?.totalAmount;
+    // monthsEarning += yesterdaysEarningAggregated?.[0]?.totalAmount;
+  }
+
+  if (weeksEarningAggregated?.[0]?.totalAmount) {
+    weeksEarning += weeksEarningAggregated?.[0]?.totalAmount;
+    // monthsEarning += weeksEarningAggregated?.[0]?.totalAmount;
+  }
+
+  if (monthsEarningAggregated?.[0]?.totalAmount) {
+    monthsEarning += monthsEarningAggregated?.[0]?.totalAmount;
+  }
+
+  if (lastMonthsEarningAggregated?.[0]?.totalAmount) {
+    lastMonthsEarning += lastMonthsEarningAggregated?.[0]?.totalAmount;
+  }
 
   // console.log({ todaysEarningAggregated });
   // why is that an empty array?
 
-  earnings.forEach((earning) => {
-    if (earning.date.toDateString() === new Date().toDateString()) {
-      todaysEarning += earning.pointsForRef;
-      weeksEarning += earning.pointsForRef;
-      monthsEarning += earning.pointsForRef;
-    } else if (
-      earning.date.toDateString() ===
-      new Date(Date.now() - 86400000).toDateString()
-    ) {
-      yesterdaysEarning += earning.pointsForRef;
-      weeksEarning += earning.pointsForRef;
-      monthsEarning += earning.pointsForRef;
-    } else if (
-      earning.date.getTime() >
-      new Date(Date.now() - 7 * 24 * 3600 * 1000).getTime()
-    ) {
-      weeksEarning += earning.pointsForRef;
-      monthsEarning += earning.pointsForRef;
-    } else if (
-      earning.date.getTime() >
-      new Date(Date.now() - 30 * 24 * 3600 * 1000).getTime()
-    ) {
-      monthsEarning += earning.pointsForRef;
-    } else {
-      lastMonthsEarning += earning.pointsForRef;
-    }
-  });
+  // earnings.forEach((earning) => {
+  //   if (earning.date.toDateString() === new Date().toDateString()) {
+  //     todaysEarning += earning?.payout;
+  //     weeksEarning += earning?.payout;
+  //     monthsEarning += earning?.payout;
+  //   } else if (
+  //     earning.date.toDateString() ===
+  //     new Date(Date.now() - 86400000).toDateString()
+  //   ) {
+  //     yesterdaysEarning += earning?.payout;
+  //     weeksEarning += earning?.payout;
+  //     monthsEarning += earning?.payout;
+  //   } else if (
+  //     earning.date.getTime() >
+  //     new Date(Date.now() - 7 * 24 * 3600 * 1000).getTime()
+  //   ) {
+  //     weeksEarning += earning?.payout;
+  //     monthsEarning += earning?.payout;
+  //   } else if (
+  //     earning.date.getTime() >
+  //     new Date(Date.now() - 30 * 24 * 3600 * 1000).getTime()
+  //   ) {
+  //     monthsEarning += earning?.payout;
+  //   } else {
+  //     lastMonthsEarning += earning?.payout;
+  //   }
+  // });
   return {
     todaysEarning,
     yesterdaysEarning,
@@ -188,25 +249,52 @@ const getOffers = async () => {
   //   date: { $gte: lastMonthStartDate },
   // });
 
+  const todayStart = new Date(new Date().setUTCHours(0, 0, 0, 0));
+  const yesterdayStart = new Date(
+    new Date().setUTCHours(0, 0, 0, 0) - 86400000
+  );
+
+  const currentDate = new Date();
+
+  // Calculate the difference in days between the current day and the last Sunday
+  const daysUntilLastSunday = (currentDate.getUTCDay() + 7 - 0) % 7;
+  const lastSunday = new Date(currentDate);
+  lastSunday.setUTCHours(0, 0, 0, 0);
+  lastSunday.setUTCDate(currentDate.getUTCDate() - daysUntilLastSunday);
+
+  // If today is Sunday, reset lastSunday to the current date
+  if (daysUntilLastSunday === 0) {
+    lastSunday.setUTCDate(currentDate.getUTCDate());
+  }
+
+  const currentMonthStart = new Date(
+    Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), 1)
+  );
+
+  const prevMonthStart = new Date(
+    Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth() - 1, 1)
+  );
+
   const offerDoneTodayPromise = OfferDone.find({
-    date: { $gte: new Date(new Date().setHours(0, 0, 0, 0)) },
+    date: { $gte: todayStart },
   }).countDocuments();
 
   const offerDoneThisWeekPromise = OfferDone.find({
     date: {
-      $gte: new Date(new Date().setHours(0, 0, 0, 0) - 7 * 24 * 3600 * 1000),
+      $gte: lastSunday,
     },
   }).countDocuments();
 
   const offerDoneThisMonthPromise = OfferDone.find({
     date: {
-      $gte: new Date(new Date().setHours(0, 0, 0, 0) - 30 * 24 * 3600 * 1000),
+      $gte: currentMonthStart,
     },
   }).countDocuments();
 
   const offerDoneLastMonthPromise = OfferDone.find({
     date: {
-      $gte: new Date(new Date().setHours(0, 0, 0, 0) - 61 * 24 * 3600 * 1000),
+      $gte: prevMonthStart,
+      $lt: currentMonthStart,
     },
   }).countDocuments();
 
@@ -281,20 +369,45 @@ const getGameInfo = async () => {
 };
 
 const getUserInfo = async () => {
+  const todayStart = new Date(new Date().setUTCHours(0, 0, 0, 0));
+  const yesterdayStart = new Date(
+    new Date().setUTCHours(0, 0, 0, 0) - 86400000
+  );
+
+  const currentDate = new Date();
+
+  // Calculate the difference in days between the current day and the last Sunday
+  const daysUntilLastSunday = (currentDate.getUTCDay() + 7 - 0) % 7;
+  const lastSunday = new Date(currentDate);
+  lastSunday.setUTCHours(0, 0, 0, 0);
+  lastSunday.setUTCDate(currentDate.getUTCDate() - daysUntilLastSunday);
+
+  // If today is Sunday, reset lastSunday to the current date
+  if (daysUntilLastSunday === 0) {
+    lastSunday.setUTCDate(currentDate.getUTCDate());
+  }
+
+  const currentMonthStart = new Date(
+    Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth(), 1)
+  );
+
+  const prevMonthStart = new Date(
+    Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth() - 1, 1)
+  );
   // console.log("getUserInfo");
-  const todaysDate = new Date();
-  const yesterdaysDate = new Date(Date.now() - 86400000);
-  const weekDate = new Date(Date.now() - 7 * 24 * 3600 * 1000);
-  const monthStartDate = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    1
-  );
-  const lastMonthStartDate = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth() - 1,
-    1
-  );
+  // const todaysDate = new Date();
+  // const yesterdaysDate = new Date(Date.now() - 86400000);
+  // const weekDate = new Date(Date.now() - 7 * 24 * 3600 * 1000);
+  // const monthStartDate = new Date(
+  //   new Date().getFullYear(),
+  //   new Date().getMonth(),
+  //   1
+  // );
+  // const lastMonthStartDate = new Date(
+  //   new Date().getFullYear(),
+  //   new Date().getMonth() - 1,
+  //   1
+  // );
 
   // console.log("wroks until here");
 
@@ -302,16 +415,16 @@ const getUserInfo = async () => {
 
   const emailPromise = User.find({ emailConfirmed: true }).count();
   // console.log("doesnt until here", { $gte: yesterdaysDate, $lt: todaysDate });
-  const todayPromise = User.find({ joinDate: { $gte: todaysDate } }).count();
+  const todayPromise = User.find({ joinDate: { $gte: todayStart } }).count();
   const yesterdayPromise = User.find({
-    joinDate: { $gte: yesterdaysDate, $lt: todaysDate },
+    joinDate: { $gte: yesterdayStart, $lt: todayStart },
   }).count();
-  const weekPromise = User.find({ joinDate: { $gte: weekDate } }).count();
+  const weekPromise = User.find({ joinDate: { $gte: lastSunday } }).count();
   const monthPromise = User.find({
-    joinDate: { $gte: monthStartDate },
+    joinDate: { $gte: currentMonthStart },
   }).count();
   const lastMonthPromise = User.find({
-    joinDate: { $gte: lastMonthStartDate, $lt: monthStartDate },
+    joinDate: { $gte: prevMonthStart, $lt: currentMonthStart },
   }).count();
   // console.log("getUserInfo");
 
@@ -373,8 +486,28 @@ export const load = async (request) => {
   // console.log("gamePRomise");
   const userinfoPromise = getUserInfo();
   // console.log("userINfoPromise");
+  const todayStart = new Date(new Date().setUTCHours(0, 0, 0, 0));
+
+  const todaysWithdrawalsPromise = Reward.aggregate([
+    {
+      $match: {
+        date: { $gte: todayStart },
+      },
+    },
+    {
+      $group: {
+        _id: null, // Group all documents together
+        totalAmount: { $sum: "$price" }, // Calculate the sum of the 'price' field
+      },
+    },
+  ]);
 
   const mostAppearWallInfoPromise = OfferDone.aggregate([
+    {
+      $match: {
+        date: { $gte: todayStart },
+      },
+    },
     {
       $group: {
         _id: "$wall", // Group by the field you want to count
@@ -394,6 +527,11 @@ export const load = async (request) => {
 
   const mostGrossingWallInfoPromise = OfferDone.aggregate([
     {
+      $match: {
+        date: { $gte: todayStart },
+      },
+    },
+    {
       $group: {
         _id: "$wall", // Group by the field you want to count
         highest: { $sum: "$payout" }, // Sum value of the field
@@ -411,6 +549,11 @@ export const load = async (request) => {
   // console.log("mostGrossingWallInfoPromise");
 
   const mostAppearOfferInfoPromise = OfferDone.aggregate([
+    {
+      $match: {
+        date: { $gte: todayStart },
+      },
+    },
     {
       $group: {
         _id: "$offerId", // Group by the field you want to count
@@ -431,6 +574,11 @@ export const load = async (request) => {
 
   const mostGrossingOfferInfoPromise = OfferDone.aggregate([
     {
+      $match: {
+        date: { $gte: todayStart },
+      },
+    },
+    {
       $group: {
         _id: "$offerId", // Group by the field you want to count
         highest: { $sum: "$payout" }, // Sum value of the field
@@ -449,6 +597,11 @@ export const load = async (request) => {
   // console.log("mostGrossingOfferInfoPromise");
 
   const mostCountryPromise = User.aggregate([
+    {
+      $match: {
+        joinDate: { $gte: todayStart },
+      },
+    },
     {
       $group: {
         _id: "$country", // Group by the field you want to count
@@ -477,6 +630,7 @@ export const load = async (request) => {
     mostAppearOfferInfo,
     mostGrossingOfferInfo,
     mostCountry,
+    todaysWithdrawals,
   ] = await Promise.all([
     earningsPromise,
     offersPromise,
@@ -487,9 +641,10 @@ export const load = async (request) => {
     mostAppearOfferInfoPromise,
     mostGrossingOfferInfoPromise,
     mostCountryPromise,
+    todaysWithdrawalsPromise,
   ]);
   console.timeEnd("promise all");
-  // console.log({ offers });
+  // console.log({ mostCountry });
 
   // console.log("promise all");
 
@@ -501,6 +656,10 @@ export const load = async (request) => {
   );
 
   // console.timeEnd("start: ");
+  // console.log({
+  //   mostAppearOfferInfo,
+  //   mostGrossingOfferInfo,
+  // });
 
   return {
     info: {
@@ -508,6 +667,8 @@ export const load = async (request) => {
       offers,
       game,
       user: userinfo,
+      todaysProfit:
+        earnings.todaysEarning - todaysWithdrawals?.[0]?.totalAmount / 100,
     },
     popular: {
       wall: {

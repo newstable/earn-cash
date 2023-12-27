@@ -1,5 +1,7 @@
 import preprocess from "svelte-preprocess";
 import adapter from "@sveltejs/adapter-node";
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -16,6 +18,7 @@ const config = {
         prependData: '@use "src/variables.scss" as *;',
       },
     }),
+    vitePreprocess({}),
   ],
 };
 

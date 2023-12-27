@@ -56,7 +56,9 @@
                 },
                 {
                     sentDate: new Date()
-                }
+                }, {
+                    processing: 1
+                }, 
             ]
         })
     });

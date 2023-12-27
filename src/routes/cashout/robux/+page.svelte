@@ -4,7 +4,7 @@
     export let data;
 </script>
 
-<div class="page">
+<div class="page bg-bye">
     <a href="/cashout">
         <img src="/arrowLeftV2.svg" alt="Arrow back"/>
         <span>Back to shop</span>
@@ -14,12 +14,12 @@
     <div class="container">
         <div class="top">
             <div class="left">
-                <img src="/roblox-27104.png" alt="Roblox logo" style="height: 80px"/>
+                <img src="/robux10.png" alt="Roblox logo" style="height: 80px"/>
             </div>
             <div class="right">
                 <div class="info">
                     <img src="/infoIcon.svg" alt="info"/>
-                    <span>It can take up to 2 weeks before you receive your ROBUX in your balance!</span>
+                    <span>It can take up to a week before you receive your ROBUX in your balance!</span>
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@
         }
 
         & > div.container {
-            background: rgba(0,0,0,0.1);
+            background: rgba(199, 180, 180, 0.1);
             padding: 36px;
             margin: 0 auto;
             flex: 1;

@@ -36,6 +36,8 @@ export const load = async(req) => {
             reward: offer.tokens
         }
     });
+    const reverseactivities = activities.reverse();
+
 
     return {
         username: user.username,
@@ -46,6 +48,7 @@ export const load = async(req) => {
         totalEarnings,
         totalEarnings30Days,
         activities,
+        reverseactivities,
         country: user.country,
         countryFull: getCountryName(user.country)
     };

@@ -179,13 +179,13 @@
   >
     <span class="icon">
       {#if $page.url.pathname.includes("offers")}
-        <Icon {icon} color="#ff5a5c" width="20" height="20" />
+        <Icon {icon} color="#ffff" width="20" height="20" />
       {:else if hovering}
-        <Icon {icon} color="#ff6668" width="20" height="20" />
+        <Icon {icon} color="#ffff" width="20" height="20" />
       {:else if active}
         <Icon {icon} color="#ff5a5c" width="20" height="20" />
       {:else}
-        <Icon {icon} color="#a9a9ca" width="20" height="20" />
+        <Icon {icon} color="#ffff" width="20" height="20" />
       {/if}
     </span>
     <span class="text">
@@ -195,7 +195,7 @@
       {#if active}
         <Icon
           icon="material-symbols:arrow-back-ios-new"
-          color="#ff5a5c"
+          color="#ffff"
           width="12"
           height="12"
           rotate={1}
@@ -203,7 +203,7 @@
       {:else if $page.url.pathname.includes("offers")}
         <Icon
           icon="material-symbols:arrow-back-ios-new"
-          color="#ff5a5c"
+          color="#ffff"
           width="12"
           height="12"
           rotate={3}
@@ -211,7 +211,7 @@
       {:else}
         <Icon
           icon="material-symbols:arrow-back-ios-new"
-          color="#a9a9ca"
+          color="#000000"
           width="12"
           height="12"
           rotate={3}
@@ -240,7 +240,7 @@
   @import "../variables.scss";
 
   div.dropdown {
-    border-left: 1px solid #322d2d;
+    border-left: 2px solid #0E0C1D;
     overflow: hidden;
     transition: height 200ms;
     height: 0;
@@ -267,9 +267,9 @@
     cursor: pointer;
     padding: 9px;
     font-style: normal;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 160%;
-    color: $nav-text-color;
+    color: #ffff;
     display: flex;
     align-items: center;
     border-radius: 6px;
@@ -280,13 +280,13 @@
     }
 
     &.active {
-      background: #2c2727;
-      color: $active-color;
+      background: #0E0C1D;
+      color: #ffff;
     }
 
     &.here {
-      background: #2c2727;
-      color: $active-color;
+      background: #0E0C1D;
+      color: #ffff;
     }
 
     span.icon {
@@ -302,6 +302,8 @@
       flex: 1;
       display: flex;
       align-items: center;
+      font-weight: 400;
+      font-size: medium ;
     }
 
     span.toggle_icon {

@@ -209,12 +209,12 @@ function togglePopup() {
             align-items: center;
 
             & > img {
-                width: 15px;
+                width: 35px;
             }
         }
 
         & > .title {
-            color: #fff;
+            color: #f3f4f6;
             flex: 1;
             font-style: normal;
             font-weight: 700;
@@ -231,7 +231,6 @@ function togglePopup() {
 
     div.category {
         position: relative;
-        background: #232121;
         padding: calc($earn-page-padding * 0.7) $earn-page-padding 30px $earn-page-padding;
         min-height: 185px;
     }

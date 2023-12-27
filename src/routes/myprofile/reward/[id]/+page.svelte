@@ -47,7 +47,7 @@
                     <tr>
                         <td>Price</td>
                         <td>
-                            <img src="/favicon.png" alt="Currency" width="16"/>
+                            <img src="/coin.svg" alt="Currency" width="16"/>
                             {data.reward.price}
                         </td>
                     </tr>

@@ -3,19 +3,35 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%sveltekit.assets%/logoicon.png" />
+    <link rel="icon" href="/coin.svg" type="image/svg+xml" />
     <meta name="viewport" content="width=device-width" /> %sveltekit.head%
-    <title>JustEarn: Free Cash, PayPal, Bitcoin &amp; more! | Justearn.com</title>
+    <title>Earn Cash & R$ | justearn.gg</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="f526017e-eee0-4c9e-825d-8f170fae714c";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+    <script>
+        // Function to show the chatbox
+        function showChatbox() {
+          $crisp.push(["do", "chat:show"]);
+        }
+      
+        // Initially hide the chatbox when the page loads
+        $crisp.push(["do", "chat:hide"]);
+      </script>
+    
+<!-- TrustBox script -->
+<script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+<!-- End TrustBox script -->
+
 </head>
 
 <body data-sveltekit-preload-data="hover" class="chatActive">
     <div style="display: contents">%sveltekit.body%</div>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    
 </body>
 
 </html>

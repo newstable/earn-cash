@@ -31,7 +31,7 @@
     div.chat {
         width: 0;
         height: 100%;
-        background-color: $chat-background-color;
+        background-color: white;
         position: fixed;
         top: 0;
         right: 0;

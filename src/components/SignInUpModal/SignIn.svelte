@@ -119,18 +119,21 @@
 </script>
 
 <div class="login">
-  <div class="input">
-    <input
-      autocomplete="on"
-      placeholder="E-mail address"
-      type="email"
-      class:valid={emailValidated == 1}
-      class:invalid={emailValidated == -1}
-      bind:value={email}
-      on:keyup={validate}
-    />
-    <!-- svelte-ignore a11y-label-has-associated-control -->
-    <label>Enter your E-mail address</label>
+  <div class="login">
+    <div class="input">
+      <label for="email">Enter your E-mail address</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="E-mail address"
+        autocomplete="email"
+        class:valid={emailValidated == 1}
+        class:invalid={emailValidated == -1}
+        bind:value={email}
+        on:keyup={validate}
+      />
+    </div>
   </div>
 
   {#if !resetPassword}
@@ -145,7 +148,7 @@
         on:keyup={validate}
       />
       <!-- svelte-ignore a11y-label-has-associated-control -->
-      <label>Password</label>
+      <label for="password">Password</label>
     </div>
   {/if}
 
@@ -197,8 +200,8 @@
         justify-content: center;
         height: 44px;
         min-width: 130px;
-        background: $alt-background-color;
-        color: #e64c4e;
+        background: #5f141e;
+        color: white;
         border-radius: 5px;
         box-shadow: none;
         text-shadow: 0 0 15px #e64c4e;
@@ -230,7 +233,7 @@
 
       & > p {
         transition: all 300ms ease-in-out;
-        color: #63658e;
+        color: #ffff;
         font-weight: 600;
         cursor: pointer;
         margin: 13px 0;
@@ -249,8 +252,9 @@
       input {
         outline: none;
         height: 3rem;
+        scale: 90%;
         font-size: 16px;
-        margin: 0 0 8px 0;
+        margin: 0 0 8px -20px;
         box-shadow: none;
         box-sizing: content-box;
         transition:
@@ -264,7 +268,8 @@
         width: calc(100% - 2rem);
         margin-top: 0.75rem;
         border-radius: 5px;
-        color: $alt-navbar-color;
+        color: black;
+        font-weight: bold;
 
         overflow: visible;
         line-height: 1.15;

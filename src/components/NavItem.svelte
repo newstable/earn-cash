@@ -16,7 +16,9 @@
 
     const mouseLeave = () => {
         hovering = false;
-    }
+    };
+    
+
 </script>
 
 <div class="item">
@@ -26,15 +28,15 @@
         }>
         <span class="icon">
             {#if $page.url.pathname == url}
-                <Icon icon={icon} color="#ff5a5c" width="20" height="20" />
+                <Icon icon={icon} color="#ffff" width="20" height="20" />
             {:else}
                 {#if hovering}
-                    <Icon icon={icon} color="#ff6668" width="20" height="20" />
+                    <Icon icon={icon} color="#ffff" width="20" height="20" />
                 {:else}
                     {#if active}
                         <Icon icon={icon} color="#ff5a5c" width="20" height="20" />
                     {:else}
-                        <Icon icon={icon} color="#a9a9ca" width="20" height="20" />
+                        <Icon icon={icon} color="#ffff" width="20" height="20" />
                     {/if}
                 {/if}
             {/if}
@@ -42,6 +44,7 @@
         <span class="text">
             <slot/>
         </span>
+        
     </a>
 </div>
 
@@ -56,26 +59,28 @@
         cursor: pointer;
         padding: 9px;
         font-style: normal;
-        font-size: 14px;
+        font-size: 12px;
         line-height: 160%;
-        color: $nav-text-color;
+        color: #ffff;
         display: flex;
+        font-weight: 400;
+        font-size: medium;
         align-items: center;
         border-radius: 6px;
         text-decoration: none;
 
         &:hover {
-            color: #ff6668 !important;
+            color: #ffff !important;
         }
 
         &.active {
             background: #2c2727;
-            color: $active-color;
+            color: #ffff;
         }
 
         &.here {
-            background: #2c2727;
-            color: $active-color;
+            background: #0E0C1D;
+            color: #ffff;
         }
 
         span.icon {

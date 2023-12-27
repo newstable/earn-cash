@@ -1,8 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0 auto;
   font-family: "Poppins", sans-serif;
   position: relative;
-  background-color: #232121;
+  
   overflow-x: hidden;
   color: #fff;
   min-height: 100%;

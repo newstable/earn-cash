@@ -32,7 +32,7 @@
     @import "../variables.scss";
 
     div.event {
-        background: #1d1c1c;
+        background: #f3f4f6;
         padding: 0;
         border-radius: 5px;
         overflow: hidden;
@@ -77,7 +77,7 @@
                     text-overflow: ellipsis;
 
                     &.user {
-                        color: #65678d;
+                        color: #010210;
                         font-size: 12px;
                         top: -1px;
                     }
@@ -85,12 +85,12 @@
             }
 
             div.amount {
-                color: $active-color;
-                font-size: 11px;
-                background: #2f2e2e;
+                color: white;
+                font-size: 12px;
+                background: #6a1622;
                 border-radius: 2px;
-                padding: 3px 5px 3px 10px;
-                font-weight: 500;
+                padding: 5px 5px 3px 10px;
+                font-weight: 600;
                 display: flex;
                 align-items: center;
 
@@ -98,7 +98,7 @@
                     display: inline-block;
                     width: 2px;
                     height: 12px;
-                    background: #ff5a5c;
+                    background: #ffffff;
                     border-radius: 20px;
                     margin-left: 7px;
                 }

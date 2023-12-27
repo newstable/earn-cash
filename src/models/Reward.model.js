@@ -9,6 +9,7 @@ const reward = new Schema({
         type: Date,
         default: Date.now
     },
+    
     type: String,
     reward: String,
     price: Number,
@@ -30,6 +31,7 @@ const reward = new Schema({
     holdDate: Date,
     releaseDate: Date,
     sentDate: Date,
+    tremendousUSDValue: Number,
     revoked: {
         type: Number,
         default: 0

@@ -56,6 +56,7 @@
 
         if (body.success) {
             // TODO: redirecet to table with withdrawal requests
+            window.location.href = '/myprofile';
         } else {
             error = body.message;
         }
@@ -96,8 +97,8 @@
             </div>
         {/if}
         <div class="row highlight">
-            <span>
-                <img src="/coinLogo.svg" alt="coin"/>
+            <span class="text-white">
+                <img src="/coin.svg" alt="coin"/>
                 Coin Price
             </span>
             <span class="fat">
@@ -185,7 +186,7 @@
     }
 
     div.helper {
-        color: #eb4244;
+        color: #ffff;
         font-size: 11px;
         font-weight: 500;
         margin-bottom: 10px;

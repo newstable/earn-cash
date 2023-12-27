@@ -5,25 +5,27 @@
     export let data;
 </script>
 
-<div class="shop">
+<div class="shop bg-bye">
     <h1>
-        <img src="/money-active.svg" alt="Money"/>
+        <img src="/money.png" alt="Money"/>
         <span>Cashout</span>
     </h1>
 
-    <div>
+    <div class="text-md">
         <img src="/infoIcon.svg" alt="Info"/>
-        Use your earned coins on justearn.gg to withdraw PayPal, Bitcoin, VISA, Amazon & much more!
+        Use your earned coins on justearn.gg to withdraw PayPal, Bitcoin, Robux, VISA & much more!
     </div>
 
-    {#each Object.keys(data) as type}
+    {#each Object.keys(data).reverse() as type}
         <ShopSection name={"Withdraw " + type}>
+            
             {#each data[type] as item}
                 <ShopSectionItem url={item.name.toLowerCase()} background={item.shopBackground} imageUrl={item.shopLogo}/>
+                
             {/each}
 
             {#if type == "cash"}
-                <ShopSectionItem url={"robux"} background={"#fff"} imageUrl={"https://logos-world.net/wp-content/uploads/2020/11/Roblox-Logo.png"}/>
+                <ShopSectionItem url={"robux"} background={"#fff"} imageUrl={"https://i.imgur.com/cyzPM7J_d.webp?maxwidth=1520&fidelity=grand"}/>
             {/if}
         </ShopSection>
     {/each}
@@ -32,7 +34,7 @@
 <style lang="scss">
     div.shop {
         padding: 28px 41px;
-        font-family: Roboto;
+        font-family: sans-serif;
 
         @media only screen and (max-width: 700px) {
             padding: 28px 10px;

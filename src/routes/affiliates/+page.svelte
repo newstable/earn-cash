@@ -15,7 +15,7 @@
     export let data;
 
     var isEditing = false;
-    var code = "urmomishot";
+    var code = "";
     var editCode = "";
     var url = "";
     var message = "I’m earning money by completing tasks such as testing apps and playing games on URL_HERE. If you sign up through my link you can open a free case and win up to $250.";
@@ -25,8 +25,8 @@
     var earnings30Days = 0;
     var usersReferred = 0;
     
-    var username = "Hattorius";
-    var picture = "https://eu.ui-avatars.com/api/?background=302f2f&color=ff5a5c&length=1&name=Hattorius";
+    var username = "";
+    var picture = "/coin.svg";
     var tier = 1;
     var commissionPercentage = 0.05;
 
@@ -57,7 +57,8 @@
         message = "I’m earning money by completing tasks such as testing apps and playing games on " + window.location.protocol + "//" + window.location.host + "/" + code + ". If you sign up through my link you can open a free case and win up to $250.";
         refUrl = window.location.protocol + "//" + window.location.host + "/" + code;
 
-        document.body.style.backgroundColor = "#171515";
+        document.body.style.backgroundImage = 'linear-gradient(to top, #5f141e, #0E0C1D 70%)';
+
         return () => document.body.style.backgroundColor = "";
     });
 
@@ -132,7 +133,7 @@
         }).showToast();
     }
 </script>
-
+<div class="bg-bye">
 <div class="container">
     <div class="heading">
         <h1>Affiliates</h1>
@@ -300,6 +301,7 @@
         <Affiliates/>
     {/if}
 </div>
+</div>
 
 <style lang="scss">
     div.infos {
@@ -336,7 +338,7 @@
                 cursor: pointer;
 
                 &.active {
-                    background-color: #302828;
+                    background-color: #0e0c1d;
                     color: #ff5a5c;
                     text-shadow: 0.5px 0 0 #ff5a5c;
                 }
@@ -389,7 +391,7 @@
     }
 
     section.referral {
-        background-color: #222121;
+        background-color: #521119;
         border-radius: 15px;
         padding: 30px 35px;
         margin-top: 20px;
@@ -436,7 +438,7 @@
             gap: 10px;
 
             & > div.title {
-                color: #e15a5a;
+                color: white;
                 font-weight: bold;
             }
 
@@ -470,7 +472,7 @@
                     & > button {
                         border-radius: 10px;
                         border: 1px solid #393e56;
-                        background-color: #2f3045;
+                        background-color: #0e0c1d;
                         height: 42px;
                         padding: 7px 15px;
                         font-weight: 500;
@@ -562,6 +564,7 @@
 
     div.container {
         font-size: 14px;
+        
         font-family: "Poppins";
         max-width: 1100px;
         margin: 0 auto;
@@ -581,7 +584,7 @@
             }
 
             & > .card {
-                background-color: #222121;
+                background-color: #521119;
                 border-radius: 15px;
                 padding: 30px 35px;
 

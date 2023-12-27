@@ -62,11 +62,11 @@
                 <div>{aff.username}</div>
                 <div class="thisshallbehidden">{aff.paidSurveyCount.toLocaleString()}</div>
                 <div>
-                    <img src="/favicon.png" alt="logo"/>
+                    <img src="/coin.svg" alt="logo"/>
                     {aff.points.toLocaleString()}
                 </div>
                 <div>
-                    <img src="/favicon.png" alt="logo"/>
+                    <img src="/coin.svg" alt="logo"/>
                     {typeof aff.earnedForRef !== "undefined" ? aff.earnedForRef.toLocaleString() : 0}
                 </div>
             </div>

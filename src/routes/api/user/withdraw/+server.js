@@ -127,13 +127,14 @@ export const POST = async(request) => {
         const cryptocurrency = payoutMethod.name; // Assuming the name corresponds to the cryptocurrency (BTC, LTC, ETH)
 
         // Fetch the corresponding cryptocurrency rate from the payout method
-        const cryptoRate = payoutMethod.rate;
-
+        // Fetch the cryptocurrency rate based on the selected cryptocurrency name
+        const cryptofetch = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${cryptocurrency.toLowerCase()}&vs_currencies=usd`);
+        const cryptoData = await cryptofetch.json();
+        const cryptoRate = cryptoData[cryptocurrency.toLowerCase()].usd;
         // Calculate USD amount based on the selected cryptocurrency's rate
         const usdAmount = cryptoAmount * cryptoRate;
         const formattedUsdAmount = usdAmount.toFixed(2); // Format USD amount to 2 decimal places
         const deductionAmount = usdAmount * 100; // Deduct $100 for every $1 USD
-
         console.log(`${cryptocurrency} Amount:`, cryptoAmount);
         console.log("USD Amount:", formattedUsdAmount);
         console.log("Deduction Amount:", deductionAmount);
@@ -169,8 +170,8 @@ export const POST = async(request) => {
             user,
             type: payoutMethod.type,
             reward: `${rewardAmount.toFixed(8)} ${cryptocurrency} @ $${formattedUsdAmount}`,
-            price: usdAmount,
-            info: address
+            price: (usdAmount * 100),
+            info: address                          
         });
         reward.save();
 

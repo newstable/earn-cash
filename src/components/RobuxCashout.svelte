@@ -48,6 +48,7 @@
                 isInProgress = false;
                 if (data.success) {
                     // TODO: redirecet to table with withdrawal requests
+                    window.location.href = '/myprofile';
                     alert("Success withdraw action")
                     coins = 0
                 } else {
@@ -85,7 +86,7 @@
 <h4>Instructions:</h4>
 <ol>
     <li>Login to roblox <a href="https://www.roblox.com/" target="_blank">here</a>.</li>
-    <li>Go to your game's access tab <a href="https://create.roblox.com/dashboard/creations" target="_blank">here</a>.</li>
+    <li>Go to your game's access tab <a href="https://create.roblox.com/dashboard/creations"  target="_blank">here</a>.</li>
     <li>Pick one of your experiences</li>
     <li>Click Access and scroll down till you see private servers. Change them to paid and make the price {Math.round(coins/7*10)} ROBUX.</li>
 </ol>
@@ -251,7 +252,7 @@
     }
 
     div.crypto {
-        background: #24253d;
+        background: #5f141e;
         box-shadow: 0 4px 8px rgb(0 0 0 / 5%);
         border-radius: 5px;
         padding: 6px 16px;
@@ -270,7 +271,7 @@
             font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
 
             border-bottom-color: #48292980 !important;
-            color: #787ead;
+            color: #f7f7f7;
 
             margin: 0 0 !important;
             background-color: #321e1eb3 !important;
@@ -321,7 +322,7 @@
         }
 
         & > div.helper {
-            color: #eb4244;
+            color: #ffff;
             font-size: 11px;
             font-weight: 500;
             margin-bottom: 10px;

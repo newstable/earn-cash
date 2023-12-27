@@ -8,7 +8,7 @@
     <div/>
 </div>
 
-<div class="btns">
+<div class="btns scale-90">
     <a href="/auth/google">
         <img src="/auth-google-logo.png" alt="google logo"/>
         <span>Google</span>
@@ -38,13 +38,15 @@
         & > a {
             position: relative;
             width: 100%;
-            background: $alt-background-color;
+            background: #5f141e;
             justify-content: space-between;
             padding: 0 .15rem;
 
             display: flex;
             align-items: center;
+            justify-content: center;
             height: 44px;
+            column-gap: 10px;
             min-width: 130px;
             color: #e64c4e;
             border-radius: 5px;
@@ -84,11 +86,12 @@
         display: flex;
         align-items: center;
         margin: .5rem 0;
+        
 
         & > div {
             width: 45%;
             height: 1px;
-            background: #343652;
+            background: #e8e9ed;
         }
 
         & > div:first-child {
@@ -101,7 +104,7 @@
 
          & > p {
             margin: auto;
-            color: #32344f;
+            color: white;
 
             text-transform: lowercase;
             font-size: 15px;
@@ -112,8 +115,8 @@
         padding: .5rem 0;
 
         & > p {
-            color: #63658e;
-            font-size: 12px;
+            color: #ffff;
+            font-size: 11px;
         }
     }
 </style>

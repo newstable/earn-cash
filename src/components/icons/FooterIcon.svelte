@@ -10,9 +10,9 @@
 
 <a href={url} target="_blank" rel="nofollow noreferrer" on:mouseenter={() => hovering = true} on:mouseleave={() => hovering = false} style={hovering ? "background: " + hoverColor : ""}>
     {#if hovering}
-        <Icon icon={icon} color="#fff" width="16" height="16" />
+        <Icon icon={icon} color="#ffff" width="16" height="16" />
     {:else}
-        <Icon icon={icon} color="#7d7d9e" width="16" height="16" />
+        <Icon icon={icon} color="#ffff" width="16" height="16" />
     {/if}
 </a>
 
@@ -25,6 +25,6 @@
         align-items: center;
         justify-content: center;
         background: #232121;
-        color: #7d7d9e;
+        color: #ffff;
     }
 </style>

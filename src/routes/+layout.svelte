@@ -144,23 +144,34 @@
 
 <QueryClientProvider client={queryClient}>
   {#if !$page.route.id.startsWith("/wall/") && !$page.route.id.startsWith("/admin")}
-    <Header modal={loadedModal} />
-    <LiveEvents />
-    <Chat />
-    <Navigation />
-    <MobileNavigation />
-    <SignInUpModal bind:this={modal} />
-    <Cookies />
-
-    <div class="site">
+    {#if $page.route.id === "/"} 
+      <!-- This block will only render the Footer for the homepage ("/") -->
       <slot />
+      <Footer />
+      <Header modal={loadedModal}/>
+      <Cookies/>
+      <SignInUpModal bind:this={modal} />
+    {:else}
+      <!-- This block renders for all other pages except "/wall/" and "/admin" prefixes -->
+      <Header modal={loadedModal} />
+      <LiveEvents />
+      <Chat />
+      <Navigation />
+      <MobileNavigation />
+      <SignInUpModal bind:this={modal} />
+      <Cookies />
 
-      <!-- {$page.route.id} -->
-      {#if !$page.route.id.startsWith("/chat") && !$page.route.id.startsWith("/admin")}
-        <Footer />
-      {/if}
-    </div>
+      <div class="site">
+        <slot />
+
+        <!-- {$page.route.id} -->
+        {#if !$page.route.id.startsWith("/chat") && !$page.route.id.startsWith("/admin")}
+          <Footer />
+        {/if}
+      </div>
+    {/if}
   {:else}
+    <!-- This slot renders for pages starting with "/wall/" and "/admin" -->
     <slot />
   {/if}
 </QueryClientProvider>
