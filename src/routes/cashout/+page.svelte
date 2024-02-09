@@ -7,7 +7,7 @@
 
 <div class="shop bg-bye">
     <h1>
-        <img src="/money.png" alt="Money"/>
+        <img src="/cashout.png" alt="Money"/>
         <span>Cashout</span>
     </h1>
 

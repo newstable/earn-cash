@@ -287,6 +287,7 @@
             position: relative;
             cursor: pointer;
             width: 24%;
+            
             height: 125px;
             margin-top: 12px;
             border-radius: 5px;
@@ -297,6 +298,7 @@
 
                 & > img.check {
                     display: block;
+                    
                 }
             }
 
@@ -312,7 +314,9 @@
             }
 
             & > img.logo {
-                position: absolute;
+                position: relative;
+                height: 100%;
+                width: 100%;
                 left: 50%;
                 top: 50%;
                 transform: translate(-50%,-50%);

@@ -73,7 +73,7 @@ export const handle = async ({ event, resolve }) => {
     // console.log(resObj)
     event.locals.clientIp = resObj.ip;
   } else {
-    console.log("in hooks handle's else");
+    // console.log("in hooks handle's else");
     event.locals.clientIp = "2400:1a00:bde0:1e4c:fcf3:440f:1abd:8720";
   }
   // return resolve(event)
@@ -81,5 +81,5 @@ export const handle = async ({ event, resolve }) => {
 };
 
 if (NODE_ENV !== "development") {
-   getNewOffers();
+  getNewOffers();
 }

@@ -14,7 +14,7 @@
     <div class="container">
         <div class="top">
             <div class="left">
-                <img src="/robux10.png" alt="Roblox logo" style="height: 80px"/>
+                <img src="/robux10.png" class="pb-2" alt="Roblox logo" style="height: 80px"/>
             </div>
             <div class="right">
                 <div class="info">

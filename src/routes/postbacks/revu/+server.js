@@ -46,7 +46,7 @@ export const GET = async (request) => {
     ip,
     tokens,
     wall: 5,
-    status: parseInt(searchParams.get("cb")) - 1,
+    status: parseInt(searchParams.get("cb")) === 1 ? 1 : 0,
   });
   await newOffer.save();
 

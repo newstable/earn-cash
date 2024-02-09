@@ -432,7 +432,7 @@
                   <td>
                     {#if reward.type === "crypto"}
                       {capitalizeFirstLetter(reward.type)} - ${Math.ceil(
-                        reward.price
+                        reward.price / 100
                       )}
                     {:else}
                       {reward.reward}

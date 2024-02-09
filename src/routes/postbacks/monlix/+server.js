@@ -10,10 +10,10 @@ export const GET = async (request) => {
     const searchParams = request.url.searchParams;
 
     // Log the incoming request and its parameters
-    console.log("Incoming request:", request.url);
-    for (const [param, value] of searchParams) {
-      console.log(`${param}: ${value}`);
-    }
+    // console.log("Incoming request:", request.url);
+    // for (const [param, value] of searchParams) {
+    //   console.log(`${param}: ${value}`);
+    // }
 
     // Check if all required parameters are present
     const requiredParams = [
@@ -28,10 +28,10 @@ export const GET = async (request) => {
       "status",
     ];
     if (requiredParams.some((param) => !searchParams.get(param))) {
-      console.error(
-        "Required parameters missing:",
-        requiredParams.filter((param) => !searchParams.get(param))
-      );
+      // console.error(
+      //   "Required parameters missing:",
+      //   requiredParams.filter((param) => !searchParams.get(param))
+      // );
       return new Response("", { status: 404 });
     }
 
@@ -61,19 +61,26 @@ export const GET = async (request) => {
       return new Response("", { status: 404 });
     }
 
-    const tokens = parseFloat(searchParams.get("rewardValue"));
+    let tokens = parseFloat(searchParams.get("rewardValue"));
+    let payout = parseFloat(searchParams.get("payout"));
+
+    if (status !== 1) {
+      // For chargebacks, tokens should be negative
+      tokens = -Math.abs(tokens);
+      payout = -Math.abs(payout);
+    }
 
     const newOffer = new OfferDone({
       user: userId, // Pass userId here
       country,
       conversionId: searchParams.get("transactionId"),
       offerId: searchParams.get("taskName"),
-      payout: parseFloat(searchParams.get("payout")),
+      payout,
       offerName: searchParams.get("taskName"),
       ip,
       tokens,
       wall: 11,
-      status: status === 1 ? 1 : status === 2 ? 0 : 0, // Map status 1 to 1, 2 to 0, and all others to 0
+      status: status === 1 ? 1 : 0, // Map status 1 to 1, 2 and all others to 0
     });
     await newOffer.save();
 

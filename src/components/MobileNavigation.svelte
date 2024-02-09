@@ -13,30 +13,30 @@
 <div class="mobile-nav">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="item menu" on:click={toggleNavigation}>
-        <Icon icon="mdi:hamburger-menu" width="40" height="40" color="#787ead" />
+        <Icon icon="mdi:hamburger-menu" width="40" height="40" color="#ffff" />
     </div>
 
     <a href="/cashout" class={"item" + ($page.url.pathname == "/cashout" ? " active" : "")}>
-        <Icon icon="mdi:cash-register" width="36" height="36" color="#787ead" />
+        <Icon icon="mdi:cash-register" width="36" height="36" color="#ffff" />
         <span>Cashout</span>
     </a>
 
     <a href="/earn" class={"item highlighted" + ($page.url.pathname == "/earn" ? " active" : "")}>
         {#if $page.url.pathname != "/earn"}
-            <Icon icon="fluent:money-hand-20-regular" width="36" height="36" color="#787ead" />
+            <Icon icon="fluent:money-hand-20-regular" width="36" height="36" color="#ffff" />
         {:else}
             <Icon icon="fluent:money-hand-20-regular" width="36" height="36" color="#ffffff" />
         {/if}
         <span>Earn</span>
     </a>
 
-    <a href="/rewards" class={"item" + ($page.url.pathname == "/rewards" ? " active" : "")}>
-        <Icon icon="tabler:medal-2" width="36" height="36" color="#787ead" />
-        <span>Rewards</span>
+    <a href="/affiliates" class={"item" + ($page.url.pathname == "/affiliates" ? " active" : "")}>
+        <Icon icon="tabler:medal-2" width="36" height="36" color="#ffff" />
+        <span>Refer</span>
     </a>
 
     <a href="/chat" class={"item" + ($page.url.pathname == "/rewards" ? " active" : "")}>
-        <Icon icon="mdi:message-group" width="36" height="36" color="#787ead" />
+        <Icon icon="mdi:message-group" width="36" height="36" color="#ffff" />
         <span>Chat</span>
     </a>
 </div>
@@ -52,7 +52,7 @@
         display: none;
         align-items: center;
         flex-direction: row;
-        background: $mobile-navbar-background-color;
+        background: #6a1622;
         width: 100%;
         justify-content: space-between;
         padding: 0 60px;
@@ -71,6 +71,7 @@
             padding-top: 15px;
             position: relative;
             top: 0;
+            
             transition: .3s;
             flex: 1;
             cursor: pointer;
@@ -82,7 +83,7 @@
                 font-size: 12px;
                 line-height: 165%;
                 text-align: center;
-                color: $nav-text-color;
+                color: white;
                 border-bottom: 2px solid transparent;
             }
         }
@@ -92,13 +93,13 @@
             max-height: 67px;
             max-width: 73px;
             padding-top:12px;
-            background: $alt-background-color;
+            background: #901d2e;
             border-radius: 6px;
         }
 
         .item.active {
-            border-bottom: 2px solid #ff5a5c;
-            background: linear-gradient(180deg,rgba(255,90,92,0) 0,rgba(255,90,92,0.2) 100%);
+            border-bottom: 2px solid white;
+            background: linear-gradient(180deg,rgba(231, 153, 154, 0) 0,rgba(255,90,92,0.2) 100%);
         }
 
         .item.active.highlighted {

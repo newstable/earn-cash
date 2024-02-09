@@ -13,8 +13,11 @@
     Row,
   } from "sveltestrap";
   import BreadcrumbOne from "../../../../components/admin/breadcrumbs/BreadcrumbOne.svelte";
+  import { toast } from "$lib/new/frontend/utils/toast";
 
   export var data;
+
+  // console.log(data.payouts, "payouts");
 
   var breadcrumbData = {
     pageTitle: "User",
@@ -26,18 +29,41 @@
   let points = 0;
   let rate = 0;
   let totalPoints =
-    data.user.points + data.user.addedPoints + data.user.pointsByRef;
-  let currentPoints =
     data.user.points +
-    data.user.addedPoints +
-    data.user.pointsByRef -
-    data.user.cashedOut -
-    data.user.removedPoints;
+    // data.user.cashedOut + // * 100
+    data.user.addedPoints -
+    data.user.removedPoints +
+    data.user.pointsByRef;
+  let currentPoints =
+    data.user.points -
+    data.user.cashedOut +
+    data.user.addedPoints -
+    data.user.removedPoints +
+    data.user.pointsByRef;
   let isBanned = data.user.banned !== 0;
   let currentRate = data.user.customCommissionRate;
 
+  // $: userPayout = data.payouts;
+
+  // // console.log(userPayout, data.payouts);
+  // console.log(
+  //   data.payouts,
+  //   data.user.cashedOut,
+  //   data.payouts - data.user.cashedOut
+  // );
+
+  // let profitCount = data.user.points - data.user.cashedOut;
+  let profitCount = data.payouts - data.user.cashedOut;
+
   let isPointUpdating = false;
   let isRateUpdating = false;
+
+  let isUpdatingCashoutPoints = false;
+  console.log(data, "<=Data");
+  let cashoutPoints = data.user.cashedOut;
+  // let isApiUpdatingCashoutPoints = false;
+
+  // console.log(data, "data");
 
   const addOrRemovePoints = async () => {
     isPointUpdating = true;
@@ -87,7 +113,7 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ban: banned ? 0 : 1,
+        // ban: banned ? 0 : 1,
         userId: data.user._id,
       }),
     });
@@ -95,6 +121,27 @@
     if (body.success) {
       isBanningAccount = false;
       isBanned = banned;
+    }
+  };
+
+  const handleUpdateCashoutpoints = async () => {
+    // isApiUpdatingCashoutPoints = true;
+    const response = await fetch("/api/admin/userUpdate/updateCashOutPoints", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        points: cashoutPoints,
+        userId: data.user._id,
+      }),
+    });
+    const body = await response.json();
+
+    if (body.success) {
+      // isApiUpdatingCashoutPoints = false;
+      isUpdatingCashoutPoints = false;
+      toast({ text: body.message });
     }
   };
 </script>
@@ -105,6 +152,21 @@
       <Col lg={12}>
         <BreadcrumbOne {...breadcrumbData} />
       </Col>
+      <div
+        class="p-2 w-[98%] mx-auto rounded-lg mb-2 {data?.referralearnings +
+          data?.offerdones >=
+        data?.cashouts
+          ? 'bg-green-200 '
+          : 'bg-red-200 '}"
+      >
+        Notice: The sum of all tokens of offerdones ({data?.offerdones.toLocaleString()})
+        & refearnings ({data?.referralearnings.toLocaleString()}) for this user
+        is {(data?.offerdones + data?.referralearnings).toLocaleString()}.
+        <br />
+        Withdrawn: {data?.cashouts.toLocaleString()}
+        <br />
+        Total points: {data?.user?.totalPoints.toLocaleString()}
+      </div>
       <Col lg={12}>
         <Card class="card-default card-md mb-4">
           <CardBody>
@@ -240,7 +302,7 @@
               </Row>
 
               <Row>
-                <Col>Last active</Col>
+                <Col width={"25%"}>Last active</Col>
                 <Col>
                   {date2readable(data.user.lastActive)} ({dateFormatter(
                     data.user.lastActive
@@ -276,7 +338,9 @@
               <Row>
                 <Col>Profit Counter</Col>
                 <Col>
-                  ${currentPoints / 100}
+                  {profitCount.toLocaleString()} (${(profitCount / 100).toFixed(
+                    2
+                  )})
                 </Col>
               </Row>
 
@@ -296,9 +360,38 @@
               <Row>
                 <Col>Withdrawn</Col>
                 <Col>
-                  {data.user.cashedOut.toLocaleString()} (${(
-                    data.user.cashedOut / 100
-                  ).toLocaleString()})
+                  <div class="flex justify-start gap-2 items-center">
+                    {#if isUpdatingCashoutPoints}
+                      <input type="number" bind:value={cashoutPoints} />
+                      <button
+                        on:click={handleUpdateCashoutpoints}
+                        class="text-2xl bg-gray-100 grid place-items-center rounded-full p-0.5 hover:bg-gray-200"
+                      >
+                        <iconify-icon icon="uil:check"></iconify-icon>
+                      </button>
+                      <button
+                        on:click={() => {
+                          isUpdatingCashoutPoints = false;
+                        }}
+                        class="text-2xl bg-gray-100 grid place-items-center rounded-full p-0.5 hover:bg-red-200"
+                      >
+                        <iconify-icon icon="uil:plus" class="rotate-45"
+                        ></iconify-icon>
+                      </button>
+                    {:else}
+                      <span>
+                        {cashoutPoints.toLocaleString()}
+                        (${(cashoutPoints / 100).toLocaleString()})
+                      </span>
+                      <button
+                        on:click={() => {
+                          isUpdatingCashoutPoints = true;
+                        }}
+                      >
+                        <iconify-icon icon="uil:edit-alt"></iconify-icon>
+                      </button>
+                    {/if}
+                  </div>
                 </Col>
               </Row>
 

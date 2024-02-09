@@ -72,6 +72,7 @@
 
   // Function to toggle the popup visibility
   function togglePopup() {
+    console.log(offerUrl, "offerUrl");
     // if user isnt loggedin show toast and dont open popup
     if (!$userId)
       return Toastify({

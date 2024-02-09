@@ -22,6 +22,13 @@ export const GET = async (request) => {
     });
   }
 
+  if (user.isBanned) {
+    return response({
+      error: "Authentication failed",
+      message: "You're banned from the website",
+    });
+  }
+
   userRequest(user, geoInfo);
 
   return response({

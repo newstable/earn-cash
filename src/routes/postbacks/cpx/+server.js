@@ -40,19 +40,30 @@ export const GET = async (request) => {
   var user = await User.findOne({ _id: searchParams.get("u") });
   if (user === null) return new Response("", { status: 404 });
 
-  const tokens = parseFloat(searchParams.get("a"));
+  const status = parseInt(searchParams.get("s"));
+
+  // const tokens = parseFloat(searchParams.get("a"));
+
+  let tokens = parseFloat(searchParams.get("a"));
+  let payout = parseFloat(searchParams.get("p"));
+
+  if (status !== 1) {
+    // For chargebacks, tokens should be negative
+    tokens = -Math.abs(tokens);
+    payout = -Math.abs(payout);
+  }
 
   const newOffer = new OfferDone({
     user,
     country,
     conversionId: searchParams.get("cid"),
     offerId: searchParams.get("oid"),
-    payout: parseFloat(searchParams.get("p")),
+    payout,
     offerName: searchParams.get("on"),
     ip,
     tokens,
     wall: 8,
-    status: searchParams.get("s") == 2 ? 0 : 1,
+    status: status == 1 ? 1 : 0,
   });
   await newOffer.save();
 

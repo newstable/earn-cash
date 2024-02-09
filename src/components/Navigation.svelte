@@ -17,24 +17,24 @@
     <!-- <NavItem icon="iconoir:leaderboard-star" url="/leaderboard">Leaderboard</NavItem>
     <NavItem icon="tabler:medal-2" url="/rewards">Rewards</NavItem> -->
     <NavItem icon="fluent:people-team-20-filled" url="/affiliates">Affiliates</NavItem>
-    <NavItem icon="bxs:game" url="/rps">RPS<span class="text-xs font-normal">-[SOON]</span></NavItem>
+    <NavItem icon="bxs:game" url="/statusearn">StatusEarn</NavItem>
      <NavItem icon="gridicons:chat"><button on:click={showChatbox}>Live Chat</button></NavItem>
     <h1 class="text-gray-300 ml-4 mt-4 pb-4 font-semibold">Guides</h1>
     <ul class="space-y-2">
         <li>
-            <a href="https://discord.com/invite/justearn" target="_blank"  class="flex text-sm items-center py-3 px-4 rounded hover:bg-black">
+            <a href="https://discord.com/invite/justearn" target="_blank"  class="flex text-sm text-white items-center py-3 px-4 rounded hover:bg-black">
                 <img src="/coin.svg" alt="coin" class="w-6 h-6 mr-2"> <!-- Adjust the size and path as needed -->
                 Surveys<img src="/infinity1.svg" alt="infinity" class="w-6 h-6 ml-2"/>
             </a>
         </li>
         <li>
-            <a href="https://discord.com/invite/justearn" target="_blank" class="flex text-sm items-center py-3 px-4 rounded hover:bg-black">
+            <a href="https://discord.com/invite/justearn" target="_blank" class="flex text-white text-sm items-center py-3 px-4 rounded hover:bg-black">
                 <img src="/coin.svg" alt="coin" class="w-6 h-6 mr-2">
                 RAID [50$]<img src="https://i.imgur.com/23GPQ4k_d.webp?maxwidth=760" alt="bigcoins" class="w-8 h-8 mr-2"/>
             </a>
         </li>
         <li>
-            <a href="https://discord.com/invite/justearn" target="_blank" class="flex items-center whitespace-nowrap text-sm py-3 px-4 rounded hover:bg-black">
+            <a href="https://discord.com/invite/justearn" target="_blank" class="flex text-white items-center whitespace-nowrap text-sm py-3 px-4 rounded hover:bg-black">
                 <img src="/coin.svg" alt="coin" class="w-6 h-6 mr-2">
                 iNetOnline [25$]<img src="https://i.imgur.com/23GPQ4k_d.webp?maxwidth=760" alt="bigcoins" class="w-8 h-8 mr-2"/>
             </a>

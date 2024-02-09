@@ -21,6 +21,7 @@
         letter-spacing: -0.03em;
         padding-top: 57px;
         margin: 0 auto 67px auto;
+        background-color: #0E0C1D;
         
 
         &::before {
@@ -33,6 +34,7 @@
             /* background-image: url(/coin.svg); TODO: give different image */
             background-repeat: no-repeat;
             z-index: -1;
+            
         }
     }
 </style>

@@ -11,28 +11,24 @@ export const PATCH = async (request) => {
     return response(
       {
         success: false,
+        message: "Error occured",
       },
       400
     );
   }
 
-  //   if (mustBeHere(data.ban)) return response({ success: false }, 400);
+  if (mustBeHere(data.points) && !Number.isNaN(Number(data.points)))
+    return response({ success: false, message: "Error occured" }, 400);
 
   const user = await User.findById(data.userId);
-
-  if (user.banned) {
-    user.banned = 0;
-  } else {
-    user.banned = 1;
-  }
-  // user.banned = data.ban;
+  user.cashedOut = data.points;
 
   await user.save();
 
   return response(
     {
       success: true,
-      message: "Account ban status updated",
+      message: "Cashedout updated",
     },
     200
   );

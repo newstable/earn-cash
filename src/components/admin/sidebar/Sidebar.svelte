@@ -1,256 +1,305 @@
 <script>
-	import { onMount } from 'svelte';
-	import { Svroller } from 'svrollbar';
-	import { page } from '$app/stores';
+  import { onMount } from "svelte";
+  import { Svroller } from "svrollbar";
+  import { page } from "$app/stores";
 
-	let urlPath;
-	$: urlPath = $page.url.pathname;
+  let urlPath;
+  $: urlPath = $page.url.pathname;
 
-	let isSidebarCollapsed = false; // Reactive variable to track sidebar state
+  let isSidebarCollapsed = false; // Reactive variable to track sidebar state
 
-// Function to toggle sidebar
-function toggleSidebar() {
-	isSidebarCollapsed = !isSidebarCollapsed;
-};
+  // Function to toggle sidebar
+  function toggleSidebar() {
+    isSidebarCollapsed = !isSidebarCollapsed;
+  }
 
-	onMount(() => {
-		/* Navbar list dropdown */
-		const sidebarNav = document.querySelector('.sidebar_nav');
-		const sidebarNavChild = sidebarNav.querySelectorAll('.has-child');
-		const mainSidebar = document.querySelector('.sidebar');
-		const menuItem = document.querySelectorAll('.menu-item a');
+  onMount(() => {
+    /* Navbar list dropdown */
+    const sidebarNav = document.querySelector(".sidebar_nav");
+    const sidebarNavChild = sidebarNav.querySelectorAll(".has-child");
+    const mainSidebar = document.querySelector(".sidebar");
+    const menuItem = document.querySelectorAll(".menu-item a");
 
-		menuItem.forEach((item) => {
-			const itemPath = item.getAttribute('href');
-			if (itemPath === urlPath) {
-				let currentActiveMenu = document.querySelector('.has-child.open');
-				let uList = currentActiveMenu.querySelector('ul');
-				currentActiveMenu.querySelector('.has-child__toggle').classList.remove('active');
-				currentActiveMenu.querySelector('.menu-item').classList.remove('active');
-				uList.style.cssText = '';
-				currentActiveMenu.classList.remove('open');
+    menuItem.forEach((item) => {
+      const itemPath = item.getAttribute("href");
+      if (itemPath === urlPath) {
+        let currentActiveMenu = document.querySelector(".has-child.open");
+        let uList = currentActiveMenu.querySelector("ul");
+        currentActiveMenu
+          .querySelector(".has-child__toggle")
+          .classList.remove("active");
+        currentActiveMenu
+          .querySelector(".menu-item")
+          .classList.remove("active");
+        uList.style.cssText = "";
+        currentActiveMenu.classList.remove("open");
 
-				let _closest = item.closest('.has-child');
-				item.classList.add('active');
-				if (_closest) {
-					_closest.classList.add('open');
-					_closest.querySelector('.has-child__toggle').classList.add('active');
-					let uList = _closest.querySelector('ul');
-					let uListHeight = uList.offsetHeight;
-					uList.style.cssText = `height: ${uListHeight}px; padding-bottom: 12px;`;
-				}
-			}
-			item.addEventListener('click', function () {
-				this.closest('.sidebar_nav')
-					.querySelectorAll('.menu-item')
-					.forEach((elm) => {
-						elm.classList.remove('active');
-					});
-				this.closest('li').classList.add('active');
-				sidebarNavChild.forEach((elm) => {
-					elm.querySelector('.has-child__toggle').classList.remove('active');
-					elm.classList.remove('open');
-					let uList = elm.querySelector('ul');
-					uList.style.cssText = 'height: 0; padding-bottom: 0;';
-				});
-				if (this.closest('.has-child')) {
-					this.closest('.has-child').classList.add('open');
-					this.closest('.has-child').querySelector('.has-child__toggle').classList.add('active');
-					let uList = this.closest('.has-child').querySelector('ul');
-					let uListHeight = uList.offsetHeight;
-					uList.style.cssText = `height: ${uListHeight}px; padding-bottom: 12px;`;
-				}
+        let _closest = item.closest(".has-child");
+        item.classList.add("active");
+        if (_closest) {
+          _closest.classList.add("open");
+          _closest.querySelector(".has-child__toggle").classList.add("active");
+          let uList = _closest.querySelector("ul");
+          let uListHeight = uList.offsetHeight;
+          uList.style.cssText = `height: ${uListHeight}px; padding-bottom: 12px;`;
+        }
+      }
+      item.addEventListener("click", function () {
+        this.closest(".sidebar_nav")
+          .querySelectorAll(".menu-item")
+          .forEach((elm) => {
+            elm.classList.remove("active");
+          });
+        this.closest("li").classList.add("active");
+        sidebarNavChild.forEach((elm) => {
+          elm.querySelector(".has-child__toggle").classList.remove("active");
+          elm.classList.remove("open");
+          let uList = elm.querySelector("ul");
+          uList.style.cssText = "height: 0; padding-bottom: 0;";
+        });
+        if (this.closest(".has-child")) {
+          this.closest(".has-child").classList.add("open");
+          this.closest(".has-child")
+            .querySelector(".has-child__toggle")
+            .classList.add("active");
+          let uList = this.closest(".has-child").querySelector("ul");
+          let uListHeight = uList.offsetHeight;
+          uList.style.cssText = `height: ${uListHeight}px; padding-bottom: 12px;`;
+        }
 
-				if (window.innerWidth < 991) {
-					mainSidebar.classList.toggle('sidebar--collapsed');
-				}
-			});
-		});
-		document.body.addEventListener('click', function (e) {
-			if (window.innerWidth < 991) {
-				if (!e.target.closest('.sidebar') && !e.target.closest('.sidebar-toggle')) {
-					mainSidebar.classList.add('sidebar--collapsed');
-				}
-			}
-		});
+        if (window.innerWidth < 991) {
+          mainSidebar.classList.toggle("sidebar--collapsed");
+        }
+      });
+    });
+    document.body.addEventListener("click", function (e) {
+      if (window.innerWidth < 991) {
+        if (
+          !e.target.closest(".sidebar") &&
+          !e.target.closest(".sidebar-toggle")
+        ) {
+          mainSidebar.classList.add("sidebar--collapsed");
+        }
+      }
+    });
 
-		/* Looping all dropdown items */
-		sidebarNavChild.forEach((elm) => {
-			let uList = elm.querySelector('ul');
-			let uListHeight = uList.offsetHeight;
+    /* Looping all dropdown items */
+    sidebarNavChild.forEach((elm) => {
+      let uList = elm.querySelector("ul");
+      let uListHeight = uList.offsetHeight;
 
-			/* Reset all submenu height and padding */
-			uList.style.cssText = 'height: 0; padding-bottom: 0;';
+      /* Reset all submenu height and padding */
+      uList.style.cssText = "height: 0; padding-bottom: 0;";
 
-			/* Set height & padding to submenu if parent has 'open' class */
-			if (elm.classList.contains('open')) {
-				uList.style.cssText = `height: ${uListHeight}px; padding-bottom: 12px;`;
-			}
+      /* Set height & padding to submenu if parent has 'open' class */
+      if (elm.classList.contains("open")) {
+        uList.style.cssText = `height: ${uListHeight}px; padding-bottom: 12px;`;
+      }
 
-			/* Event listener for all submenu trigger anchors */
-			elm.children[0].addEventListener('click', function (e) {
-				e.preventDefault();
+      /* Event listener for all submenu trigger anchors */
+      elm.children[0].addEventListener("click", function (e) {
+        e.preventDefault();
 
-				/* Close if any submenu already opened */
-				sidebarNavChild.forEach((element) => {
-					if (e.target.closest('.has-child') !== element) {
-						element.classList.remove('open');
-						element.querySelector('ul').style.cssText = 'height: 0; padding-bottom: 0;';
-					}
-				});
+        /* Close if any submenu already opened */
+        sidebarNavChild.forEach((element) => {
+          if (e.target.closest(".has-child") !== element) {
+            element.classList.remove("open");
+            element.querySelector("ul").style.cssText =
+              "height: 0; padding-bottom: 0;";
+          }
+        });
 
-				/* Current targeted submenu actions */
-				let childParent = elm.children[0].closest('.has-child');
-				let ul = childParent.querySelector('ul');
-				childParent.classList.toggle('open');
+        /* Current targeted submenu actions */
+        let childParent = elm.children[0].closest(".has-child");
+        let ul = childParent.querySelector("ul");
+        childParent.classList.toggle("open");
 
-				if (childParent.classList.contains('open')) {
-					ul.style.cssText = `height: ${uListHeight}px; padding-bottom: 12px;`;
-				} else {
-					ul.style.cssText = 'height: 0; padding-bottom: 0;';
-				}
-			});
-		});
+        if (childParent.classList.contains("open")) {
+          ul.style.cssText = `height: ${uListHeight}px; padding-bottom: 12px;`;
+        } else {
+          ul.style.cssText = "height: 0; padding-bottom: 0;";
+        }
+      });
+    });
 
-		/* Submenu position relative to it's parent */
-		function sidebarCollapsed() {
-			let direction = document.querySelector('html').getAttribute('dir');
-			let collapsedChild = document.querySelectorAll('.sidebar--collapsed .has-child');
-			collapsedChild.forEach((item) => {
-				item.addEventListener('mouseover', function () {
-					if (mainSidebar.classList.contains('sidebar--collapsed')) {
-						let menuItem = this;
-						let menuItemRect = menuItem.getBoundingClientRect();
-						let submenuWrapper = menuItem.querySelector('ul');
-						menuItem.classList.add('open');
-						submenuWrapper.style.cssText = `height: auto; padding-bottom: 12px; top: ${menuItemRect.top}px;`;
-						if (direction === 'ltr') {
-							submenuWrapper.style.left = `${
-								menuItemRect.left + Math.round(menuItem.offsetWidth * 0.75) + 10
-							}px`;
-							submenuWrapper.style.right = 'auto';
-						} else if (direction === 'rtl') {
-							submenuWrapper.style.right = `${Math.round(menuItem.offsetWidth * 0.75) + 10}px`;
-							submenuWrapper.style.left = 'auto';
-						}
-					}
-				});
-			});
-		}
+    /* Submenu position relative to it's parent */
+    function sidebarCollapsed() {
+      let direction = document.querySelector("html").getAttribute("dir");
+      let collapsedChild = document.querySelectorAll(
+        ".sidebar--collapsed .has-child"
+      );
+      collapsedChild.forEach((item) => {
+        item.addEventListener("mouseover", function () {
+          if (mainSidebar.classList.contains("sidebar--collapsed")) {
+            let menuItem = this;
+            let menuItemRect = menuItem.getBoundingClientRect();
+            let submenuWrapper = menuItem.querySelector("ul");
+            menuItem.classList.add("open");
+            submenuWrapper.style.cssText = `height: auto; padding-bottom: 12px; top: ${menuItemRect.top}px;`;
+            if (direction === "ltr") {
+              submenuWrapper.style.left = `${
+                menuItemRect.left + Math.round(menuItem.offsetWidth * 0.75) + 10
+              }px`;
+              submenuWrapper.style.right = "auto";
+            } else if (direction === "rtl") {
+              submenuWrapper.style.right = `${
+                Math.round(menuItem.offsetWidth * 0.75) + 10
+              }px`;
+              submenuWrapper.style.left = "auto";
+            }
+          }
+        });
+      });
+    }
 
-		/* sidebar scroll to active link on page load */
-		const activeLink = document.querySelector('.sidebar_nav .menu-item a.active');
-		if (activeLink !== null) {
-			const activeLinkOffset = activeLink.offsetTop;
-			document.querySelector('.svlr-viewport').scrollTop = activeLinkOffset;
-		}
+    /* sidebar scroll to active link on page load */
+    const activeLink = document.querySelector(
+      ".sidebar_nav .menu-item a.active"
+    );
+    if (activeLink !== null) {
+      const activeLinkOffset = activeLink.offsetTop;
+      document.querySelector(".svlr-viewport").scrollTop = activeLinkOffset;
+    }
+  });
 
-		
-	});
+  function handleLayoutDirecction(e, direction) {
+    e.preventDefault();
 
-	function handleLayoutDirecction(e, direction) {
-		e.preventDefault();
+    document.documentElement.setAttribute("dir", direction);
+    if (direction === "rtl") {
+      document.getElementById("bootstrap-css-link").href =
+        "../css/bootstrap.rtl.min.css";
+    } else {
+      document.getElementById("bootstrap-css-link").href =
+        "../css/bootstrap.min.css";
+    }
+  }
 
-		document.documentElement.setAttribute('dir', direction);
-		if (direction === 'rtl') {
-			document.getElementById('bootstrap-css-link').href = '../css/bootstrap.rtl.min.css';
-		} else {
-			document.getElementById('bootstrap-css-link').href = '../css/bootstrap.min.css';
-		}
-	}
-
-	/* Active Top Menu */
-	function handleMenuType(e) {
-		e.preventDefault();
-		document.body.classList.add('top-menu');
-		document.body.classList.remove('side-menu');
-	}
+  /* Active Top Menu */
+  function handleMenuType(e) {
+    e.preventDefault();
+    document.body.classList.add("top-menu");
+    document.body.classList.remove("side-menu");
+  }
 </script>
 
 <aside class="sidebar" class:sidebar--collapsed={isSidebarCollapsed}>
-    <button on:click={toggleSidebar}>Minify</button>
+  <button on:click={toggleSidebar} class="text-black">Minify</button>
 
-	<Svroller width="100%" height="100%">
-		<div class="sidebar__menu-group">
-			<ul class="sidebar_nav">
-				<li>
-					<a href={'/admin'} class={$page.route.id === "/admin" && "active"}>
-						<span class="nav-icon uil uil-apps" />
-						<span class="menu-text">Dashboard</span>
-					</a>
-				</li>
-                <li>
-					<a href={'/admin/recent-earnings'} class={$page.route.id === "/admin/recent-earnings" && "active"}>
-						<span class="nav-icon uil uil-search-alt" />
-						<span class="menu-text">Recent Earnings</span>
-					</a>
-				</li>
-                <li>
-					<a href={'/admin/featured-offers'} class={$page.route.id === "/admin/featured-offers" && "active"}>
-						<span class="nav-icon uil uil-star" />
-						<span class="menu-text">Featured Offers</span>
-					</a>
-				</li>
-                <li>
-					<a href={'/admin/csv'} class={$page.route.id === "/admin/csv" && "active"}>
-						<span class="nav-icon uil uil-file-download-alt" />
-						<span class="menu-text">CSV Download</span>
-					</a>
-				</li>
-                <li>
-					<a href={'/admin/search'} class={$page.route.id === "/admin/search" && "active"}>
-						<span class="nav-icon uil uil-user-location" />
-						<span class="menu-text">User Search</span>
-					</a>
-				</li>
+  <!-- <Svroller width="100%" height="100%"> -->
+  <div class="sidebar__menu-group h-full">
+    <ul class="sidebar_nav">
+      <li>
+        <a href={"/admin"} class={$page.route.id === "/admin" && "active"}>
+          <span class="nav-icon uil uil-apps" />
+          <span class="menu-text">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href={"/admin/recent-earnings"}
+          class={$page.route.id === "/admin/recent-earnings" && "active"}
+        >
+          <span class="nav-icon uil uil-search-alt" />
+          <span class="menu-text">Recent Earnings</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href={"/admin/featured-offers"}
+          class={$page.route.id === "/admin/featured-offers" && "active"}
+        >
+          <span class="nav-icon uil uil-star" />
+          <span class="menu-text">Featured Offers</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href={"/admin/csv"}
+          class={$page.route.id === "/admin/csv" && "active"}
+        >
+          <span class="nav-icon uil uil-file-download-alt" />
+          <span class="menu-text">CSV Download</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href={"/admin/search"}
+          class={$page.route.id === "/admin/search" && "active"}
+        >
+          <span class="nav-icon uil uil-user-location" />
+          <span class="menu-text">User Search</span>
+        </a>
+      </li>
 
-                <li class="menu-title mt-30">
-					<span>Rewards</span>
-				</li>
-                <li>
-					<a href={'/admin/reward-requests'} class={$page.route.id === "/admin/reward-requests" && "active"}>
-						<span class="nav-icon uil uil-gift" />
-						<span class="menu-text">Reward Requests</span>
-					</a>
-				</li>
-                <li>
-					<a href={'/admin/paypal-requests'} class={$page.route.id === "/admin/paypal-requests" && "active"}>
-						<span class="nav-icon uil uil-paypal" />
-						<span class="menu-text">PayPal Requests</span>
-					</a>
-				</li>
-                <li>
-					<a href={'/admin/crypto-requests'} class={$page.route.id === "/admin/crypto-requests" && "active"}>
-						<span class="nav-icon uil uil-bitcoin" />
-						<span class="menu-text">Crypto Requests</span>
-					</a>
-				</li>
-                <li>
-					<a href={'/admin/held-rewards'} class={$page.route.id === "/admin/held-rewards" && "active"}>
-						<span class="nav-icon uil uil-gift" />
-						<span class="menu-text">Held Rewards</span>
-					</a>
-				</li>
-                <li>
-					<a href={'/admin/held-paypal'} class={$page.route.id === "/admin/held-paypal" && "active"}>
-						<span class="nav-icon uil uil-paypal" />
-						<span class="menu-text">Held PayPal</span>
-					</a>
-				</li>
-                <li>
-					<a href={'/admin/held-crypto'} class={$page.route.id === "/admin/held-crypto" && "active"}>
-						<span class="nav-icon uil uil-bitcoin" />
-						<span class="menu-text">Held Crypto</span>
-					</a>
-				</li>
-                <li>
-					<a href={'/admin/reward-history'} class={$page.route.id === "/admin/reward-history" && "active"}>
-						<span class="nav-icon uil uil-gift" />
-						<span class="menu-text">Reward History</span>
-					</a>
-				</li>
+      <li class="menu-title mt-30">
+        <span>Rewards</span>
+      </li>
+      <li>
+        <a
+          href={"/admin/reward-requests"}
+          class={$page.route.id === "/admin/reward-requests" && "active"}
+        >
+          <span class="nav-icon uil uil-gift" />
+          <span class="menu-text">Reward Requests</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href={"/admin/paypal-requests"}
+          class={$page.route.id === "/admin/paypal-requests" && "active"}
+        >
+          <span class="nav-icon uil uil-paypal" />
+          <span class="menu-text">PayPal Requests</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href={"/admin/crypto-requests"}
+          class={$page.route.id === "/admin/crypto-requests" && "active"}
+        >
+          <span class="nav-icon uil uil-bitcoin" />
+          <span class="menu-text">Crypto Requests</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href={"/admin/held-rewards"}
+          class={$page.route.id === "/admin/held-rewards" && "active"}
+        >
+          <span class="nav-icon uil uil-gift" />
+          <span class="menu-text">Held Rewards</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href={"/admin/held-paypal"}
+          class={$page.route.id === "/admin/held-paypal" && "active"}
+        >
+          <span class="nav-icon uil uil-paypal" />
+          <span class="menu-text">Held PayPal</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href={"/admin/held-crypto"}
+          class={$page.route.id === "/admin/held-crypto" && "active"}
+        >
+          <span class="nav-icon uil uil-bitcoin" />
+          <span class="menu-text">Held Crypto</span>
+        </a>
+      </li>
+      <li>
+        <a
+          href={"/admin/reward-history"}
+          class={$page.route.id === "/admin/reward-history" && "active"}
+        >
+          <span class="nav-icon uil uil-gift" />
+          <span class="menu-text">Reward History</span>
+        </a>
+      </li>
 
-				<!-- <li class="menu-title mt-30">
+      <!-- <li class="menu-title mt-30">
 					<span>Database</span>
 				</li>
                 <li>
@@ -832,23 +881,24 @@ function toggleSidebar() {
 						<span class="menu-text">Coming Soon</span>
 					</a>
 				</li> -->
-			</ul>
-		</div>
-	</Svroller>
+    </ul>
+  </div>
+  <!-- </Svroller> -->
 </aside>
 
 <style lang="scss">
-    @import '../../../assets/sass/mixins/directional.scss';
-	@import './style.scss';
-    $dir: ltr;
+  @import "../../../assets/sass/mixins/directional.scss";
+  @import "./style.scss";
+  $dir: ltr;
 
-	  /* CSS for collapsed sidebar */
-	  .sidebar--collapsed {
-        width: 50px; /* Adjust the width as per your design */
-        /* Other styles for collapsed state */
-    }
+  /* CSS for collapsed sidebar */
+  .sidebar--collapsed {
+    width: 75px; /* Adjust the width as per your design */
+    min-width: 75px; /* Adjust the width as per your design */
+    /* Other styles for collapsed state */
+  }
 
-	/* :global(aside.sidebar) {
+  /* :global(aside.sidebar) {
 		@import '../../../assets/sass/mixins/directional.scss';
 		@import './style.scss';
 

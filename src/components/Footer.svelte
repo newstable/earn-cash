@@ -5,9 +5,9 @@
 </script>
 
 <footer>
-  <div class="bg-[#5F141E] text-black h-[468px] px-[50px] pt-[50px] pb-[25px]">
+  <div class="bg-hi text-black h-[468px] px-[50px] pt-[50px] pb-[25px]">
     <div
-      class="h-[181px]  rounded-md bg-[#65131E] flex flex-col sm:flex-row mx-10 justify-between pr-20 break-words overflow-hidden"
+      class="h-[181px]  rounded-md bg-glass flex flex-col sm:flex-row mx-10 justify-between pr-20 break-words overflow-hidden"
     >
       <div class="flex flex-col align-middle gap-[0px]">
         <img
@@ -98,7 +98,7 @@
       </div>
     </div>
     <div
-      class="w-auto border-b-2 border-black rounded-md h-[137px] bg-[#65131E] px-[20px] py-[15px] mt-[45px] align-middle mx-auto flex justify-center items-center overflow-hidden"
+      class="w-auto border-b-2 border-black rounded-md h-[137px] bg-glass px-[20px] py-[15px] mt-[45px] align-middle mx-auto flex justify-center items-center overflow-hidden"
     >
       <p class="w-[547px] h-[107px] text-sm mb-3 text-white hidden sm:block">
         JustEarn is an easy way to earn money online from anywhere in the world.

@@ -108,7 +108,7 @@
 </script>
 
 <svelte:head>
-  <title>Offers - Justearn.com</title>
+  <title>Offers - Justearn.gg</title>
 </svelte:head>
 
 <EarnHeader name="Offers" onChange={filterOffers} bind:devices />
@@ -128,7 +128,9 @@
         apple={offer.mobile_app_type === "ios" ||
           offer.mobile_app_type === null}
         computer={offer.mobile_app_type === null}
-        offerUrl={offer?.link?.replace("[USERIDHERE]", userId)}
+        offerUrl={offer?.link?.replace("[USERIDHERE]", userId) +
+          "&subid=" +
+          userId}
         {offer}
       />
       <!-- {/if} -->
@@ -148,6 +150,5 @@
     place-items: center;
     height: 100px;
     width: 100%;
-    background: #171515;
   }
 </style>

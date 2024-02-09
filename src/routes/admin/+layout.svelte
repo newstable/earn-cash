@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="/css/style.css" />
 </svelte:head>
 
-<main class="main-content">
+<main class="main-content flex">
   <Sidebar />
   <div class="contents" style="padding-top: 1rem; color: #000;">
     <slot />

@@ -39,7 +39,7 @@
     loadedModal = modal;
     modalStore.set(modal);
 
-    if (get(wsStore) === false && !get(page).route.id.startsWith("/admin")) {
+    if (get(wsStore) === false && !get(page).route.id?.startsWith("/admin")) {
       const makeConnection = () => {
         var typeListeners = {};
 
@@ -143,13 +143,13 @@
 </script>
 
 <QueryClientProvider client={queryClient}>
-  {#if !$page.route.id.startsWith("/wall/") && !$page.route.id.startsWith("/admin")}
-    {#if $page.route.id === "/"} 
+  {#if !$page.route.id?.startsWith("/wall/") && !$page.route.id?.startsWith("/admin")}
+    {#if $page.route.id === "/"}
       <!-- This block will only render the Footer for the homepage ("/") -->
       <slot />
       <Footer />
-      <Header modal={loadedModal}/>
-      <Cookies/>
+      <Header modal={loadedModal} />
+      <Cookies />
       <SignInUpModal bind:this={modal} />
     {:else}
       <!-- This block renders for all other pages except "/wall/" and "/admin" prefixes -->
@@ -165,7 +165,7 @@
         <slot />
 
         <!-- {$page.route.id} -->
-        {#if !$page.route.id.startsWith("/chat") && !$page.route.id.startsWith("/admin")}
+        {#if !$page.route.id?.startsWith("/chat") && !$page.route.id?.startsWith("/admin")}
           <Footer />
         {/if}
       </div>

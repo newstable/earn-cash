@@ -24,6 +24,7 @@ export const GET = async (request) => {
   }
 
   userRequest(user, geoInfo);
+  // console.log(user, "user");
 
   return response({
     success: true,
@@ -63,6 +64,7 @@ export const POST = async (request) => {
   const user = await User.findOne({
     email: data.email.toLowerCase(),
   });
+
   if (user === null)
     return response({
       success: false,
@@ -76,6 +78,13 @@ export const POST = async (request) => {
       success: false,
       message: "EP not 0K",
       userMessage: "Email or password incorrect",
+    });
+
+  if (user.banned === 1)
+    return response({
+      success: false,
+      message: "You are banned",
+      userMessage: "You cannot log into justearn",
     });
 
   userRequest(user, data);
