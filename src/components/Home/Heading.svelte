@@ -496,40 +496,109 @@
           target="_blank"
           class="font-semibold text-[#7289DA] hover:underline"
         >
-          <p class="mt-6 text-lg leading-8">
+          <span class="block mt-6 text-lg leading-8">
             Still confused? Join our vibrant community and let's guide you to
             making some extra cash with a smile :)
-          </p>
+          </span>
         </a>
       </div>
       <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
         <dl
           class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3"
         >
-          <div class="flex flex-col">
+          <div class="flex flex-col bg-white/5 p-8 pb-0 rounded-xl">
             <dt
-              class="flex items-center gap-x-3 text-2xl font-semibold leading-7 text-white"
+              class="flex items-center justify-center gap-x-3 text-2xl font-semibold leading-7 text-white"
             >
-              <img src="turbo.svg" alt="turbo" class="h-10 w-12 flex-none" />
+              <img src="turbo.svg" alt="turbo" class="h-4 flex-none" />
               Play Games
             </dt>
             <dd
-              class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-100"
+              class="mt-4 flex flex-auto justify-between flex-col text-base leading-7 text-gray-300"
             >
-              <p class="flex-auto">
-                Get paid to play by gaming companies seeking more players. Start
-                gaming now!
-              </p>
-              <p class="mt-6">
-                <button
-                  on:click={() => modal.open(false)}
-                  class="text-2xl font-extrabold leading-6 text-red-800"
-                  >$0.5 - $120 <span aria-hidden="true">→</span></button
-                >
-              </p>
+              <div>
+                <p class="text-center">
+                  Get paid to play by gaming companies seeking more players.
+                  Start gaming now!
+                </p>
+                <p class="mt-6 text-center">
+                  <button
+                    on:click={() => modal.open(false)}
+                    class="text-2xl font-extrabold leading-6 text-red-400"
+                    >$0.5 - $120 <span aria-hidden="true">→</span></button
+                  >
+                </p>
+              </div>
+              <div class="mt-12 relative animating-images">
+                <img
+                  src="/img/landing/icon-1.png"
+                  alt=""
+                  class="absolute w-1/6 left-4 up-and-down"
+                />
+                <img
+                  src="/img/landing/icon-2.png"
+                  alt=""
+                  class="absolute w-1/5 left-1/4 top-1/4 up-and-down"
+                  style="animation-duration: 6s; animation-delay: 1s"
+                />
+                <img
+                  src="/img/landing/character-1.png"
+                  alt=""
+                  class="absolute w-1/3 bottom-[20%] right-0 up-and-down"
+                  style="animation-duration: 8s"
+                />
+                <img
+                  src="/img/landing/screen-1.png"
+                  alt=""
+                  class="w-2/3 mx-auto"
+                />
+              </div>
             </dd>
           </div>
-          <div class="flex flex-col">
+          <div class="flex flex-col bg-white/5 p-8 pb-0 rounded-xl">
+            <dt
+              class="flex items-center justify-center gap-x-3 text-2xl font-semibold leading-7 text-white"
+            >
+              <img src="turbo.svg" alt="turbo" class="h-4 flex-none" />
+              Complete Offers
+            </dt>
+            <dd
+              class="mt-4 flex justify-between flex-auto flex-col text-base leading-7 text-gray-300"
+            >
+              <div>
+                <p class="text-center">
+                  Earn by trying new apps from different companies. Get paid for
+                  app usage!
+                </p>
+                <p class="mt-6 text-center">
+                  <button
+                    on:click={() => modal.open(false)}
+                    class="text-2xl font-extrabold leading-6 text-red-400"
+                    >$1.00 - $75 <span aria-hidden="true">→</span></button
+                  >
+                </p>
+              </div>
+              <div class="mt-12 relative animating-images">
+                <img
+                  src="/img/landing/icon-3.png"
+                  alt=""
+                  class="absolute w-1/6 left-4 up-and-down"
+                />
+                <img
+                  src="/img/landing/icon-4.png"
+                  alt=""
+                  class="absolute w-1/6 bottom-[20%] right-6 up-and-down"
+                  style="animation-duration: 6s; animation-delay: 0.5s"
+                />
+                <img
+                  src="/img/landing/screen-2.png"
+                  alt=""
+                  class="w-2/3 mx-auto"
+                />
+              </div>
+            </dd>
+          </div>
+          <!-- <div class="flex flex-col">
             <dt
               class="flex items-center gap-x-3 text-2xl font-semibold leading-7 text-white"
             >
@@ -551,8 +620,49 @@
                 >
               </p>
             </dd>
+          </div> -->
+          <div class="flex flex-col bg-white/5 p-8 pb-0 rounded-xl">
+            <dt
+              class="flex items-center justify-center gap-x-3 text-2xl font-semibold leading-7 text-white"
+            >
+              <img src="turbo.svg" alt="turbo" class="h-4 flex-none" />
+              Fill Surveys
+            </dt>
+            <dd
+              class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-300"
+            >
+              <p class="text-center">
+                Companies need your opinion to create better products and
+                services. That’s why they pay for your feedback.
+              </p>
+              <p class="mt-6 text-center">
+                <button
+                  on:click={() => modal.open(false)}
+                  class="text-2xl font-extrabold leading-6 text-red-400"
+                  >$1.00 <span aria-hidden="true">→</span></button
+                >
+              </p>
+              <div class="mt-12 relative animating-images">
+                <img
+                  src="/img/landing/icon-5.png"
+                  alt=""
+                  class="absolute w-[13%] left-4 up-and-down"
+                />
+                <img
+                  src="/img/landing/icon-6.png"
+                  alt=""
+                  class="absolute w-[13%] bottom-[20%] right-6 up-and-down"
+                  style="animation-duration: 6s; animation-delay: 0.5s"
+                />
+                <img
+                  src="/img/landing/screen-3.png"
+                  alt=""
+                  class="w-full mx-auto"
+                />
+              </div>
+            </dd>
           </div>
-          <div class="flex flex-col">
+          <!-- <div class="flex flex-col">
             <dt
               class="flex items-center gap-x-3 text-2xl font-semibold leading-7 text-white"
             >
@@ -574,7 +684,7 @@
                 >
               </p>
             </dd>
-          </div>
+          </div> -->
         </dl>
       </div>
     </div>
@@ -1019,6 +1129,21 @@
         transform: translate(-50%, -50%);
         border-style: none;
       }
+    }
+  }
+
+  .up-and-down {
+    animation: upAndDown 5s ease-in-out 0s infinite;
+  }
+
+  @keyframes upAndDown {
+    // transform: translate
+    // 0% {
+    //   transform: translateY(0px);
+    // }
+
+    50% {
+      transform: translateY(25%);
     }
   }
 </style>
