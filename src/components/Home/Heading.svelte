@@ -247,7 +247,46 @@
       <div
         class="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-40"
       >
-        <div class="mx-auto max-w-2xl lg:mx-0 lg:flex-auto">
+        <div
+          class="mx-auto =bg-blue-500 relative max-w-2xl lg:mx-0 lg:flex-auto"
+        >
+          <div class="hidden sm:block">
+            <img
+              src="/img/landing/star/long.svg"
+              class="absolute bottom-[40%] -left-[10%] w-6"
+              alt=""
+            />
+            <img
+              src="/img/landing/star/long.svg"
+              class="absolute top-[30%] left-[-5%] w-10"
+              alt=""
+            />
+            <img
+              src="/img/landing/star/long.svg"
+              class="absolute top-0 -left-[15%] w-14"
+              alt=""
+            />
+            <img
+              src="/img/landing/star/long.svg"
+              class="absolute bottom-[20%] right-[20%] w-14"
+              alt=""
+            />
+            <img
+              src="/img/landing/star/long.svg"
+              class="absolute bottom-[28%] right-[28%] w-10"
+              alt=""
+            />
+            <img
+              src="/img/landing/star/long.svg"
+              class="absolute top-0 right-[40%] w-10"
+              alt=""
+            />
+            <!-- <img src="/img/landing/star/plain.svg" alt="" />
+          <img src="/img/landing/star/smoothinnercorner.svg" alt="" />
+          <img src="/img/landing/star/thin.svg" alt="" />
+          <img src="/img/landing/star/thinsmooth.svg" alt="" />
+          <img src="/img/landing/star/wide.svg" alt="" /> -->
+          </div>
           <div class="flex">
             <div
               class="bg-white relative flex items-center gap-x-4 rounded-full px-4 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20"
