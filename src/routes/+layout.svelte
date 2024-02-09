@@ -69,7 +69,7 @@
 
         websocket.onmessage = (e) => {
           const data = JSON.parse(e.data.toString());
-          console.log(data);
+          // console.log(data);
 
           if (data.type === "ping") {
             websocket.send(
@@ -144,21 +144,23 @@
 
 <QueryClientProvider client={queryClient}>
   {#if !$page.route.id?.startsWith("/wall/") && !$page.route.id?.startsWith("/admin")}
+    <SignInUpModal bind:this={modal} />
+    <Header modal={loadedModal} />
     {#if $page.route.id === "/"}
       <!-- This block will only render the Footer for the homepage ("/") -->
       <slot />
       <Footer />
-      <Header modal={loadedModal} />
+      <!-- <Header modal={loadedModal} /> -->
       <Cookies />
-      <SignInUpModal bind:this={modal} />
+      <!-- <SignInUpModal bind:this={modal} /> -->
     {:else}
       <!-- This block renders for all other pages except "/wall/" and "/admin" prefixes -->
-      <Header modal={loadedModal} />
+      <!-- <Header modal={loadedModal} /> -->
       <LiveEvents />
       <Chat />
       <Navigation />
       <MobileNavigation />
-      <SignInUpModal bind:this={modal} />
+      <!-- <SignInUpModal bind:this={modal} /> -->
       <Cookies />
 
       <div class="site">

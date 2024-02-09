@@ -120,20 +120,24 @@
     deleteCookie("token");
     loggedIn.set(false);
   };
+
+  // $: console.log(modal, "modal");
 </script>
 
 <div class="headerHolder">
   <header>
     <div class="logo flex content-center w-[220px] h-[100%]">
       <a href="/earn" class="flex flex-row">
-          <img src="/coin.svg" alt="Logo" class="w-[100%] h-[48px] mt-3 ml-4" />
-          <img src="/logo1.png" alt="Logo" class="w-[80%] h-[60%] scale-90 -ml-0 mt-4 hidden sm:block" />
+        <img src="/coin.svg" alt="Logo" class="w-[100%] h-[48px] mt-3 ml-4" />
+        <img
+          src="/logo1.png"
+          alt="Logo"
+          class="w-[80%] h-[60%] scale-90 -ml-0 mt-4 hidden sm:block"
+        />
       </a>
-  </div>
-
+    </div>
 
     <div class="account">
-     
       {#if !$loggedIn}
         <button on:click={() => modal.open()}>
           <Icon icon="mdi:user" color="white" width="17" height="17" />
@@ -295,7 +299,6 @@
 
   .account-item {
     margin-left: 10px;
-    
 
     &.dropdown {
       position: relative;
@@ -353,7 +356,7 @@
     &:first-child > a {
       display: flex;
       align-items: center;
-      background: #4A4845;
+      background: #4a4845;
       border-radius: 6px;
       font-size: 14px;
       line-height: 160%;
@@ -386,8 +389,6 @@
     left: 0;
     transition: 0.25s;
     z-index: 11;
-
-    
 
     div.widgets {
       margin-left: 20px;
@@ -432,7 +433,6 @@
 
         &.alt {
           background: #171515;
-          
         }
 
         @media only screen and (max-width: 700px) {
