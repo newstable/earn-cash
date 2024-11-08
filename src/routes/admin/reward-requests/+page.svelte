@@ -46,7 +46,6 @@
   };
   const calculateTotalRewardPrice = () => {
     totalRewardPrice = items.reduce((total, item) => total + item.reward.price, 0);
-    console.log(totalRewardPrice);
   };
   const hold = (item) =>
     fetch("/api/admin/rewards/hold", {

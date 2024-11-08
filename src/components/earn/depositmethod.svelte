@@ -64,7 +64,7 @@
 <div class="deposit-methods">
     <div class="header">
         <p>
-            <span class="gold">BLOXCLASH</span> OFFERS VARIOUS DEPOSIT METHODS
+            <span class="gold">JUST EARN</span> OFFERS VARIOUS DEPOSIT METHODS
         </p>
         <div class="bar"></div>
         <p class="method-name {METHODS[method] ? 'active' : ''}">

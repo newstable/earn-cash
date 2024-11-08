@@ -65,7 +65,7 @@
     {#if $loggedIn}
     <a href="/myprofile" class="w-[100%] mt-[70%] lg:mt-[90%] flex bg-[#4a4845] p-1 h-9 rounded-2xl"><iconify-icon icon="line-md:cog-filled-loop" width="30" height="30"  style="color: white"></iconify-icon><span class="pl-4 pt-[2px]">My Profile</span></a>
     {/if}
-    <div class="hidden rate w-[150px] h-[40px] align-middle flex justify-center bg-[#6F1521] rounded-lg  ml-[30px] mt-[80px]"><img class="w-10 px-" src="/coin3.svg" alt="coin"/><span class="text-white font-medium text-md whitespace-nowrap mr-8 pr-43 flex mt-2 ml-2">100 Coins = 1 $</span></div>
+    <div class="hidden rate w-[150px] h-[40px] align-middle flex justify-center bg-[#2d2755] rounded-lg  ml-[30px] mt-[80px]"><img class="w-10 px-" src="/coin3.svg" alt="coin"/><span class="text-white font-medium text-md whitespace-nowrap mr-8 pr-43 flex mt-2 ml-2">100 Coins = 1 $</span></div>
 </div>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->

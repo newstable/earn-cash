@@ -9,7 +9,7 @@ body {
   
   overflow-x: hidden;
   color: #ffff;
-  background-color: #5f141e;
+  background-color: #5a5499;
   min-height: 100%;
 }
 
@@ -152,4 +152,8 @@ textarea.materialize-textarea {
 * {
   overflow-wrap: break-word;
   text-decoration: none;
+}
+
+.sc-carousel__pages-container{
+  gap:10px;
 }

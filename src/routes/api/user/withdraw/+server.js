@@ -241,7 +241,7 @@ export const POST = async (request) => {
         })
       });
       const data = await payoutResponse.json();
-      if (payoutResponse.status !== 200) return response( 
+      if (payoutResponse.status !== 200) return response(
         {
           success: false,
           message: data.message,
@@ -255,6 +255,7 @@ export const POST = async (request) => {
 
       const reward = new Reward({
         user,
+        processing: 1,
         type: payoutMethod.type,
         reward: `${rewardAmount.toFixed(
           8
@@ -344,6 +345,7 @@ export const POST = async (request) => {
 
       const reward = new Reward({
         user,
+        processing: 1,
         type: payoutMethod.type,
         reward: (chosenOption.value / 100).toString() + "$ " + payoutMethod.name,
         amount,
@@ -395,40 +397,40 @@ export const POST = async (request) => {
       //   );
       // }
 
-      const response = await fetch('https://testflight.tremendous.com/api/v2/orders', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${process.env.TREMENDOUS_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          'payment': {
-            "funding_source_id": "BALANCE"
-          },
-          "rewards": {
-            "value": {
-              "denomination": chosenOption.price,
-            },
-            "delivery": {
-              "method": "EMAIL"
-            },
-            "recipient": {
-              "name": user.username,
-              "email": user.email
-            },
-            "products": [
-              ""
-            ]
-          }
-        })
-      });
+      // const response = await fetch('https://testflight.tremendous.com/api/v2/orders', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Authorization': `Bearer ${process.env.TREMENDOUS_API_KEY}`,
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     'payment': {
+      //       "funding_source_id": "BALANCE"
+      //     },
+      //     "rewards": {
+      //       "value": {
+      //         "denomination": chosenOption.price,
+      //       },
+      //       "delivery": {
+      //         "method": "EMAIL"
+      //       },
+      //       "recipient": {
+      //         "name": user.username,
+      //         "email": user.email
+      //       },
+      //       "products": [
+      //         ""
+      //       ]
+      //     }
+      //   })
+      // });
 
-      if (response.status !== 200) {
-        return response({
-          success: false,
-          message: 'An error occurred while processing the payout.',
-        }, 500);
-      }
+      // if (response.status !== 200) {
+      //   return response({
+      //     success: false,
+      //     message: 'An error occurred while processing the payout.',
+      //   }, 500);
+      // }
 
       user.cashedOut += price;
       await user.save();
@@ -476,7 +478,6 @@ async function createPayout(receiverEmail, amount) {
       }]
     })
   });
-  console.log(response);
   if (!response.ok) {
     const errorData = await response.json();
     console.error("Error:", errorData);

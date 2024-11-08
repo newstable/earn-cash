@@ -1,39 +1,102 @@
 <script>
-    import Avatar from "./avatar.svelte";
+    import { onMount } from "svelte";
+    import Loader from "./loader.svelte";
 
     export let user;
 
-    let option = () => "all";
-
+    let option = () => "recent";
+    let bets = [];
+    const itemsPerPage = 10;
+    let currentPage = 1;
+    let totalPages = 0;
     function changeBetChannel(selectedOption) {
-        option = () => selectedOption; // Update the current option
+        option = () => selectedOption;
+        bets = [];
+        const itemsPerPage = 10;
+        let currentPage = 1;
+        let totalPages = 0;
+
+        switch (selectedOption) {
+            case "recent":
+                getLastOffersDone();
+                break;
+            case "all":
+                getAllOffersDone();
+                break;
+            case "completed":
+                getCompletedWithdrawals();
+                break;
+            case "pending":
+                getPendingWithdrawals();
+                break;
+            default:
+                break;
+        }
     }
 
-    let bets = () => [];
-    let gameToImage = {};
+    const tableHeads = {
+        recent: ["User", "time", "wall", "tokens"],
+        all: ["User", "time", "wall", "tokens"],
+        completed: ["User", "time", "type", "reward"],
+        pending: ["User", "time", "type", "reward"],
+    };
 
-    function getCents(bal) {
-        if (typeof bal !== "number") {
-            return "00";
-        }
+    const getLastOffersDone = async () => {
+        const response = await fetch("/api/getLastInfos/getLastOffers");
+        const data = await response.json();
 
-        bal = Math.abs(bal);
-        let cents = Math.floor(Math.round((bal % 1) * 100));
-        if (cents < 10) {
-            return "0" + cents;
+        if (typeof data.offers !== "undefined") {
+            bets = data.offers;
         }
-        return cents;
-    }
+    };
+
+    const getAllOffersDone = async () => {
+        const response = await fetch(
+            `/api/getLastInfos/getAllOffers?page=${currentPage}&limit=${itemsPerPage}`,
+        );
+        const data = await response.json();
+
+        if (typeof data.offers !== "undefined") {
+            bets = data.offers;
+            totalPages = data.totalOffers;
+        }
+    };
+
+    const getCompletedWithdrawals = async () => {
+        const response = await fetch(
+            `/api/getLastInfos/getCompletedWithdrawals?page=${currentPage}&limit=${itemsPerPage}`,
+        );
+        const data = await response.json();
+
+        if (typeof data.rewards !== "undefined") {
+            bets = data.rewards;
+        }
+    };
+
+    const getPendingWithdrawals = async () => {
+        const response = await fetch(
+            `/api/getLastInfos/getPendingWithdrawals?page=${currentPage}&limit=${itemsPerPage}`,
+        );
+        const data = await response.json();
+
+        if (typeof data.rewards !== "undefined") {
+            bets = data.rewards;
+        }
+    };
+
+    onMount(() => {
+        getLastOffersDone();
+    });
 </script>
 
 <div class="bets-container">
     <div class="bets-options">
         {#if user}
             <button
-                class="option {option() === 'me' ? 'active' : ''}"
-                on:click={() => changeBetChannel("me")}
+                class="option {option() === 'recent' ? 'active' : ''}"
+                on:click={() => changeBetChannel("recent")}
             >
-                MY BETS
+                RECENTELY
             </button>
         {/if}
 
@@ -41,107 +104,78 @@
             class="option {option() === 'all' ? 'active' : ''}"
             on:click={() => changeBetChannel("all")}
         >
-            ALL BETS
+            ALL
         </button>
         <button
-            class="option {option() === 'high' ? 'active' : ''}"
-            on:click={() => changeBetChannel("high")}
+            class="option {option() === 'completed' ? 'active' : ''}"
+            on:click={() => changeBetChannel("completed")}
         >
-            HIGH BETS
+            COMPLETED
         </button>
         <button
-            class="option {option() === 'lucky' ? 'active' : ''}"
-            on:click={() => changeBetChannel("lucky")}
+            class="option {option() === 'pending' ? 'active' : ''}"
+            on:click={() => changeBetChannel("pending")}
         >
-            LUCKY WINS
+            PENDING
         </button>
     </div>
 
-    <table class="bets-table" cellspacing={0}>
-        <thead class="bets-header">
-            <tr>
-                <th>GAME</th>
-                <th>USER</th>
-                <th class="large">TIME</th>
-                <th class="large">WAGER AMOUNT</th>
-                <th class="large">MULTIPLIER</th>
-                <th>PAYOUT</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            {#each bets() as bet, index}
-                <tr class="bet">
-                    <td>
-                        <div class="image-data white caps">
-                            <img
-                                src={gameToImage[bet.game]}
-                                alt=""
-                                height="17"
-                            />
-                            {bet.game}
-                        </div>
-                    </td>
-
-                    <td>
-                        <div class="image-data user">
-                            <Avatar
-                                id={bet?.user?.id}
-                                picture={user.picture}
-                                height={30}
-                            />
-                            {bet?.user?.username || "Anonymous"}
-                        </div>
-                    </td>
-
-                    <td class="large"
-                        >{new Date(bet?.createdAt).toLocaleTimeString()}</td
-                    >
-
-                    <td class="large">
-                        <div class="image-data white">
-                            <img src="./front-coin" alt="" height="17" />
-                            <p>
-                                {Math.floor(bet?.amount || 0)}<span
-                                    class="cents"
-                                    >.{getCents(bet?.amount || 0)}</span
-                                >
-                            </p>
-                        </div>
-                    </td>
-
-                    <td
-                        class={"large " +
-                            (bet?.payout / bet?.amount > 1 ? "green" : "")}
-                    >
-                        {(bet?.payout / bet?.amount).toFixed(2)}x
-                    </td>
-
-                    <td>
-                        <div
-                            class={"image-data " +
-                                (bet?.payout / bet?.amount > 1
-                                    ? "gold"
-                                    : "lum")}
-                        >
-                            <img src="./front-coin" alt="" height="17" />
-                            {bet?.payout / bet?.amount > 1 ? "+" : ""}
-                            <p>
-                                {Math.floor(bet?.payout || 0)}<span
-                                    class="cents"
-                                    >.{getCents(bet?.payout || 0)}</span
-                                >
-                            </p>
-                        </div>
-                    </td>
+    {#if bets.length > 0}
+        <table class="bets-table relative" cellspacing={0}>
+            <thead class="bets-header">
+                <tr>
+                    {#each tableHeads[option()] as table}
+                        <th class="uppercase">{table}</th>
+                    {/each}
                 </tr>
-            {/each}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {#each bets as bet, index}
+                    <tr class="bet">
+                        <td>
+                            <div class="image-data user text-nowrap">
+                                {#if bet.picture}
+                                    <img
+                                        class="rounded-full w-6"
+                                        src={bet.picture}
+                                        alt=""
+                                        height="17"
+                                    />
+                                {:else}
+                                    <div
+                                        class="w-6 h-6 bg-[#302f2f] rounded-full"
+                                    ></div>
+                                {/if}
+                                {bet.username}
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="large">
+                                {new Date(bet?.date).toLocaleDateString()}
+                                {new Date(bet?.date).toLocaleTimeString()}
+                            </div>
+                        </td>
+
+                        <td class="large">{bet.wall}</td>
+
+                        <td class="large">
+                            <div>{bet.tokens}</div>
+                        </td>
+                    </tr>
+                {/each}
+            </tbody>
+        </table>
+    {:else}
+        <div class="flex items-center z-20 w-full justify-center mt-8">
+            <Loader type={"small"} />
+        </div>
+    {/if}
 </div>
 
 <style>
     .bets-container {
+        padding-bottom: 40px;
     }
 
     .bets-options {
@@ -257,6 +291,7 @@
     }
 
     .user {
+        @apply rounded-full w-full h-6;
         gap: 10px;
     }
 

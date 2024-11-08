@@ -25,7 +25,6 @@
             });
 
             const data = await response.json();
-            console.log(data);
             showModal(data.success, data.message);
         } catch (error) {
             console.error('Error:', error.message);

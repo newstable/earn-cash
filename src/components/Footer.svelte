@@ -100,7 +100,7 @@
 
         <div class='divider'/>
 
-        <div class="rate w-[305px] h-[60px] align-middle flex  justify-center bg-[#6f1521] rounded-lg border-r-8 border-r-black ml-[40px]"><img class="h-30 w-20 mr-6" src="/coin3.svg" alt="coin"/><span class="text-white font-extrabold text-2xl whitespace-nowrap mr-20 flex mt-1">100 Coins = 1 $</span></div>
+        <div class="rate w-[305px] h-[60px] align-middle flex  justify-center bg-[#2d2755] rounded-lg border-r-8 border-r-black ml-[40px]"><img class="h-30 w-20 mr-6" src="/coin3.svg" alt="coin"/><span class="text-white font-extrabold text-2xl whitespace-nowrap mr-20 flex mt-1">100 Coins = 1 $</span></div>
     </div>
 </div>
 </footer>

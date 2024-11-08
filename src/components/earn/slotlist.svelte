@@ -1,54 +1,129 @@
 <script>
-    import Loader from "./loader.svelte";
+    import "../../app.scss";
+    import Carousel from "svelte-carousel";
+    import Wall from "../Wall.svelte";
+    import { browser } from '$app/environment';
 
-    let slotsRef;
-    export let slots = { loading: true, data: [] };
+    export let user;
+    let carousel;
+    export let errorMessage;
+    const walls = [
+        {
+            imgUrl: "joystick.png",
+            wallName: "MM WALL",
+            wallUrl: "mmwall",
+            logoUrl: "/mmwall.svg",
+            hasBonus: false,
+            backgroundUrl: "/wall-offertoro-card-bg.png",
+        },
+        {
+            imgUrl: "5stars.png",
+            wallName: "Torox",
+            wallUrl: "offertoro",
+            logoUrl: "/torox.png",
+            hasBonus: true,
+            backgroundUrl: "/wall-offertoro-card-bg.png",
+        },
+        {
+            imgUrl: "4stars.png",
+            wallName: "AdGate",
+            wallUrl: "adgate",
+            logoUrl: "/AdGatemediaGlow.png",
+            hasBonus: true,
+            backgroundUrl: "/wall-adgate-card-bg.png",
+        },
+        {
+            imgUrl: "4stars.png",
+            wallName: "Notik",
+            wallUrl: "notik",
+            logoUrl: "/notik.png",
+            hasBonus: false,
+            backgroundUrl: "/wall-adscend-card-bg.png",
+        },
+        {
+            imgUrl: "4stars.png",
+            wallName: "Monlix",
+            wallUrl: "monlix",
+            logoUrl: "/monlix.svg",
+            hasBonus: true,
+            backgroundUrl: "/wall-adscend-card-bg.png",
+        },
+        {
+            imgUrl: "3stars.png",
+            wallName: "Rev Universe",
+            wallUrl: "revu",
+            logoUrl: "/revu-logo-white.svg",
+            hasBonus: true,
+            backgroundUrl: "/wall-revu-card-bg.png",
+        },
+        {
+            imgUrl: "3stars.png",
+            wallName: "MM WALL",
+            wallUrl: "mmwall",
+            logoUrl: "/mmwall.svg",
+            hasBonus: false,
+            backgroundUrl: "/wall-offertoro-card-bg.png",
+        },
+        {
+            imgUrl: "3stars.png",
+            wallName: "AdToWall",
+            wallUrl: "adtowall",
+            logoUrl:
+                "https://i.imgur.com/nAB252F_d.webp?maxwidth=760&fidelity=grand",
+            hasBonus: false,
+            backgroundUrl: "/survey-inbrain-card-bg.png",
+        },
+        {
+            imgUrl: "3stars.png",
+            wallName: "Lootably",
+            wallUrl: "lootably",
+            logoUrl: "/lootably-logo.png",
+            hasBonus: true,
+            backgroundUrl: "/wall-lootably-card-bg.png",
+        },
+        {
+            imgUrl: "3stars.png",
+            wallName: "Adscend",
+            wallUrl: "adscend",
+            logoUrl: "/AdscendMediaGlow.webp",
+            hasBonus: false,
+            backgroundUrl: "/wall-adscend-card-bg.png",
+        },
+        {
+            imgUrl: "2stars.png",
+            wallName: "Timewall",
+            wallUrl: "timewall",
+            logoUrl: "https://i.imgur.com/eNQVAm7.png",
+            hasBonus: false,
+            backgroundUrl: "/survey-inbrain-card-bg.png",
+        },
+    ];
 
-    function scrollGames(direction) {
-        // Implement your scrolling logic here
-        if (slotsRef) {
-            const scrollAmount = direction === -1 ? -100 : 100; // Adjust scroll amount as needed
-            slotsRef.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    const goToPrevPage = () => {
+        if (carousel) {
+            carousel.goToPrev();
         }
-    }
+    };
+
+    // Function to navigate to the next page
+    const goToNextPage = () => {
+        if (carousel) {
+            carousel.goToNext();
+        }
+    };
 </script>
 
 <div class="games">
     <div class="games-button">
-        <img src="/assets/icons/seven.svg" height="19" width="19" alt="" />
-
+        <img src="/joystick.png" height="30" width="30" alt="" />
         <p class="title">
-            <span class="white bold">SLOTS</span>
-            {#if !slots.loading}
-                ({slots.data.length})
-            {:else}
-                (0)
-            {/if}
+            <span class="white bold">Offer Partners</span>
+            ({walls.length})
         </p>
-
-        <button class="bevel-purple viewall">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="11"
-                height="7"
-                viewBox="0 0 11 7"
-                fill="none"
-            >
-                <path
-                    d="M5.5 0C3.39833 0 1.49243 1.14984 0.0860693 3.01749C-0.0286898 3.1705 -0.0286898 3.38427 0.0860693 3.53728C1.49243 5.40718 3.39833 6.55702 5.5 6.55702C7.60167 6.55702 9.50757 5.40718 10.9139 3.53953C11.0287 3.38652 11.0287 3.17275 10.9139 3.01974C9.50757 1.14984 7.60167 0 5.5 0ZM5.65076 5.58719C4.25565 5.67495 3.10356 4.52511 3.19132 3.12775C3.26332 1.97566 4.19715 1.04183 5.34924 0.969827C6.74435 0.88207 7.89644 2.03191 7.80868 3.42927C7.73443 4.57911 6.8006 5.51294 5.65076 5.58719ZM5.58101 4.52061C4.82945 4.56786 4.2084 3.94906 4.2579 3.1975C4.29615 2.57645 4.80019 2.07467 5.42124 2.03416C6.1728 1.98691 
-                ... (rest of the SVG path data)
-                "
-                    fill="#423579"
-                />
-            </svg>
-
-            SEE ALL
-            <a href="/slots" class="gamemode-link"></a>
-        </button>
 
         <div class="line"></div>
 
-        <button class="bevel-purple arrow" on:click={() => scrollGames(-1)}>
+        <button class="bevel-purple arrow" on:click={goToPrevPage}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
@@ -64,7 +139,7 @@
             </svg>
         </button>
 
-        <button class="bevel-purple arrow" on:click={() => scrollGames(1)}>
+        <button class="bevel-purple arrow" on:click={goToNextPage}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
@@ -80,20 +155,34 @@
             </svg>
         </button>
     </div>
-
-    <div class="slots" bind:this={slotsRef}>
-        {#if !slots.loading}
-            {#each slots.data as slot}
-                <div
-                    class="slot"
-                    style="background-image: url({import.meta.env
-                        .VITE_SERVER_URL}{slot.img})"
-                >
-                    <a href={`/slots/${slot.slug}`} class="gamemode-link"></a>
-                </div>
-            {/each}
-        {:else}
-            <Loader small={true} />
+    <div class="slots">
+        {#if walls.length > 0 && browser}
+            <Carousel
+                bind:this={carousel}
+                particlesToShow={9}
+                dots={false}
+                arrows={false}
+                autoplay
+            >
+                {#each walls as wall}
+                    <div class="slot">
+                        <img
+                            src="/5stars.png"
+                            alt="rating"
+                            class="absolute z-10 mt-2"
+                        />
+                        <Wall
+                            {user}
+                            {errorMessage}
+                            wallName={wall.wallName}
+                            wallUrl={wall.wallUrl}
+                            logoUrl={wall.logoUrl}
+                            hasBonus={wall.hasBonus}
+                            backgroundUrl={wall.backgroundUrl}
+                        />
+                    </div>
+                {/each}
+            </Carousel>
         {/if}
     </div>
 </div>
@@ -101,6 +190,7 @@
 <style>
     .games {
         width: 100%;
+        position: relative;
         margin-top: 30px;
     }
 
@@ -194,7 +284,6 @@
     .slot {
         min-width: 146px;
         width: 146px;
-        height: 195px;
         border-radius: 6px;
 
         background-size: 100%;

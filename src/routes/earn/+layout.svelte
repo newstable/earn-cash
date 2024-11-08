@@ -19,24 +19,10 @@
   export let data = {
     userid: "",
   };
-  var revuOffers = [];
 
   let user = {};
-  let pollingInterval; // Variable to store the polling interval
+  let pollingInterval;
   let errorMessage = "";
-
-  onMount(() => {
-    loggedIn.subscribe(async (val) => {
-      if (val) {
-        fetch("/api/offers/featured")
-          .then((res) => res.json())
-          .then((data) => {
-            if (!data.success) return;
-            revuOffers = data.revuOffers;
-          });
-      }
-    });
-  });
 
   // * currently moved from Wall.svelte to here as component was fetching multiple times
   // Function to fetch user details from the API and update the user and error message
@@ -124,9 +110,9 @@
   {#if $loggedIn}
     <Feature />
   {/if}
-  <Slotlist />
-  
-  <OfferCategory iconUrl="/joystick.png" title="Offer Partners">
+  <Slotlist {user} {errorMessage} />
+
+  <!-- <OfferCategory iconUrl="/joystick.png" title="Offer Partners">
     <SplideTrack slot="items">
       <SplideSlide class="carousel-item">
         <img src="/5stars.png" alt="rating" class="absolute z-50 mt-2" />
@@ -267,7 +253,7 @@
         />
       </SplideSlide>
     </SplideTrack>
-  </OfferCategory>
+  </OfferCategory> -->
 
   <!-- <OfferCategory iconUrl="/survey.png" title="Survey Partners">
     <SplideTrack slot="items">

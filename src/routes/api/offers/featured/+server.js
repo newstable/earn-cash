@@ -3,9 +3,13 @@ import FeaturedOffer from "../../../../models/FeaturedOffer.model";
 
 export const GET = async (request) => {
   const user = await request.getAuthenticatedUser();
-  const revuOffers = await FeaturedOffer.find({
-    country: { $elemMatch: { $eq: user.country } },
-  });
+  // const revuOffers = await FeaturedOffer.find({
+  //   country: { $elemMatch: { $eq: user.country } },
+  // });
+
+  const revuOffers = await FeaturedOffer.find();
+
+  console.log(revuOffers);
 
   return response({
     success: true,

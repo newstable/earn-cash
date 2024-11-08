@@ -1,67 +1,28 @@
 <script>
+    import { onMount } from "svelte";
     import Gameinfo from "./gameinfo.svelte";
     import Gametag from "./gametag.svelte";
+    import loggedIn from "../../stores/loggedIn.store.js";
 
     let page = 0;
+    let revuOffers = [];
+
+    onMount(() => {
+        loggedIn.subscribe(async (val) => {
+            if (val) {
+                fetch("/api/offers/featured")
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if (!data.success) return;
+                        revuOffers = data.revuOffers;
+                    });
+            }
+        });
+    });
 
     const setPage = (newPage) => {
         page = newPage;
     };
-
-    const gamemodes = [
-        {
-            tag: "hot",
-            icon: "/assets/icons/battles.svg",
-            title: "CASE BATTLES",
-            type: "PVP",
-            image: "./games/battles.png",
-            link: "/battles",
-        },
-        // {
-        //     tag: 'new',
-        //     icon: '/assets/icons/slot.svg',
-        //     title: 'SLOTS',
-        //     type: 'PROVIDER',
-        //     image: './games/slots.png',
-        //     link: '/slots',
-        // },
-        {
-            tag: "new",
-            icon: "/assets/icons/mines.svg",
-            title: "MINES",
-            type: "HOUSE",
-            image: "./games/mines.png",
-            link: "/mines",
-        },
-        // {
-        //     icon: '/assets/icons/roulette.svg',
-        //     title: 'ROULETTE',
-        //     type: 'HOUSE',
-        //     image: './games/roulette.png',
-        //     link: '/roulette',
-        // },
-        {
-            icon: "/assets/icons/coinflip.svg",
-            title: "COINFLIP",
-            type: "PVP",
-            image: "./games/coinflip.png",
-            link: "/coinflip",
-        },
-        {
-            icon: "/assets/icons/cases.svg",
-            title: "CASES",
-            type: "PVP",
-            image: "./games/cases.png",
-            link: "/cases",
-        },
-        {
-            icon: "/assets/icons/jackpot.svg",
-            title: "JACKPOT",
-            type: "PVP",
-            image: "./games/jackpot.png",
-            link: "/jackpot",
-        },
-    ];
 </script>
 
 <div class="games">
@@ -97,7 +58,7 @@
         <button
             class="bevel-purple arrow"
             onClick={() =>
-                setPage(Math.min(page + 1, Math.floor(gamemodes.length / 6)))}
+                setPage(Math.min(page + 1, Math.floor(revuOffers?.length / 6)))}
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -115,43 +76,23 @@
         </button>
     </div>
     <div class="dropdown-games">
-        {#each gamemodes as game}
+        {#each revuOffers as offer}
             <div class="gamemode">
                 <div class="info">
-                    {#if game.tag}
-                        <Gametag tag={game.tag} />
-                    {/if}
-                    <img src={game.icon} alt="" height="16" />
-                    <p>{game.title}</p>
-                    <Gameinfo type={game.type} />
+                    <p class="uppercase">{offer.name}</p>
+                    <div style="margin: 0 0 0 auto;">
+                        ${offer.currency_award.toFixed(2)}
+                    </div>
                 </div>
-                <a href={game.link} class="gamemode-link" />
+                <a href={offer.offer_url} class="gamemode-link" />
                 <div
-                    class="gamemode-image"
-                    style="background-image: url({game?.image})"
+                    class="gamemode-image bg-cover"
+                    style="background-image: url({offer.image_url})"
                 ></div>
             </div>
         {/each}
     </div>
 </div>
-
-<!-- <OfferCategory iconUrl="/fire.png" title="Featured Offers">
-    <a slot="right" href="/offers">View All</a>
-
-    <SplideTrack slot="items">
-        {#each revuOffers as offer}
-            <SplideSlide class="carousel-item">
-                <Offer
-                    offerUrl={offer.offer_url}
-                    offerImage={offer.image_url}
-                    title={offer.name}
-                    description={offer.description}
-                    currencyAward={offer.currency_award}
-                />
-            </SplideSlide>
-        {/each}
-    </SplideTrack>
-</OfferCategory> -->
 
 <style>
     .games {

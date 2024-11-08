@@ -28,8 +28,8 @@
     }
 
     .small {
-        height: 100%;
-        width: unset;
+        width: 90px;
+        height: 90px;
         aspect-ratio: 1;
         padding: unset;
         padding: 10px;

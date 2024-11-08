@@ -509,7 +509,7 @@
                       </div>
                     {:else if reward.hold === 1}
                       <div
-                        class="rounded-full bg-[#6f1521] w-12 flex justify-center py-1 text-xs font-semibold text-white"
+                        class="rounded-full bg-[#2d2755] w-12 flex justify-center py-1 text-xs font-semibold text-white"
                       >
                       {Math.max(31 - days4date(new Date(), string2date(reward.date)), 0)} days
                        
