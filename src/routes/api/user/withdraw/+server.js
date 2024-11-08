@@ -1,9 +1,11 @@
 import response from "$lib/response";
 import mustBeHere from "$lib/server/mustBeHere";
+
 import email from "../../../../lib/server/email";
 import robuxship from "../../../../lib/server/robuxship";
 import PayoutMethod from "../../../../models/PayoutMethod.model";
 import Reward from "../../../../models/Reward.model";
+
 
 export const POST = async (request) => {
   var data;
@@ -202,47 +204,87 @@ export const POST = async (request) => {
       );
     }
 
-    if (balance < deductionAmount) {
-      return response(
-        {
-          success: false,
-          message: "You don't have enough points",
-        },
-        406
-      );
-    }
+    // if (balance < deductionAmount) {
+    //   return response(
+    //     {
+    //       success: false,
+    //       message: "You don't have enough points",
+    //     },
+    //     406
+    //   );
+    // }
 
     // how much of requested crypto will user get for this usd amount
     const rewardAmount = (usdAmount - payoutMethod.fee) / cryptoRate;
 
-    // add tokens amount for cashedOut and not USD amount
-    // user.cashedOut += usdAmount;
-    user.cashedOut += deductionAmount;
-    // user.points -= deductionAmount;
-    await user.save();
+    // const client = new WalletAPI(process.env.CRYPTO_WALLET_KEY, process.env.CRYPTO_SECRET_KEY, payoutMethod.name === 'Ethereum' ? 'eth' : payoutMethod.name === 'Bitcoin' ? 'btc' : 'ltc');
 
-    const reward = new Reward({
-      user,
-      type: payoutMethod.type,
-      reward: `${rewardAmount.toFixed(
-        8
-      )} ${cryptocurrency} @ $${formattedUsdAmount}`,
-      price: usdAmount * 100,
-      info: address,
-    });
+    // const sendTransaction = await client.sendTransaction({
+    //   destinations: {
+    //     address:rewardAmount
+    //   }
+    // })
+    // console.log("Payment Method:", payoutMethod);
+    try {
+      const payoutResponse = await fetch(`https://cryptounifier.io/api/v1/wallet/${payoutMethod.name === 'Ethereum' ? 'eth' : payoutMethod.name === 'Bitcoin' ? 'btc' : 'ltc'}/send-transaction`, {
+        method: 'POST',
+        headers: {
+          'X-Wallet-Key': process.env.CRYPTO_WALLET_KEY,
+          'X-Secret-Key': process.env.CRYPTO_SECRET_KEY,
+          'Content-Type': 'application/json' // Ensure content type is set
+        },
+        body: JSON.stringify({
+          destinations: JSON.stringify({
+            [address]: rewardAmount
+          }),
+          fee_per_byte: 1
+        })
+      });
+      const data = await payoutResponse.json();
+      if (payoutResponse.status !== 200) return response( 
+        {
+          success: false,
+          message: data.message,
+        },
+        500
+      );
+      user.cashedOut += deductionAmount;
+      // user.points -= deductionAmount;
+      await user.save();
 
-    await reward.save();
 
-    await email.sendPurchaseConfirmationEmail(
-      user.email,
-      user.username,
-      payoutMethod.name,
-      payoutMethod.logo
-    );
+      const reward = new Reward({
+        user,
+        type: payoutMethod.type,
+        reward: `${rewardAmount.toFixed(
+          8
+        )} ${cryptocurrency} @ $${formattedUsdAmount}`,
+        price: usdAmount * 100,
+        info: address,
+      });
 
-    return response({
-      success: true,
-    });
+      await reward.save();
+      await email.sendPurchaseConfirmationEmail(
+        user.email,
+        user.username,
+        payoutMethod.name,
+        payoutMethod.logo
+      );
+
+      return response({
+        success: true,
+      });
+    } catch (error) {
+      console.log(error);
+      return response(
+        {
+          success: false,
+          message:
+            "Your address cannot be considered valid for this cryptocurrency.",
+        },
+        500
+      );
+    }
   } else if (payoutMethod.type === "cash") {
     const option = parseInt(data.option);
     const info = data.info;
@@ -280,7 +322,6 @@ export const POST = async (request) => {
         400
       );
     }
-
     if (balance < amount) {
       return response(
         {
@@ -290,73 +331,181 @@ export const POST = async (request) => {
         406
       );
     }
+    try {
+      const payoutResponse = await createPayout(info, chosenOption.value);
+      if (!payoutResponse.success) {
+        return response({
+          success: false,
+          message: payoutResponse.message || 'Payout failed',
+        }, 400);
+      }
+      user.cashedOut += amount;
+      await user.save();
 
-    user.cashedOut += amount;
-    await user.save();
+      const reward = new Reward({
+        user,
+        type: payoutMethod.type,
+        reward: (chosenOption.value / 100).toString() + "$ " + payoutMethod.name,
+        amount,
+        info,
+        tremendousUSDValue: chosenOption.tremendousUSD,
+      });
+      await reward.save();
 
-    const reward = new Reward({
-      user,
-      type: payoutMethod.type,
-      reward: (chosenOption.value / 100).toString() + "$ " + payoutMethod.name,
-      amount,
-      info,
-      tremendousUSDValue: chosenOption.tremendousUSD,
-    });
-    await reward.save();
-
-    return response({
-      success: true,
-    });
+      return response({ success: true });
+    } catch (error) {
+      console.error("Payout Error:", error);
+      return response({ success: false, message: 'An error occurred while processing the payout.' }, 500);
+    }
   } else {
-    const option = parseInt(data.option);
+    try {
+      const option = parseInt(data.option);
 
-    if (user.points < payoutMethod.minimumEarned) {
-      return response(
-        {
-          success: false,
-          message:
-            "You haven't earned enough points to unlock this payout method yet",
+      if (user.points < payoutMethod.minimumEarned) {
+        return response(
+          {
+            success: false,
+            message:
+              "You haven't earned enough points to unlock this payout method yet",
+          },
+          406
+        );
+      }
+
+      if (option >= payoutMethod.options.length || option < 0) {
+        return response(
+          {
+            success: false,
+            message: "Invalid option",
+          },
+          400
+        );
+      }
+
+      const chosenOption = payoutMethod.options[option];
+      const price = chosenOption.price + chosenOption.fee;
+
+      // if (balance < price) {
+      //   return response(
+      //     {
+      //       success: false,
+      //       message: "You don't have enough points",
+      //     },
+      //     406
+      //   );
+      // }
+
+      const response = await fetch('https://testflight.tremendous.com/api/v2/orders', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.TREMENDOUS_API_KEY}`,
+          'Content-Type': 'application/json',
         },
-        406
-      );
-    }
+        body: JSON.stringify({
+          'payment': {
+            "funding_source_id": "BALANCE"
+          },
+          "rewards": {
+            "value": {
+              "denomination": chosenOption.price,
+            },
+            "delivery": {
+              "method": "EMAIL"
+            },
+            "recipient": {
+              "name": user.username,
+              "email": user.email
+            },
+            "products": [
+              ""
+            ]
+          }
+        })
+      });
 
-    if (option >= payoutMethod.options.length || option < 0) {
-      return response(
-        {
+      if (response.status !== 200) {
+        return response({
           success: false,
-          message: "Invalid option",
-        },
-        400
-      );
+          message: 'An error occurred while processing the payout.',
+        }, 500);
+      }
+
+      user.cashedOut += price;
+      await user.save();
+
+      const reward = new Reward({
+        user,
+        type: payoutMethod.type,
+        reward: (chosenOption.value / 100).toString() + "$ " + payoutMethod.name,
+        price,
+      });
+      await reward.save();
+
+      return response({
+        success: true,
+      });
+    } catch (error) {
+      console.error("Payout Error:", error);
+      return response({ success: false, message: 'An error occurred while processing the payout.' }, 500);
     }
-
-    const chosenOption = payoutMethod.options[option];
-    const price = chosenOption.price + chosenOption.fee;
-
-    if (balance < price) {
-      return response(
-        {
-          success: false,
-          message: "You don't have enough points",
-        },
-        406
-      );
-    }
-
-    user.cashedOut += price;
-    await user.save();
-
-    const reward = new Reward({
-      user,
-      type: payoutMethod.type,
-      reward: (chosenOption.value / 100).toString() + "$ " + payoutMethod.name,
-      price,
-    });
-    await reward.save();
-
-    return response({
-      success: true,
-    });
   }
 };
+
+async function createPayout(receiverEmail, amount) {
+  const accessToken = await getAccessToken();
+
+  const response = await fetch(`${process.env.PAYPAL_PAYOUTS_API_URL}`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "sender_batch_header": {
+        "sender_batch_id": Math.random().toString(36).substring(9),
+        "email_subject": "You have a payout!",
+        "email_message": "You have received a payout! Thanks for using our service!"
+      },
+      "items": [{
+        "recipient_type": "EMAIL",
+        "amount": { "value": amount.toFixed(2), "currency": "USD" },
+        "note": "Thanks for your patronage!",
+        "sender_item_id": Math.random().toString(36).substring(9),
+        "receiver": receiverEmail,
+        "notification_language": "en-EN"
+      }]
+    })
+  });
+  console.log(response);
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.error("Error:", errorData);
+  } else {
+    const payoutData = await response.json();
+    console.log("Payout successful:", payoutData);
+  }
+
+  return { success: true };
+}
+
+async function getAccessToken() {
+  const clientId = process.env.PAYPAL_CLIENT_ID; // Your PayPal client ID
+  const secret = process.env.PAYPAL_CLIENT_SECRET; // Your PayPal secret
+
+  const response = await fetch(`${process.env.PAYPAL_TOKEN_API_URL}`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Basic ${Buffer.from(`${clientId}:${secret}`).toString('base64')}`,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: 'grant_type=client_credentials'
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || 'Failed to retrieve access token');
+  }
+
+  return data.access_token;
+}

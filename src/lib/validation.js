@@ -17,5 +17,5 @@ const password = password => {
 export default {
     username,
     email,
-    password
+    password,
 }

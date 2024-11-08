@@ -2,12 +2,14 @@
   export let url = "";
   export let background = ""; // For color
   export let imageUrl = "";
-  export let imageWidth = false;
+  export let imageWidth = "";
+  export let imageHeight = "";
+  
 </script>
 
 <a href={"/cashout/" + url} style="background: {background};">
   <div class="background-layer"></div>
-  <img src={imageUrl} alt="logo" style={imageWidth ? "width: " + imageWidth.toString() + "px" : ""}/>
+  <img src={imageUrl} alt="logo" style={imageWidth ? "min-width: " + imageWidth.toString() + "%; min-height: " + imageHeight.toString() + "%; max-height: " + imageHeight.toString() + "%" : "min-height: " + imageHeight.toString() + "%; max-height: " + imageHeight.toString() + "%"}/>
 </a>
 <style lang="scss">
 a {

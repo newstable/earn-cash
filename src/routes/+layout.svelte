@@ -156,7 +156,7 @@
     {:else}
       <!-- This block renders for all other pages except "/wall/" and "/admin" prefixes -->
       <!-- <Header modal={loadedModal} /> -->
-      <LiveEvents />
+      <!-- <LiveEvents /> -->
       <Chat />
       <Navigation />
       <MobileNavigation />
@@ -183,7 +183,7 @@
 
   div.site {
     transition: 0.25s;
-    padding-top: calc($header-height + 66px);
+    padding-top: calc($header-height);
     min-height: 100%;
 
     @media only screen and (min-width: 1200px) {

@@ -46,7 +46,7 @@
         <h3 class="text-md font-bold text-white">👋It appears you have one or more withdrawals held for suspicious activity</h3>
         <div class="mt-2 text-sm text-black">
           <ul role="list" class="list-disc space-y-1 pl-5">
-            <li>Once the 30d hold concludes, your payment will be promptly processed. Additionally, you'll be pleased to know that future withdrawals will be free from such holds.
+            <li>Once the 30d hold concludes your payment will be promptly processed with future cashouts free from such holds.
             </li>
             <li>If you believe this hold was a mistake, please contact us through Live Chat or Discord</li>
           </ul>
@@ -439,7 +439,7 @@
                     {/if}
                   </td>
                   <td class="hidden sm:table-cell scale-80">
-                    {#if reward.type === "crypto" || reward.type === "cash"}
+                    {#if reward.type === "crypto" || reward.type === "cash" || reward.type === "ROBUX"}
                       {reward.info}
                     {:else}
                       {data.email}
@@ -459,7 +459,7 @@
                         </div>
                         <div class="hidden text-white sm:block">Completed</div>
                       </div>
-                    {:else if reward.hold === 1}
+                    {:else if reward.hold === 1 && (Math.max(31 - days4date(new Date(), string2date(reward.date)), 0) === 0)}
                       <div
                         class="flex items-center justify-end gap-x-2 sm:justify-start"
                       >
@@ -470,8 +470,21 @@
                             class="h-1.5 w-1.5 rounded-full bg-current"
                           ></div>
                         </div>
-                        <div class="hidden text-white sm:block">Held</div>
+                        <div class="hidden text-white sm:block">Contact Support</div>
                       </div>
+                    {:else if reward.hold === 1}
+                    <div
+                    class="flex items-center justify-end gap-x-2 sm:justify-start"
+                  >
+                    <div
+                      class="flex-none rounded-full p-1 text-red-400 bg-red-400/10"
+                    >
+                      <div
+                        class="h-1.5 w-1.5 rounded-full bg-current"
+                      ></div>
+                    </div>
+                    <div class="hidden text-white sm:block">Held</div>
+                  </div>
                     {:else}
                       <div
                         class="flex items-center justify-end gap-x-2 sm:justify-start"
@@ -487,7 +500,7 @@
                       </div>
                     {/if}
                   </td>
-                  <td class="pr-8">
+                  <td class="pr-8 sm:pr-0">
                     {#if reward.processing === 1}
                       <div
                         class="rounded-full bg-green-700 w-12 flex justify-center py-1 text-xs font-semibold text-white"
@@ -498,7 +511,7 @@
                       <div
                         class="rounded-full bg-[#6f1521] w-12 flex justify-center py-1 text-xs font-semibold text-white"
                       >
-                        {31 - days4date(new Date(), string2date(reward.date))} days
+                      {Math.max(31 - days4date(new Date(), string2date(reward.date)), 0)} days
                        
                       </div>
                     
@@ -527,6 +540,46 @@
               {/each}
             </tbody>
           </table>
+        {/if}
+        {#if infoPage === 2}
+        <div class="activity">
+          <div class="sectionHeading">
+              
+          </div>
+
+          <table class="profileTable">
+              <thead>
+                  <tr>
+                      <td>
+                          Offer
+                      </td>
+                      <td class="justify-start flex">
+                          Time
+                      </td>
+                      <td>
+                          Reward
+                      </td>
+                  </tr>
+              </thead>
+              <tbody>
+                  {#each data.activities.slice((page - 1) * 5, (page * 5)) as activity}
+                      <tr>
+                          <td>
+                              {activity.name}
+                          </td>
+                          <td>
+                              {date2readable(activity.time)}
+                          </td>
+                          <td class="flex align-center py-4">
+                              <img src="/coin.svg" class="w-10 h-10 pr-4" alt="Currency"/>
+                              <span class="flex align-center self-center">{activity.reward}</span>
+                          </td>
+                      </tr>
+                  {/each}
+              </tbody>
+          </table>
+         
+      </div>
         {/if}
         <Pagination totalPages={maxPage()} pageHandler={setPage} />
       </div>
@@ -602,9 +655,9 @@
 
       &.active,
       &:hover {
-        background-color: #302828;
-        color: #ff5a5c;
-        text-shadow: 0.5px 0 0 #ff5a5c;
+        background-color: #0e0c1d;
+        color: #ffff;
+        text-shadow: 0.5px 0 0 #ffff;
       }
     }
   }

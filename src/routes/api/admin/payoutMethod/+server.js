@@ -13,7 +13,7 @@ export const POST = async(request) => {
 
     const user = await User.findOne({ _id: tokenV.data.body.uid });
     if (user === null) return response({ success: false });
-    // TODO: if (user.rank !== 3) return response({ success: false });
+    if (user.rank !== 3) return response({ success: false });
 
     const data = await request.request.json();
     const method = new PayoutMethod(data);

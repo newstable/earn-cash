@@ -1,6 +1,7 @@
 import response from "$lib/response";
 import mustBeHere from "$lib/server/mustBeHere";
 import validation from "$lib/validation";
+import sanitization from "$lib/sanitize_query";
 import doLogin from "../../../../lib/server/doLogin";
 import { checkPassword } from "../../../../lib/server/passwords";
 import userRequest from "../../../../lib/server/userRequest";
@@ -34,6 +35,7 @@ export const GET = async (request) => {
         user.points - user.cashedOut - user.removedPoints + user.addedPoints,
       picture: user.picture,
       id: user._id,
+      discord: user.discordUsername
     },
   });
 };
@@ -43,6 +45,7 @@ export const POST = async (request) => {
 
   try {
     data = await request.request.json();
+    data = await sanitization.sanitize_query(data)
   } catch (e) {
     return response(
       {

@@ -317,7 +317,7 @@
 
                 & > textarea {
                     margin-bottom: 0;
-                    color: #787ead;
+                    color: #ffff;
                     width: 100%;
                     background-color: #1f1b1b;
                     border: 0.5px solid #27273e;

@@ -24,7 +24,9 @@ export const GET = async(_request) => {
             "notik",
             "monlix",
             "timewall",
-			"mmwall"
+			"mmwall",
+            "adtowall",
+            "mychips"
         ][offer.wall];
 
         try {

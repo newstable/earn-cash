@@ -12,7 +12,7 @@ export const GET = async(request) => {
 
     const user = await User.findOne({ _id: tokenV.data.body.uid });
     if (user === null) return response({ success: false });
-    // TODO: if (user.rank !== 3) return response({ success: false });
+    if (user.rank !== 3) return response({ success: false });
 
     var page = 1;
     var pageText = request.url.searchParams.get("page");

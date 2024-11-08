@@ -37,6 +37,10 @@
     filteredOffers =
       offers?.filter((offer) => {
         // console.log(offer, "offer");
+	if (offer.mobile_app_type === "all") {
+          return true;
+        }
+
         if (
           devices.apple &&
           (offer.mobile_app_type === "ios" || offer.mobile_app_type === null)

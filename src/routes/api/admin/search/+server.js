@@ -14,12 +14,13 @@ export const POST = async(request) => {
 
     const user = await User.findOne({ _id: tokenV.data.body.uid });
     if (user === null) return response({ success: false });
-    // TODO: if (user.rank !== 3) return response({ success: false });
+    if (user.rank !== 3) return response({ success: false });
 
     var page = 1;
     var limit = 15;
 
     const data = await request.request.json();
+    
     if (typeof data.page !== "undefined") page = data.page;
     if (typeof data.limit !== "undefined") limit = data.limit;
 

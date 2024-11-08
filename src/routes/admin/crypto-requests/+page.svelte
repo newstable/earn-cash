@@ -12,6 +12,10 @@
     let currentPage = 1;
     let pageSize = 32;
     var totalItems = 7;
+    var totalRewardPrice = 0; // Initialize total reward price
+   
+
+
 
     const onPageChange = e => {
         getPage(e.detail.page);
@@ -21,12 +25,20 @@
     const getPage = async (page = 1) => {
         const response = await fetch("/api/admin/rewards?type=crypto&sent=0&page=" + page.toString());
         const data = await response.json();
+        
 
         if (data.success) {
             totalItems = data.total;
             items = data.data;
+            calculateTotalRewardPrice();
+
         }
-    }
+    };
+
+    const calculateTotalRewardPrice = () => {
+    totalRewardPrice = items.reduce((total, item) => total + item.reward.price, 0);
+    console.log(totalRewardPrice);
+  };
 
     const hold = item => fetch("/api/admin/rewards/hold", {
         method: "PATCH",
@@ -166,7 +178,10 @@
                                 showStepOptions={true}
                                 on:setPage={e => onPageChange(e)}
                             />
+                            
+                            <p>Total Reward Price: {(totalRewardPrice / 100).toFixed(2)}$</p>
                         </div>
+                        
                     </CardBody>
                 </Card>
             </Col>

@@ -31,7 +31,7 @@ export const POST = async(request) => {
 
     if (isNumber(query)) {
         queries.push({
-            discordId: query
+            discordId: query,
         });
     }
 

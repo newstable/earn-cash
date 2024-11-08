@@ -21,6 +21,8 @@
     bitlabs: 0,
     inbrain: 0,
     mmwall: 0,
+    adtowall: 0,
+    mychips: 0,
   };
 
   export let user = {};

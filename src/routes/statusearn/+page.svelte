@@ -33,7 +33,7 @@
           >
             <span class="font-bold text-white">1</span>
           </div>
-          <p class="text-lg font-semibold text-red-900 leading-none">Step One</p>
+          <p class="text-lg font-semibold text-gray-100 leading-none">Step One</p>
         </div>
         <p class=" text-white mb-4 pt-10">
           Make sure to join our <a
@@ -51,7 +51,7 @@
           >
             <span class="font-bold text-white">2</span>
           </div>
-          <p class="text-lg font-semibold leading-none text-red-900">Step Two</p>
+          <p class="text-lg font-semibold leading-none text-gray-100">Step Two</p>
         </div>
         <p class="text-white mb-4">
           Add “<span class="text-darkercc font-extrabold"
@@ -74,7 +74,7 @@
           >
             <span class="font-bold text-white">3</span>
           </div>
-          <p class=" text-lg font-semibold leading-none text-red-900">
+          <p class=" text-lg font-semibold leading-none text-gray-100">
             Step Three
           </p>
         </div>
@@ -88,9 +88,14 @@
             class="w-full bg-green-600 hover:bg-green-900 text-white px-3 py-2 rounded shadow font-semibold flex items-center justify-between"
           >
             <p>Start Earning</p>
+            
             <i class="bx bx-right-arrow-alt text-teal-900 text-xl"></i>
           </div>
         </button>
+          <!-- Video Embed -->
+          <div class="w-full pt-8">
+            <iframe title="video" width="300" height="170" src="https://www.youtube.com/embed/tqBBskvXu78" frameborder="0" allowfullscreen></iframe>
+        </div>
       </div>
     
   </div>

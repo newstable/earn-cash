@@ -39,7 +39,7 @@
 {/if}
 <div class="relative inset-x-0 bottom-16 z-50 cover bg-black">
   <!-- Header -->
-  <header class="absolute inset-x-0 top-0 z-50 bg-[#6a1622]">
+  <header class="absolute inset-x-0 top-0 z-50 bg-[#110d1d]">
     <nav
       class="flex items-center justify-between p-6 lg:px-8"
       aria-label="Global"
@@ -47,7 +47,7 @@
       <div class="flex lg:flex-1">
         <a href="/" class="-m-1.5 p-1.5">
           <span class="sr-only">JustEarn</span>
-          <img class="h-20 w-auto" src="/coin.svg" alt="logo" />
+          <img class="h-10 w-auto" src="/logo1.png" alt="logo" />
         </a>
       </div>
       <div class="flex lg:hidden">
@@ -169,8 +169,8 @@
     <!-- Hero section -->
     <div class="relative isolate pt-14">
       <svg
-        class="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
-        aria-hidden="true"
+      class="absolute inset-0 -z-10 h-full w-full stroke-gray-500 [mask-image:radial-gradient(100%_50%_at_top_right,white,transparent)]"
+      aria-hidden="true"
       >
         <defs>
           <pattern
@@ -208,11 +208,11 @@
           </defs>
 
           <!-- Background rectangles -->
-          <rect x="-100.5" y="0" width="201" height="201" fill="#E5E7EB" />
+          <rect x="-100.5" y="0" width="201" height="201" fill="#39151d" />
           <!-- gray-200 equivalent -->
-          <rect x="699.5" y="0" width="201" height="201" fill="#E5E7EB" />
-          <rect x="499.5" y="400" width="201" height="201" fill="#E5E7EB" />
-          <rect x="-300.5" y="600" width="201" height="201" fill="#E5E7EB" />
+          <rect x="699.5" y="0" width="201" height="201" fill="#39151d" />
+          <rect x="499.5" y="400" width="201" height="201" fill="#39151d" />
+          <rect x="-300.5" y="600" width="201" height="201" fill="#39151d" />
 
           <!-- Pattern-filled paths -->
           <path
@@ -252,33 +252,29 @@
         >
           <div class="hidden sm:block">
             <img
-              src="/img/landing/star/long.svg"
-              class="absolute bottom-[40%] -left-[10%] w-6"
+              src="https://i.imgur.com/cOpitof.png"
+              class="absolute bottom-[0%] -left-[20%] w-24"
               alt=""
             />
             <img
-              src="/img/landing/star/long.svg"
-              class="absolute top-[30%] left-[-5%] w-10"
+              src="https://i.imgur.com/PY3G8GR.png"
+              class="absolute top-[30%] left-[-10%] w-14"
+              alt=""
+            />
+            
+            <img
+              src="https://i.imgur.com/PEOLLsF.png"
+              class="absolute bottom-[20%] right-[20%] w-24"
               alt=""
             />
             <img
-              src="/img/landing/star/long.svg"
-              class="absolute top-0 -left-[15%] w-14"
+              src="https://i.imgur.com/nopei4M.png"
+              class="absolute bottom-[35%] right-[35%] w-20"
               alt=""
             />
             <img
-              src="/img/landing/star/long.svg"
-              class="absolute bottom-[20%] right-[20%] w-14"
-              alt=""
-            />
-            <img
-              src="/img/landing/star/long.svg"
-              class="absolute bottom-[28%] right-[28%] w-10"
-              alt=""
-            />
-            <img
-              src="/img/landing/star/long.svg"
-              class="absolute top-0 right-[40%] w-10"
+              src="https://i.imgur.com/SG2SbKq.png"
+              class="absolute  right-[45%] bottom-[80%] w-14"
               alt=""
             />
             <!-- <img src="/img/landing/star/plain.svg" alt="" />
@@ -329,9 +325,7 @@
           <p
             class="mt-6 pb-2 text-lg font- leading-8 text-white flex align-middle justify-center"
           >
-            Dive into a world of easy, exciting tasks like fun games, surveys,
-            and awesome videos. Perfect for teens and adults, JustEarn is your
-            go-to spot for earning cool stuff online.
+            Your go-to spot for earning cool stuff online. Dive into a world of easy, exciting tasks like fun games, surveys, and videos.
             <br /> <br /> It's simple, it's fun, it's JustEarn!
           </p>
           <div class="providers">
@@ -344,9 +338,9 @@
             <div class="provider litecoin">
               <img src="/providers/litecoinShopLogo.svg" alt="Litecoin Logo" />
             </div>
-            <div class="provider paypal">
+            <a href="/rewards/free-paypal-money" class="provider paypal">
               <img src="/providers/paypalShopLogo.svg" alt="PayPal Logo" />
-            </div>
+            </a>
             <div class="provider amazon">
               <img src="/providers/amazonShopLogo.svg" alt="Amazon Logo" />
             </div>
@@ -363,7 +357,7 @@
           <div class="mt-10 flex items-center gap-x-6">
             <button
               on:click={() => modal.open(false)}
-              class="rounded-md scale-125 ml-3 bg-gray-900 px-3.5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-white hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              class="rounded-md scale-125 ml-3 bg-[#39151d] px-3.5 py-2.5 text-md font-semibold text-white shadow-sm hover:bg-gray-900 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >Sign Up!</button
             >
             <button
@@ -381,7 +375,7 @@
             role="img"
             class="mx-auto w-[22.875rem] max-w-full drop-shadow-xl"
           >
-            <title>App screenshot</title>
+            <title>JustEarn Live</title>
             <defs>
               <clipPath id="2ade4387-9c63-4fc4-b754-10e687a0d332">
                 <rect width="316" height="684" rx="36" x="25" y="25" />
@@ -396,10 +390,9 @@
               d="M16 59c0-23.748 19.252-43 43-43h246c23.748 0 43 19.252 43 43v615c0 23.196-18.804 42-42 42H58c-23.196 0-42-18.804-42-42V59Z"
             />
             <image
-              href="wall1.png"
-              width="316"
-              height="684"
-              class="scale-100 w-auto h-full"
+              href="https://i.imgur.com/BZbO1Ji_d.webp?maxwidth=760&fidelity=grand"
+              
+              class="wtf"
               clip-path="url(#2ade4387-9c63-4fc4-b754-10e687a0d332)"
             ></image>
             <!-- <foreignObject
@@ -536,8 +529,7 @@
           class="font-semibold text-[#7289DA] hover:underline"
         >
           <span class="block mt-6 text-lg leading-8">
-            Still confused? Join our vibrant community and let's guide you to
-            making some extra cash with a smile :)
+            Still confused? Join our earning community!
           </span>
         </a>
       </div>
@@ -771,7 +763,7 @@
     <!-- Testimonials section -->
     <div class="relative isolate mt-32 sm:mt-56 sm:pt-32">
       <svg
-        class="absolute inset-0 -z-10 hidden h-full w-full stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] sm:block"
+        class="absolute inset-0 -z-10 hidden h-full w-full stroke-gray-900 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] sm:block"
         aria-hidden="true"
       >
         <defs>
@@ -786,7 +778,7 @@
             <path d="M.5 200V.5H200" fill="none" />
           </pattern>
         </defs>
-        <svg x="50%" y="0" class="overflow-visible fill-gray-50">
+        <svg x="50%" y="0" class="overflow-visible fill-[#0e0c1d]">
           <path
             d="M-200.5 0h201v201h-201Z M599.5 0h201v201h-201Z M399.5 400h201v201h-201Z M-400.5 600h201v201h-201Z"
             stroke-width="0"
@@ -821,7 +813,7 @@
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-xl sm:text-center">
             <h2
-              class="text-3xl sm:-ml-52 sm:text-6xl font-bold leading-8 tracking-tight text-red-600"
+              class="text-3xl sm:-ml-52 sm:text-6xl font-bold leading-8 tracking-tight text-gray-100"
             >
               Testimonials
             </h2>
@@ -984,6 +976,11 @@
 </div>
 
 <style lang="scss">
+  .wtf { 
+   /* Make image cover the container */
+   
+   height: 100%;       /* Force it to occupy full container height */
+}
   .text-gradient {
     background: linear-gradient(to right, black, red);
     -webkit-background-clip: text;

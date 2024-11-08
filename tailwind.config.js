@@ -4,8 +4,11 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'bye': 'linear-gradient(to top, #5f141e, #0E0C1D)',
-        'hi': 'linear-gradient(to top, #0E0C1D, #5f141e)',
+        'bye': 'linear-gradient(63deg, rgba(43,40,83,1) 0%, rgba(66,60,122,1) 100%)',
+        'hi': 'linear-gradient(to top, #5f141e, #0E0C1D)',
+        'sui': 'linear-gradient(to right,  #5f141e, #0E0C1D)'
+
+
         // ... other background images
       },
       backgroundColor: {
@@ -14,5 +17,8 @@ export default {
       // ... other theme extensions
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+
+  ],
 };

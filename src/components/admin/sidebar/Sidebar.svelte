@@ -213,6 +213,15 @@
           <span class="menu-text">Featured Offers</span>
         </a>
       </li>
+	  <li>
+        <a
+          href={"/admin/offers"}
+          class={$page.route.id === "/admin/offers" && "active"}
+        >
+          <span class="nav-icon uil uil-search-alt" />
+          <span class="menu-text">Offers</span>
+        </a>
+      </li>
       <li>
         <a
           href={"/admin/csv"}
@@ -232,8 +241,31 @@
         </a>
       </li>
 
+	  <li>
+		<a href={'/admin/giveaway-manage'} class={$page.route.id === "/admin/giveaway-manage" && "active"}>
+			<span class="nav-icon uil uil-user-location" />
+			<span class="menu-text">Giveaway Manage</span>
+		</a>
+	</li>
+
+	<li>
+		<a href={'/admin/promocode'} class={$page.route.id === "/admin/promocode" && "active"}>
+			<span class="nav-icon uil uil-user-location" />
+			<span class="menu-text">Promocodes Manage</span>
+		</a>
+	</li>
+
       <li class="menu-title mt-30">
         <span>Rewards</span>
+      </li>
+	  <li>
+        <a
+          href={"/admin/gamble-requests"}
+          class={$page.route.id === "/admin/gamble-requests" && "active"}
+        >
+		  <img src="/coin.svg" alt="coin" class="w-4 h-4 mr-5">
+          <span class="menu-text">Gamble Requests</span>
+        </a>
       </li>
       <li>
         <a
@@ -896,6 +928,10 @@
     width: 75px; /* Adjust the width as per your design */
     min-width: 75px; /* Adjust the width as per your design */
     /* Other styles for collapsed state */
+  }
+  .sidebar-icon-fr {
+	height: 10px;
+	width: 10px
   }
 
   /* :global(aside.sidebar) {

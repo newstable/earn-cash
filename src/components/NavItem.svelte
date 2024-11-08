@@ -52,34 +52,37 @@
     @import "../variables.scss";
 
     div.item {
-        padding-bottom: 20px;
+        padding-bottom: 10px;
     }
 
     a {
         cursor: pointer;
         padding: 9px;
         font-style: normal;
-        font-size: 12px;
+        font-size: 1px;
         line-height: 160%;
         color: #ffff;
         display: flex;
-        font-weight: 400;
+        font-weight: 300;
         font-size: medium;
         align-items: center;
         border-radius: 6px;
         text-decoration: none;
 
         &:hover {
-            color: #ffff !important;
+            background-color: #0e0c1d;
         }
 
         &.active {
-            background: #2c2727;
+           
+            
             color: #ffff;
         }
 
         &.here {
-            background: #0E0C1D;
+            background-color: #0e0c1d;
+
+            
             color: #ffff;
         }
 
@@ -96,6 +99,7 @@
             flex: 1;
             display: flex;
             align-items: center;
+            font-size: 15px;
         }
     }
 </style>

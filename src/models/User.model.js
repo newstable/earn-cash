@@ -66,7 +66,7 @@ const user = new Schema({
     type: Number,
     default: 0,
   },
-  discordId: Number,
+  discordId: String,
   isStatusEarning: {
     type: Number,
     default: 0,
@@ -112,6 +112,10 @@ const user = new Schema({
     type: Number,
     default: 0,
   },
+  discordUsername: String,
+  discord_access_token: String, 
+  discord_refresh_token: String,
+  adtogame: String
 });
 
 const User = mongoose.models.User || mongoose.model("User", user);

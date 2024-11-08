@@ -11,7 +11,7 @@
         <span>Cashout</span>
     </h1>
 
-    <div class="text-md">
+    <div class="`text-md`">
         <img src="/infoIcon.svg" alt="Info"/>
         Use your earned coins on justearn.gg to withdraw PayPal, Bitcoin, Robux, VISA & much more!
     </div>
@@ -26,6 +26,7 @@
 
             {#if type == "cash"}
                 <ShopSectionItem url={"robux"} background={"#fff"} imageUrl={"https://i.imgur.com/cyzPM7J_d.webp?maxwidth=1520&fidelity=grand"}/>
+                <ShopSectionItem url={"justgamble"} background={"transparent"} imageWidth="100" imageHeight="100" imageUrl={"https://i.imgur.com/NKRY9PU_d.webp?maxwidth=760&fidelity=grand"}/>
             {/if}
         </ShopSection>
     {/each}

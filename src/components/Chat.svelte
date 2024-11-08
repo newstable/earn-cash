@@ -12,7 +12,7 @@
     }
 </script>
 
-<div class="chat">
+<div class="chat bg-bye">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="toggle" on:click={toggleChat}>
         {#if !chatActive}
@@ -31,7 +31,7 @@
     div.chat {
         width: 0;
         height: 100%;
-        background-color: white;
+       
         position: fixed;
         top: 0;
         right: 0;
@@ -53,7 +53,7 @@
             height: 30px;
             width: 30px;
             left: -30px;
-            top: calc($header-height + $earn-feed-height + 10px);
+            top: calc($header-height + 10px);
             background: $alt-chat-background-color;
             display: flex;
             justify-content: center;

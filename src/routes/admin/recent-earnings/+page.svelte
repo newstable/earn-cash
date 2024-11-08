@@ -123,7 +123,11 @@
                                                 ? "Timewall"
                                                 : item.offerDone.wall === 14
                                                   ? "MM WALL"
-                                                  : "IDK WHICH OFFERWALL MAN :(((("}
+                                                  : item.offerDone.wall === 15
+                                                  ? "adtowall"
+                                                    : item.offerDone.wall === 16
+                                                    ? "mychips"
+                                                      : " WHICH OFFERWALL MAN :(((("}
                     </td>
                     <td>
                       {item.offerDone.offerName}

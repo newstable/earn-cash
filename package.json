@@ -53,6 +53,7 @@
     "njwt": "^2.0.0",
     "node-steam-openid": "^1.0.1",
     "passport-google-oidc": "^0.1.0",
+    "pm2": "^5.3.1",
     "react": "^18.2.0",
     "secure-random": "^1.1.2",
     "styled-components": "^5.3.10",

@@ -1,5 +1,6 @@
 import response from "$lib/response";
 import mustBeHere from "$lib/server/mustBeHere";
+import sanitization from "$lib/sanitize_query";
 import User from "../../../../../models/User.model.js";
 
 export const PATCH = async(request) => {
@@ -7,6 +8,7 @@ export const PATCH = async(request) => {
 
     try {
         data = await request.request.json();
+        data = await sanitization.sanitize_query(data)
     } catch (e) {
         return response({
             success: false

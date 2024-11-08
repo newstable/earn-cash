@@ -18,6 +18,8 @@
     let passwordValidated = 0;
     let confirmPasswordValidated = 0;
     let error = null;
+    let hcaptchaContainer;
+    let hCaptchaResponse;
 
     export let checked = false;
 
@@ -26,6 +28,17 @@
             confirmPassword = password + "";
             validate();
         }
+        const hcaptchaScript = document.createElement('script');
+        hcaptchaScript.src = 'https://js.hcaptcha.com/1/api.js?render=explicit';
+        hcaptchaScript.async = true;
+        hcaptchaScript.defer = true;
+        document.head.appendChild(hcaptchaScript);
+        hcaptcha.render(hcaptchaContainer, { 
+            sitekey: '25585be1-58f9-4050-959a-f6cc3e898d30',
+            callback: (response) => {
+                hCaptchaResponse = response; 
+            }
+        });
     });
 
     const doSignUp = async () => {
@@ -38,24 +51,19 @@
             passwordValidated !== 1 ||
             confirmPasswordValidated !== 1
         ) return;
-
-        fetch(PUBLIC_GEO_URL)
-            .then(res=>res.json())
-            .then(data=>(
-                fetch("/api/user", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        ...data,
-                        username,
-                        email,
-                        password,
-                        ref: getRef()
-                    })
+            fetch("/api/user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username,
+                    email,
+                    password,
+                    ref: getRef(),
+                    hCaptchaResponse
                 })
-            ))
+            })
             .then(res=>res.json())
             .then(data=>{
                 if (!data.success) {
@@ -134,6 +142,10 @@
             and
             <a href="/terms" target="_blank">Terms</a>
         </span>
+    </div>
+
+    <div>
+        <div class="hcaptcha" bind:this={hcaptchaContainer}></div>
     </div>
 
     <div>

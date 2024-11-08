@@ -7,7 +7,7 @@ const payoutMethod = new Schema({
   },
   type: {
     type: String,
-    enum: ["cash", "giftcard", "crypto"],
+    enum: ["cash", "giftcard", "crypto", "gamble"],
     required: true,
   },
   info: String,

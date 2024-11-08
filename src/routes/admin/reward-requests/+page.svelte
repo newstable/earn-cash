@@ -23,6 +23,7 @@
   var totalItems = 7;
   var selected = [];
   var selectedChanges = 0;
+  var totalRewardPrice = 0; // Initialize total reward price
 
   const onPageChange = (e) => {
     getPage(e.detail.page);
@@ -38,9 +39,15 @@
     if (data.success) {
       totalItems = data.total;
       items = data.data;
+      // Calculate total reward price
+      calculateTotalRewardPrice();
+      
     }
   };
-
+  const calculateTotalRewardPrice = () => {
+    totalRewardPrice = items.reduce((total, item) => total + item.reward.price, 0);
+    console.log(totalRewardPrice);
+  };
   const hold = (item) =>
     fetch("/api/admin/rewards/hold", {
       method: "PATCH",
@@ -125,6 +132,7 @@
     pageTitle: "Reward requests",
     bcItemActive: "Reward requests",
   };
+  
 </script>
 
 <!-- /admin/reward-requests -->
@@ -277,6 +285,12 @@
               >
                 Mark all as sent
               </Button>
+              <p>Total Reward Price: {(totalRewardPrice / 100).toFixed(2)}$</p>
+
+
+
+
+
             </div>
           </CardBody>
         </Card>

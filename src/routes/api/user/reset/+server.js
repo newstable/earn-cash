@@ -1,6 +1,7 @@
 import cryptoRandomString from 'crypto-random-string';
 import response from "$lib/response";
 import mustBeHere from "$lib/server/mustBeHere";
+import sanitization from "$lib/sanitize_query";
 import email from "../../../../lib/server/email";
 import validation from "../../../../lib/validation";
 import User from "../../../../models/User.model";
@@ -17,6 +18,7 @@ export const POST = async (request) => {
 
   try {
     data = await request.request.json();
+    data = await sanitization.sanitize_query(data)
   } catch (e) {
     return response(
       {

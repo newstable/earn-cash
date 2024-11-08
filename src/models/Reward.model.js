@@ -36,7 +36,9 @@ const reward = new Schema({
         type: Number,
         default: 0
     },
-    tremendousUSDValue: Number
+    tremendousUSDValue: Number,
+    discord: Object,
+    token: Number,
 });
 
 const Reward = mongoose.models.Reward || mongoose.model("Reward", reward);

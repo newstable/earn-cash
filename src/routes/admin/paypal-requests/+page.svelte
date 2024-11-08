@@ -14,6 +14,8 @@
     var totalItems = 7;
     var selected = [];
     var selectedChanges = 0;
+    var totalRewardPrice = 0; // Initialize total reward price
+
 
     const onPageChange = e => {
         getPage(e.detail.page);
@@ -27,8 +29,14 @@
         if (data.success) {
             totalItems = data.total;
             items = data.data;
+            calculateTotalRewardPrice();
+
         }
-    }
+    };
+    const calculateTotalRewardPrice = () => {
+    totalRewardPrice = items.reduce((total, item) => total + item.reward.tremendousUSDValue, 0);
+    console.log(totalRewardPrice);
+  };
 
     const hold = item => fetch("/api/admin/rewards/hold", {
         method: "PATCH",
@@ -226,6 +234,8 @@
                             <Button success class="btn-success btn-squared radius-xs fs-12 fw-200 text-capitalize" on:click={() => markAllAsSent()}>
                                 Mark all as sent
                             </Button>
+                            <p>Total Reward Price: {(totalRewardPrice).toFixed(2)}$</p>
+
                         </div>
                     </CardBody>
                 </Card>

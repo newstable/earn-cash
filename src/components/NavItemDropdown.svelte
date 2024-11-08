@@ -280,12 +280,12 @@
     }
 
     &.active {
-      background: #0E0C1D;
+      background-image: linear-gradient(to left, #171515, #2c090d);
       color: #ffff;
     }
 
     &.here {
-      background: #0E0C1D;
+      background-image: linear-gradient(to left, #171515, #2c090d);
       color: #ffff;
     }
 

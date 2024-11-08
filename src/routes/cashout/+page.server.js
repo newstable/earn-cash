@@ -24,5 +24,3 @@ export const load = async() => {
 
     return data;
 }
-
-

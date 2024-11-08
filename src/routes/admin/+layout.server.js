@@ -465,6 +465,7 @@ export const load = async (request) => {
   // console.log({ uid: jwt.data.body.uid });
 
   const user = await User.findById(jwt.data.body.uid);
+  console.log("user", user);
 
   // console.log({ user });
 

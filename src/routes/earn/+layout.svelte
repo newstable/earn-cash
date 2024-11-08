@@ -8,6 +8,13 @@
   import loggedIn from "../../stores/loggedIn.store.js";
   import { onMount, onDestroy } from "svelte";
   import { deleteCookie } from "../../lib/cookies";
+  import Icon from "@iconify/svelte";
+  import Rewardsbanner from "../../components/earn/rewardsbanner.svelte";
+  import Rainbanner from "../../components/earn/rainbanner.svelte";
+  import Feature from "../../components/earn/feature.svelte";
+  import Depositmethod from "../../components/earn/depositmethod.svelte";
+  import Bets from "../../components/earn/bets.svelte";
+  import Slotlist from "../../components/earn/slotlist.svelte";
 
   export let data = {
     userid: "",
@@ -68,9 +75,16 @@
 <svelte:head>
   <title>Earn - justearn.gg</title>
 </svelte:head>
-<div class="bg-bye">
-  <div class="border-l-4 border-black mx-max bg-[#6f1521] p-4 w-3/4 ml-6">
-    <div class="flex">
+<div class="bg-bye px-[2%] xl:px-[4%] 2xl:px-[8%] relative">
+  <img
+    src="./earn-bg.png"
+    alt="earn-bg"
+    class="absolute top-0 left-1/2 transform -translate-x-1/2"
+  />
+  <!-- <div
+    class="border-l-4 border-black mx-max bg-gradient-to-r from-blue-900 via-slate-900 to-red-900 rounded-b-2xl p-4 w-3/4 ml-6"
+  >
+    <div class="flex items-center">
       <div class="flex-shrink-0">
         <svg
           class="h-5 w-5 text-white"
@@ -85,45 +99,62 @@
           />
         </svg>
       </div>
-      <div class="ml-3">
-        <p class="text-sm text-white">
-          Struggling with completing Surveys or finding Offers?
+      <div class="ml-3 flex items-center">
+        <iconify-icon icon="fxemoji:star" width="24" height="24"></iconify-icon>
+        <p class="text-lg font-bold text-white">
+          Struggling to complete Offers? 🏆 -
           <a
-            href="https://discord.gg/justearn"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="font-medium text-orange-600 hover:text-black"
-            >Ask our community!</a
+            href="/blog/guides"
+            class="font-medium text-orange-600 hover:text-white"
           >
+            Check out our weekly released Game Guides!
+          </a>
         </p>
       </div>
     </div>
+  </div> -->
+
+  <div
+    class="flex flex-col 2xl:flex-row items-center justify-center gap-5 py-8"
+  >
+    <Rewardsbanner {user} />
+    <Rainbanner />
   </div>
 
   {#if $loggedIn}
-    <!-- {#if true} -->
-    <OfferCategory iconUrl="/fire.png" title="Featured Offers">
-      <a slot="right" href="/offers">View All</a>
-
-      <SplideTrack slot="items">
-        {#each revuOffers as offer}
-          <SplideSlide class="carousel-item">
-            <Offer
-              offerUrl={offer.offer_url}
-              offerImage={offer.image_url}
-              title={offer.name}
-              description={offer.description}
-              currencyAward={offer.currency_award}
-            />
-          </SplideSlide>
-        {/each}
-      </SplideTrack>
-    </OfferCategory>
+    <Feature />
   {/if}
+  <Slotlist />
+  
   <OfferCategory iconUrl="/joystick.png" title="Offer Partners">
     <SplideTrack slot="items">
       <SplideSlide class="carousel-item">
         <img src="/5stars.png" alt="rating" class="absolute z-50 mt-2" />
+        <Wall
+          {user}
+          {errorMessage}
+          wallName="MM WALL"
+          wallUrl="mmwall"
+          logoUrl="/mmwall.svg"
+          backgroundUrl="/wall-offertoro-card-bg.png"
+        />
+      </SplideSlide>
+
+      <SplideSlide class="carousel-item">
+        <img src="/5stars.png" alt="rating" class="absolute z-50 mt-2" />
+        <Wall
+          {user}
+          {errorMessage}
+          wallName="Torox "
+          hasBonus="true"
+          wallUrl="offertoro"
+          logoUrl="/torox.png"
+          backgroundUrl="/wall-offertoro-card-bg.png"
+        />
+      </SplideSlide>
+
+      <SplideSlide class="carousel-item">
+        <img src="/4stars.png" alt="rating" class="absolute z-50 mt-2" />
         <Wall
           {user}
           {errorMessage}
@@ -140,29 +171,15 @@
         <Wall
           {user}
           {errorMessage}
-          wallName="Lootably"
-          hasBonus="true"
-          wallUrl="lootably"
-          logoUrl="/lootably-logo.png"
-          backgroundUrl="/wall-lootably-card-bg.png"
+          wallName="Notik"
+          wallUrl="notik"
+          logoUrl="/notik.png"
+          backgroundUrl="/wall-adscend-card-bg.png"
         />
       </SplideSlide>
 
       <SplideSlide class="carousel-item">
         <img src="/4stars.png" alt="rating" class="absolute z-50 mt-2" />
-        <Wall
-          {user}
-          {errorMessage}
-          wallName="Torox "
-          hasBonus="true"
-          wallUrl="offertoro"
-          logoUrl="/torox.png"
-          backgroundUrl="/wall-offertoro-card-bg.png"
-        />
-      </SplideSlide>
-
-      <SplideSlide class="carousel-item">
-        <img src="/3stars.png" alt="rating" class="absolute z-50 mt-2" />
         <Wall
           {user}
           {errorMessage}
@@ -179,18 +196,6 @@
         <Wall
           {user}
           {errorMessage}
-          wallName="Notik"
-          wallUrl="notik"
-          logoUrl="/notik.png"
-          backgroundUrl="/wall-adscend-card-bg.png"
-        />
-      </SplideSlide>
-
-      <SplideSlide class="carousel-item">
-        <img src="/4stars.png" alt="rating" class="absolute z-50 mt-2" />
-        <Wall
-          {user}
-          {errorMessage}
           wallName="Rev Universe"
           hasBonus="true"
           wallUrl="revu"
@@ -200,19 +205,7 @@
       </SplideSlide>
 
       <SplideSlide class="carousel-item">
-        <img src="/4stars.png" alt="rating" class="absolute z-50 mt-2" />
-        <Wall
-          {user}
-          {errorMessage}
-          wallName="Adscend"
-          wallUrl="adscend"
-          logoUrl="/AdscendMediaGlow.webp"
-          backgroundUrl="/wall-adscend-card-bg.png"
-        />
-      </SplideSlide>
-
-      <SplideSlide class="carousel-item">
-        <img src="/2stars.png" alt="rating" class="absolute z-50 mt-2" />
+        <img src="/3stars.png" alt="rating" class="absolute z-50 mt-2" />
         <Wall
           {user}
           {errorMessage}
@@ -220,6 +213,44 @@
           wallUrl="mmwall"
           logoUrl="/mmwall.svg"
           backgroundUrl="/wall-offertoro-card-bg.png"
+        />
+      </SplideSlide>
+
+      <SplideSlide class="carousel-item">
+        <img src="/3stars.png" alt="rating" class="absolute z-50 mt-2" />
+
+        <Wall
+          {user}
+          {errorMessage}
+          wallName="AdToWall"
+          wallUrl="adtowall"
+          logoUrl="https://i.imgur.com/nAB252F_d.webp?maxwidth=760&fidelity=grand"
+          backgroundUrl="/survey-inbrain-card-bg.png"
+        />
+      </SplideSlide>
+
+      <SplideSlide class="carousel-item">
+        <img src="/3stars.png" alt="rating" class="absolute z-50 mt-2" />
+        <Wall
+          {user}
+          {errorMessage}
+          wallName="Lootably"
+          hasBonus="true"
+          wallUrl="lootably"
+          logoUrl="/lootably-logo.png"
+          backgroundUrl="/wall-lootably-card-bg.png"
+        />
+      </SplideSlide>
+
+      <SplideSlide class="carousel-item">
+        <img src="/3stars.png" alt="rating" class="absolute z-50 mt-2" />
+        <Wall
+          {user}
+          {errorMessage}
+          wallName="Adscend"
+          wallUrl="adscend"
+          logoUrl="/AdscendMediaGlow.webp"
+          backgroundUrl="/wall-adscend-card-bg.png"
         />
       </SplideSlide>
 
@@ -238,7 +269,7 @@
     </SplideTrack>
   </OfferCategory>
 
-  <OfferCategory iconUrl="/survey.png" title="Survey Partners">
+  <!-- <OfferCategory iconUrl="/survey.png" title="Survey Partners">
     <SplideTrack slot="items">
       <SplideSlide class="carousel-item ">
         <img src="/5stars.png" alt="rating" class="absolute z-50 mt-2" />
@@ -278,7 +309,13 @@
         />
       </SplideSlide>
     </SplideTrack>
-  </OfferCategory>
+  </OfferCategory> -->
+
+  <div class="deposit-methods-bar" />
+
+  <Depositmethod />
+
+  <Bets {user} />
 
   <slot />
 </div>
@@ -292,5 +329,17 @@
     color: #a9a9ca;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  .deposit-methods-bar {
+    margin: 50px auto 0 auto;
+    max-width: 650px;
+    height: 1px;
+    background: linear-gradient(
+      270deg,
+      rgba(90, 84, 153, 0) 0%,
+      #5a5499 49.47%,
+      rgba(90, 84, 153, 0) 100%
+    );
   }
 </style>

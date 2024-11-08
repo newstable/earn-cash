@@ -20,7 +20,7 @@
     }
 </script>
 
-<div class="chatMessage">
+<div class="chatMessage bg-glass">
     <div class="chatHeader">
         <img src={image} alt="User profile"/>
 
@@ -51,10 +51,10 @@
 
     div.chatMessage {
         padding: 9px;
-        margin: 20px 0;
+        margin: 10px 0;
         border-radius: 3px;
         width: 100%;
-        background: #F5F5F5;
+        
         display: inline-block;
         text-align: left;
 
@@ -96,7 +96,7 @@
                     text-decoration: none;
 
                     div.usernameInner {
-                        color: black;
+                        color: white;
                         font-size: 12px;
                         max-width: 130px;
                         display: block;
@@ -115,7 +115,7 @@
             line-height: 133%;
             text-align: right;
             letter-spacing: -0.03em;
-            color: black;
+            color: white;
             margin-top: -20px;
             float: right;
         }
@@ -126,7 +126,7 @@
             font-size: 13px;
             font-weight: 500;
             line-height: 133%;
-            color: black;
+            color: white;
             margin-left: 0;
             margin-top: 0px;
         }

@@ -91,4 +91,16 @@ export const offerWalls = [
     wallId: 14,
     simple: "mmwall",
   },
+  {
+    wallUrl: "https://adtowall.com/5347/[USERID]",
+    wallName: "adtowall",
+    wallId: 15,
+    simple: "adtowall",
+  },
+  {
+    wallUrl: "https://adtowall.com/5347/[USERID]",
+    wallName: "mychips",
+    wallId: 15,
+    simple: "mychips",
+  },
 ];

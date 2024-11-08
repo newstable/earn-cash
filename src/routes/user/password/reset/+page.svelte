@@ -18,7 +18,7 @@
     export var data;
 
 	onMount(() => {
-		if(!data.email)
+		if(!data.token)
 			goto("/");
 	});
 
@@ -40,7 +40,7 @@
 			return
 		const formData = new FormData(event.target);
 		const paramData = {
-			email: data.email,
+			token: data.token,
 			password: formData.get('password')
 		}
 		const response = await fetch('/api/user/update/password', {
@@ -54,6 +54,7 @@
 		if (response.ok) {
 			const data = await response.json();
 			alert("Success resetting password.")
+			goto("/");
 			console.log('Login successful:', data);
 		} else {
 			alert("Failed resetting password.")
